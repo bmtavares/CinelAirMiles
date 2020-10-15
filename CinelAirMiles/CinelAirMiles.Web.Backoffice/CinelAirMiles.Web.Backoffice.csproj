@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CinelAirMiles.Common\CinelAirMiles.Common.csproj" />
+    <ProjectReference Include="..\CinelAirMiles.Web.Frontoffice\CinelAirMiles.Web.Frontoffice.csproj" />
   </ItemGroup>
 
 </Project>

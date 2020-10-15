@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using CinelAirMiles.Web.Backoffice.Data.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using CinelAirMiles.Web.Backoffice.Data.Repositories.Classes;
+using CinelAirMiles.Web.Backoffice.Data.Repositories.Interfaces;
 
 namespace CinelAirMiles.Web.Backoffice
 {
@@ -69,6 +71,16 @@ namespace CinelAirMiles.Web.Backoffice
 
 
             services.AddTransient<Seed>();
+            services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<ICreditCardRepository, CreditCardRepository>();
+            services.AddScoped<IMileRepository, MileRepository>();
+            services.AddScoped<IMilesTransactionRepository, MilesTransactionRepository>();
+            services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
+            services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
+            services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
+            services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
+
+
 
             services.Configure<CookiePolicyOptions>(options =>
             {
