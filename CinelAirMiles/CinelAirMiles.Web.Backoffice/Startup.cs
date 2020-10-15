@@ -17,6 +17,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CinelAirMiles.Web.Backoffice.Data.Repositories.Classes;
 using CinelAirMiles.Web.Backoffice.Data.Repositories.Interfaces;
+using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
+using CinelAirMiles.Web.Backoffice.Helpers.Classes;
 
 namespace CinelAirMiles.Web.Backoffice
 {
@@ -79,7 +81,7 @@ namespace CinelAirMiles.Web.Backoffice
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
             services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
-
+            services.AddScoped<IUserHelper, UserHelper>();
 
 
             services.Configure<CookiePolicyOptions>(options =>
