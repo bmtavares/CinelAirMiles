@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using CinelAirMiles.Web.Backoffice.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using CinelAirMiles.Web.Backoffice.Data.Entities;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace CinelAirMiles.Web.Backoffice
 {
@@ -27,6 +30,46 @@ namespace CinelAirMiles.Web.Backoffice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            //services.AddIdentity<User, IdentityRole>(cfg =>
+            //{
+            //    cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+            //    cfg.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 30, 0);
+            //    cfg.SignIn.RequireConfirmedEmail = true;
+            //    cfg.User.RequireUniqueEmail = true;
+            //    cfg.Password.RequireDigit = true;
+            //    cfg.Password.RequiredUniqueChars = 0;
+            //    cfg.Password.RequireLowercase = true;
+            //    cfg.Password.RequireNonAlphanumeric = true;
+            //    cfg.Password.RequireUppercase = true;
+            //    cfg.Password.RequiredLength = 8;
+            //})
+            //    .AddDefaultTokenProviders()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //services.AddAuthentication()
+            //    .AddCookie()
+            //    .AddJwtBearer(cfg =>
+            //    {
+            //        cfg.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            ValidIssuer = Configuration["Tokens:Issuer"],
+            //            ValidAudience = Configuration["Tokens:Audience"],
+            //            IssuerSigningKey = new SymmetricSecurityKey(
+            //                Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+            //        };
+            //    });
+
+            //services.AddDbContext<ApplicationDbContext>();
+
+            //services.AddDbContext<ApplicationDbContext>(cfg =>
+            //{
+            //    cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"));
+            //});
+
+
+            services.AddTransient<Seed>();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -36,7 +79,7 @@ namespace CinelAirMiles.Web.Backoffice
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("PublishConnection")));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
