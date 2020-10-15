@@ -19,7 +19,7 @@ namespace CinelAirMiles.Web.Backoffice.Data
 
         public DbSet<MilesTransaction> MilesTransactions { get; set; }
 
-        /*public DbSet<ReferrerProgram> ReferrersProgram { get; set; }*/
+        public DbSet<ReferrerProgram> ReferrersProgram { get; set; }
 
         public DbSet<MilesType> MilesTypes { get; set; }
 
@@ -44,8 +44,18 @@ namespace CinelAirMiles.Web.Backoffice.Data
                 fk.DeleteBehavior = DeleteBehavior.Cascade;
             }
 
-            //builder.Entity<ReferrerProgram>()
-            //    .HasKey(c => new { c.ReferredClientId, c.ReferrerClientId });
+            builder.Entity<ReferrerProgram>()
+                .HasKey(c => new { c.ReferredClientId, c.ReferrerClientId });
+
+            builder.Entity<ReferrerProgram>()
+                .HasOne(c => c.ReferredClient)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ReferrerProgram>()
+                .HasOne(c => c.ReferrerClient)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }
