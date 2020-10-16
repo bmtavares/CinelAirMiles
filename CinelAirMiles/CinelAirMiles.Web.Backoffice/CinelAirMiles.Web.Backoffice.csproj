@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.9.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.3" />
@@ -24,7 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CinelAirMiles.Common\CinelAirMiles.Common.csproj" />
-    <ProjectReference Include="..\CinelAirMiles.Web.Frontoffice\CinelAirMiles.Web.Frontoffice.csproj" />
   </ItemGroup>
 
 </Project>
