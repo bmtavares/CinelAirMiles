@@ -1,0 +1,36 @@
+﻿@model CinelAirMiles.Web.Backoffice.Data.Entities.Mile
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Mile</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Miles)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Miles)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreditDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreditDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpiryDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ExpiryDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
