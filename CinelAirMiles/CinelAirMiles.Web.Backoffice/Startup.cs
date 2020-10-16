@@ -35,41 +35,40 @@ namespace CinelAirMiles.Web.Backoffice
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //services.AddIdentity<User, IdentityRole>(cfg =>
-            //{
-            //    cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
-            //    cfg.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 30, 0);
-            //    cfg.SignIn.RequireConfirmedEmail = true;
-            //    cfg.User.RequireUniqueEmail = true;
-            //    cfg.Password.RequireDigit = true;
-            //    cfg.Password.RequiredUniqueChars = 0;
-            //    cfg.Password.RequireLowercase = true;
-            //    cfg.Password.RequireNonAlphanumeric = true;
-            //    cfg.Password.RequireUppercase = true;
-            //    cfg.Password.RequiredLength = 8;
-            //})
-            //    .AddDefaultTokenProviders()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<User, IdentityRole>(cfg =>
+            {
+                cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+                cfg.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 30, 0);
+                cfg.SignIn.RequireConfirmedEmail = true;
+                cfg.User.RequireUniqueEmail = true;
+                cfg.Password.RequireDigit = true;
+                cfg.Password.RequiredUniqueChars = 0;
+                cfg.Password.RequireLowercase = true;
+                cfg.Password.RequireNonAlphanumeric = true;
+                cfg.Password.RequireUppercase = true;
+                cfg.Password.RequiredLength = 8;
+            })
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            //services.AddAuthentication()
-            //    .AddCookie()
-            //    .AddJwtBearer(cfg =>
-            //    {
-            //        cfg.TokenValidationParameters = new TokenValidationParameters
-            //        {
-            //            ValidIssuer = Configuration["Tokens:Issuer"],
-            //            ValidAudience = Configuration["Tokens:Audience"],
-            //            IssuerSigningKey = new SymmetricSecurityKey(
-            //                Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
-            //        };
-            //    });
+            services.AddAuthentication()
+                .AddCookie()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = Configuration["Tokens:Issuer"],
+                        ValidAudience = Configuration["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                    };
+                });
 
-            //services.AddDbContext<ApplicationDbContext>();
 
-            //services.AddDbContext<ApplicationDbContext>(cfg =>
-            //{
-            //    cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"));
-            //});
+            services.AddDbContext<ApplicationDbContext>(cfg =>
+            {
+                cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"));
+            });
 
 
             services.AddTransient<Seed>();
@@ -82,6 +81,10 @@ namespace CinelAirMiles.Web.Backoffice
             services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
             services.AddScoped<IUserHelper, UserHelper>();
+            services.AddScoped<ICombosHelper, CombosHelper>();
+            services.AddScoped<IConverterHelper, ConverterHelper>();
+            services.AddScoped<IImageHelper, ImageHelper>();
+            services.AddScoped<IMailHelper, MailHelper>();
 
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -91,11 +94,10 @@ namespace CinelAirMiles.Web.Backoffice
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("PublishConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/account/notauthorized";
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -106,7 +108,7 @@ namespace CinelAirMiles.Web.Backoffice
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                //app.UseDatabaseErrorPage();
             }
             else
             {
@@ -114,6 +116,7 @@ namespace CinelAirMiles.Web.Backoffice
                 app.UseHsts();
             }
 
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

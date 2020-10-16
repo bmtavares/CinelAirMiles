@@ -12,20 +12,18 @@ namespace CinelAirMiles.Web.Backoffice.Helpers.Classes
     public class UserHelper : IUserHelper
     {
         readonly UserManager<User> _userManager;
-
-        readonly RoleManager<IdentityRole> _roleManager;
-
         readonly SignInManager<User> _signInManager;
+        readonly RoleManager<IdentityRole> _roleManager;
 
 
         public UserHelper(
             UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         public async Task<IdentityResult> AddUserAsync(User user, string password)
