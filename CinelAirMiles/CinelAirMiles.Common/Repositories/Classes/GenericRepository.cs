@@ -1,13 +1,13 @@
-﻿using CinelAirMiles.Common.Entities;
-using CinelAirMiles.Web.Backoffice.Data.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CinelAirMiles.Web.Backoffice.Data.Repositories.Classes
+﻿namespace CinelAirMiles.Common.Repositories.Classes
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Common.Data;
+
+    using Microsoft.EntityFrameworkCore;
+
     public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {
         private readonly ApplicationDbContext _context;

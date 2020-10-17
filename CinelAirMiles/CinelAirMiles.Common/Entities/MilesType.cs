@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CinelAirMiles.Common.Entities
+﻿namespace CinelAirMiles.Common.Entities
 {
     public class MilesType : IEntity
     {

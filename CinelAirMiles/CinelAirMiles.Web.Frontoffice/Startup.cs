@@ -1,27 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using CinelAirMiles.Web.Frontoffice.Data;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using CinelAirMiles.Web.Backoffice.Data.Entities;
-using CinelAirMiles.Web.Backoffice.Data.Repositories.Interfaces;
-using CinelAirMiles.Web.Backoffice.Data.Repositories.Classes;
-using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
-using CinelAirMiles.Web.Backoffice.Helpers.Classes;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-
-namespace CinelAirMiles.Web.Frontoffice
+﻿namespace CinelAirMiles.Web.Frontoffice
 {
+    using System;
+    using System.Text;
+
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.IdentityModel.Tokens;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -34,63 +25,63 @@ namespace CinelAirMiles.Web.Frontoffice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<User, IdentityRole>(cfg =>
-            {
-                cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
-                cfg.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 30, 0);
-                cfg.SignIn.RequireConfirmedEmail = true;
-                cfg.User.RequireUniqueEmail = true;
-                cfg.Password.RequireDigit = true;
-                cfg.Password.RequiredUniqueChars = 0;
-                cfg.Password.RequireLowercase = true;
-                cfg.Password.RequireNonAlphanumeric = true;
-                cfg.Password.RequireUppercase = true;
-                cfg.Password.RequiredLength = 8;
-            })
-                .AddDefaultTokenProviders()
-                .AddEntityFrameworkStores<Backoffice.Data.ApplicationDbContext>();
+            //services.AddIdentity<User, IdentityRole>(cfg =>
+            //{
+            //    cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+            //    cfg.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 30, 0);
+            //    cfg.SignIn.RequireConfirmedEmail = true;
+            //    cfg.User.RequireUniqueEmail = true;
+            //    cfg.Password.RequireDigit = true;
+            //    cfg.Password.RequiredUniqueChars = 0;
+            //    cfg.Password.RequireLowercase = true;
+            //    cfg.Password.RequireNonAlphanumeric = true;
+            //    cfg.Password.RequireUppercase = true;
+            //    cfg.Password.RequiredLength = 8;
+            //})
+            //    .AddDefaultTokenProviders()
+            //    .AddEntityFrameworkStores<Backoffice.Data.ApplicationDbContext>();
 
-            services.AddAuthentication()
-                .AddCookie()
-                .AddJwtBearer(cfg =>
-                {
-                    cfg.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidIssuer = Configuration["Tokens:Issuer"],
-                        ValidAudience = Configuration["Tokens:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
-                    };
-                });
-
-
-            services.AddDbContext<ApplicationDbContext>(cfg =>
-            {
-                cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"));
-            });
+            //services.AddAuthentication()
+            //    .AddCookie()
+            //    .AddJwtBearer(cfg =>
+            //    {
+            //        cfg.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            ValidIssuer = Configuration["Tokens:Issuer"],
+            //            ValidAudience = Configuration["Tokens:Audience"],
+            //            IssuerSigningKey = new SymmetricSecurityKey(
+            //                Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+            //        };
+            //    });
 
 
-            services.AddTransient<Backoffice.Data.Seed>();
-            services.AddScoped<IClientRepository, ClientRepository>();
-            services.AddScoped<ICreditCardRepository, CreditCardRepository>();
-            services.AddScoped<IMileRepository, MileRepository>();
-            services.AddScoped<IMilesTransactionRepository, MilesTransactionRepository>();
-            services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
-            services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
-            services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
-            services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
-            services.AddScoped<IUserHelper, UserHelper>();
-            services.AddScoped<ICombosHelper, CombosHelper>();
-            services.AddScoped<IConverterHelper, ConverterHelper>();
-            services.AddScoped<IImageHelper, ImageHelper>();
-            services.AddScoped<IMailHelper, MailHelper>();
+            //services.AddDbContext<ApplicationDbContext>(cfg =>
+            //{
+            //    cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"));
+            //});
 
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+
+            //services.AddTransient<Backoffice.Data.Seed>();
+            //services.AddScoped<IClientRepository, ClientRepository>();
+            //services.AddScoped<ICreditCardRepository, CreditCardRepository>();
+            //services.AddScoped<IMileRepository, MileRepository>();
+            //services.AddScoped<IMilesTransactionRepository, MilesTransactionRepository>();
+            //services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
+            //services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
+            //services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
+            //services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
+            //services.AddScoped<IUserHelper, UserHelper>();
+            //services.AddScoped<ICombosHelper, CombosHelper>();
+            //services.AddScoped<IConverterHelper, ConverterHelper>();
+            //services.AddScoped<IImageHelper, ImageHelper>();
+            //services.AddScoped<IMailHelper, MailHelper>();
+
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
 
             //services.AddDbContext<ApplicationDbContext>(options =>
             //    options.UseSqlServer(

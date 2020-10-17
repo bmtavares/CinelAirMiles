@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CinelAirMiles.Web.Backoffice.Data.Entities
+﻿namespace CinelAirMiles.Common.Entities
 {
     public class ReferrerProgram
     {

@@ -1,13 +1,12 @@
-﻿using CinelAirMiles.Web.Backoffice.Data.Entities;
-using CinelAirMiles.Web.Backoffice.Models;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CinelAirMiles.Web.Backoffice.Helpers.Interfaces
+﻿namespace CinelAirMiles.Web.Backoffice.Helpers.Interfaces
 {
+    using System.Threading.Tasks;
+
+    using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Web.Backoffice.Models;
+
+    using Microsoft.AspNetCore.Identity;
+
     public interface IUserHelper
     {
         Task<User> GetUserByEmailAsync(string email);

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CinelAirMiles.Common.Entities;
-using CinelAirMiles.Web.Backoffice.Data.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-
-namespace CinelAirMiles.Web.Backoffice.Data
+﻿namespace CinelAirMiles.Common.Data
 {
+    using System.Linq;
+
+    using CinelAirMiles.Common.Entities;
+
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+
     public class ApplicationDbContext : IdentityDbContext<User>
     {
         public DbSet<Client> Clients { get; set; }

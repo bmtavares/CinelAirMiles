@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using CinelAirMiles.Web.Backoffice.Data;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using CinelAirMiles.Web.Backoffice.Data.Entities;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using CinelAirMiles.Web.Backoffice.Data.Repositories.Classes;
-using CinelAirMiles.Web.Backoffice.Data.Repositories.Interfaces;
-using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
-using CinelAirMiles.Web.Backoffice.Helpers.Classes;
-
-namespace CinelAirMiles.Web.Backoffice
+﻿namespace CinelAirMiles.Web.Backoffice
 {
+    using System;
+    using System.Text;
+
+    using CinelAirMiles.Common.Data;
+    using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Common.Repositories;
+    using CinelAirMiles.Common.Repositories.Classes;
+    using CinelAirMiles.Web.Backoffice.Data;
+    using CinelAirMiles.Web.Backoffice.Helpers.Classes;
+    using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
+
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.IdentityModel.Tokens;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)

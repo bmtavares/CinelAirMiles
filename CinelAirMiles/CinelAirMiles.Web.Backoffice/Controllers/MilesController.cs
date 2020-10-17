@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using CinelAirMiles.Web.Backoffice.Data;
-using CinelAirMiles.Web.Backoffice.Data.Entities;
-
-namespace CinelAirMiles.Web.Backoffice.Controllers
+﻿namespace CinelAirMiles.Web.Backoffice.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using CinelAirMiles.Common.Data;
+    using CinelAirMiles.Common.Entities;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+
     public class MilesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context; //TODO change to repo
 
         public MilesController(ApplicationDbContext context)
         {

@@ -1,12 +1,7 @@
-﻿using CinelAirMiles.Common.Entities;
-using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CinelAirMiles.Web.Backoffice.Data.Entities
+﻿namespace CinelAirMiles.Common.Entities
 {
+    using System;
+
     public class Client : IEntity
     {
         public int Id { get; set; }

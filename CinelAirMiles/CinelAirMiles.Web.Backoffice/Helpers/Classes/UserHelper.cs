@@ -1,14 +1,13 @@
-﻿using CinelAirMiles.Web.Backoffice.Data.Entities;
-using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
-using CinelAirMiles.Web.Backoffice.Models;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CinelAirMiles.Web.Backoffice.Helpers.Classes
+﻿namespace CinelAirMiles.Web.Backoffice.Helpers.Classes
 {
+    using System.Threading.Tasks;
+
+    using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
+    using CinelAirMiles.Web.Backoffice.Models;
+
+    using Microsoft.AspNetCore.Identity;
+
     public class UserHelper : IUserHelper
     {
         readonly UserManager<User> _userManager;

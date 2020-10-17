@@ -1,14 +1,13 @@
-﻿using CinelAirMiles.Web.Backoffice.Data.Entities;
-using CinelAirMiles.Web.Backoffice.Data.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-
-namespace CinelAirMiles.Web.Backoffice.Data.Repositories.Classes
+﻿namespace CinelAirMiles.Common.Repositories.Classes
 {
+
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using CinelAirMiles.Common.Data;
+    using CinelAirMiles.Common.Entities;
+    using Microsoft.EntityFrameworkCore;
+
     public class ClientRepository : GenericRepository<Client>, IClientRepository
     {
         readonly ApplicationDbContext _context;
@@ -33,9 +32,9 @@ namespace CinelAirMiles.Web.Backoffice.Data.Repositories.Classes
 
             var currentNumber = _random.Next(100000000, 999999999).ToString();
 
-            foreach(var number in allProgramNumbers)
+            foreach (var number in allProgramNumbers)
             {
-                if(currentNumber == number)
+                if (currentNumber == number)
                 {
                     currentNumber = _random.Next(100000000, 999999999).ToString();
                 }

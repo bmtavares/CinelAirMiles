@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CinelAirMiles.Web.Backoffice.Data.Repositories.Interfaces
+﻿namespace CinelAirMiles.Common.Repositories
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public interface IGenericRepository<T> where T : class
     {
-        
+
         IQueryable<T> GetAll();
 
 

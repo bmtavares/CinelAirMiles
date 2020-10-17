@@ -1,19 +1,19 @@
-﻿using CinelAirMiles.Common.Entities;
-using CinelAirMiles.Web.Backoffice.Data;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CinelAirMiles.Web.Backoffice.Controllers
+﻿namespace CinelAirMiles.Web.Backoffice.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using CinelAirMiles.Common.Data;
+    using CinelAirMiles.Common.Entities;
+
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+
     public class ProgramTiersController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ProgramTiersController(ApplicationDbContext context)
+        public ProgramTiersController(ApplicationDbContext context) //TODO change to repo
         {
             _context = context;
         }

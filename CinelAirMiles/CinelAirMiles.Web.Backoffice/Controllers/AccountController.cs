@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using CinelAirMiles.Web.Backoffice.Data.Entities;
-using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
-using CinelAirMiles.Web.Backoffice.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-
-namespace CinelAirMiles.Web.Backoffice.Controllers
+﻿namespace CinelAirMiles.Web.Backoffice.Controllers
 {
+    using System;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
+    using CinelAirMiles.Web.Backoffice.Models;
+
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.IdentityModel.Tokens;
     public class AccountController : Controller
     {
         readonly IUserHelper _userHelper;
