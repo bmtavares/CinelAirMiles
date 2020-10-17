@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinelAirMiles.Common", "CinelAirMiles.Common\CinelAirMiles.Common.csproj", "{AFAB44AE-8D70-4BCA-9187-68E50A45624B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinelAirMiles.Common", "CinelAirMiles.Common\CinelAirMiles.Common.csproj", "{AFAB44AE-8D70-4BCA-9187-68E50A45624B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinelAirMiles.Prism", "CinelAirMiles.Prism\CinelAirMiles.Prism\CinelAirMiles.Prism.csproj", "{AC5124E4-66A7-433E-AB67-A7EA51EF0DEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinelAirMiles.Prism", "CinelAirMiles.Prism\CinelAirMiles.Prism\CinelAirMiles.Prism.csproj", "{AC5124E4-66A7-433E-AB67-A7EA51EF0DEC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinelAirMiles.Prism.Android", "CinelAirMiles.Prism\CinelAirMiles.Prism.Android\CinelAirMiles.Prism.Android.csproj", "{93B89ECA-3740-4395-B2B6-D6D9CB9E5896}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinelAirMiles.Prism.iOS", "CinelAirMiles.Prism\CinelAirMiles.Prism.iOS\CinelAirMiles.Prism.iOS.csproj", "{0B69E8EA-02CE-4DFD-AB52-31F6F9E6B8E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinelAirMiles.Web.Frontoffice", "CinelAirMiles.Web.Frontoffice\CinelAirMiles.Web.Frontoffice.csproj", "{566B4EAB-8BF1-48B7-869D-104FA1F9A70D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinelAirMiles.Web.Frontoffice", "CinelAirMiles.Web.Frontoffice\CinelAirMiles.Web.Frontoffice.csproj", "{566B4EAB-8BF1-48B7-869D-104FA1F9A70D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinelAirMiles.Web.Backoffice", "CinelAirMiles.Web.Backoffice\CinelAirMiles.Web.Backoffice.csproj", "{1A611F15-58EB-40F4-A134-DA0A07ED2CBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinelAirMiles.Web.Backoffice", "CinelAirMiles.Web.Backoffice\CinelAirMiles.Web.Backoffice.csproj", "{1A611F15-58EB-40F4-A134-DA0A07ED2CBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinelAirMiles.Web.API", "CinelAirMiles.Web.API\CinelAirMiles.Web.API.csproj", "{00713D0D-287B-415D-9E48-EF7793CF2F36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinelAirMiles.Web.API", "CinelAirMiles.Web.API\CinelAirMiles.Web.API.csproj", "{00713D0D-287B-415D-9E48-EF7793CF2F36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
