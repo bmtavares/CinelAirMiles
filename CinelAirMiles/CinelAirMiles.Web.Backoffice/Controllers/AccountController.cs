@@ -9,7 +9,7 @@
 
     using CinelAirMiles.Common.Entities;
     using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
-    using CinelAirMiles.Web.Backoffice.Models;
+    using CinelAirMiles.Common.Models;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;

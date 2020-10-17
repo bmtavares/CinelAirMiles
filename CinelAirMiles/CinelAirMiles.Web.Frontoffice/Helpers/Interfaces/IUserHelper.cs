@@ -1,4 +1,4 @@
-﻿namespace CinelAirMiles.Web.Backoffice.Helpers.Interfaces
+﻿namespace CinelAirMiles.Web.Frontoffice.Helpers.Interfaces
 {
     using System.Threading.Tasks;
 

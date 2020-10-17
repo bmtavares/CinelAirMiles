@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CinelAirMiles.Web.Backoffice.Models
+﻿namespace CinelAirMiles.Common.Models
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class ResetPasswordViewModel
     {
         [Required]

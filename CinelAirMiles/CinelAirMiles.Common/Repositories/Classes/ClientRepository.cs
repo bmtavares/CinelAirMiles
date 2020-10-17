@@ -49,6 +49,8 @@
                 MilesProgramNumber = currentNumber,
                 ProgramTier = programTier
             };
+
+            await CreateAsync(client);
         }
     }
 }

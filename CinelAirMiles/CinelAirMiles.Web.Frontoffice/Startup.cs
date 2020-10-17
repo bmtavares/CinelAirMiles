@@ -2,7 +2,12 @@
 {
     using System;
     using System.Text;
-
+    using CinelAirMiles.Common.Data;
+    using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Common.Repositories;
+    using CinelAirMiles.Common.Repositories.Classes;
+    using CinelAirMiles.Web.Frontoffice.Helpers.Classes;
+    using CinelAirMiles.Web.Frontoffice.Helpers.Interfaces;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -25,63 +30,60 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddIdentity<User, IdentityRole>(cfg =>
-            //{
-            //    cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
-            //    cfg.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 30, 0);
-            //    cfg.SignIn.RequireConfirmedEmail = true;
-            //    cfg.User.RequireUniqueEmail = true;
-            //    cfg.Password.RequireDigit = true;
-            //    cfg.Password.RequiredUniqueChars = 0;
-            //    cfg.Password.RequireLowercase = true;
-            //    cfg.Password.RequireNonAlphanumeric = true;
-            //    cfg.Password.RequireUppercase = true;
-            //    cfg.Password.RequiredLength = 8;
-            //})
-            //    .AddDefaultTokenProviders()
-            //    .AddEntityFrameworkStores<Backoffice.Data.ApplicationDbContext>();
+            services.AddIdentity<User, IdentityRole>(cfg =>
+            {
+                cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+                cfg.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 30, 0);
+                cfg.SignIn.RequireConfirmedEmail = true;
+                cfg.User.RequireUniqueEmail = true;
+                cfg.Password.RequireDigit = true;
+                cfg.Password.RequiredUniqueChars = 0;
+                cfg.Password.RequireLowercase = true;
+                cfg.Password.RequireNonAlphanumeric = true;
+                cfg.Password.RequireUppercase = true;
+                cfg.Password.RequiredLength = 8;
+            })
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            //services.AddAuthentication()
-            //    .AddCookie()
-            //    .AddJwtBearer(cfg =>
-            //    {
-            //        cfg.TokenValidationParameters = new TokenValidationParameters
-            //        {
-            //            ValidIssuer = Configuration["Tokens:Issuer"],
-            //            ValidAudience = Configuration["Tokens:Audience"],
-            //            IssuerSigningKey = new SymmetricSecurityKey(
-            //                Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
-            //        };
-            //    });
+            services.AddAuthentication()
+                .AddCookie()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = Configuration["Tokens:Issuer"],
+                        ValidAudience = Configuration["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                    };
+                });
 
 
-            //services.AddDbContext<ApplicationDbContext>(cfg =>
-            //{
-            //    cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"));
-            //});
+            services.AddDbContext<ApplicationDbContext>(cfg =>
+            {
+                cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"));
+            });
 
 
             //services.AddTransient<Backoffice.Data.Seed>();
-            //services.AddScoped<IClientRepository, ClientRepository>();
-            //services.AddScoped<ICreditCardRepository, CreditCardRepository>();
-            //services.AddScoped<IMileRepository, MileRepository>();
-            //services.AddScoped<IMilesTransactionRepository, MilesTransactionRepository>();
-            //services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
-            //services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
-            //services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
-            //services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
-            //services.AddScoped<IUserHelper, UserHelper>();
-            //services.AddScoped<ICombosHelper, CombosHelper>();
-            //services.AddScoped<IConverterHelper, ConverterHelper>();
-            //services.AddScoped<IImageHelper, ImageHelper>();
-            //services.AddScoped<IMailHelper, MailHelper>();
+            services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<ICreditCardRepository, CreditCardRepository>();
+            services.AddScoped<IMileRepository, MileRepository>();
+            services.AddScoped<IMilesTransactionRepository, MilesTransactionRepository>();
+            services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
+            services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
+            services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
+            services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
+            services.AddScoped<IUserHelper, UserHelper>();
+            services.AddScoped<IMailHelper, MailHelper>();
 
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-            //    options.CheckConsentNeeded = context => true;
-            //    options.MinimumSameSitePolicy = SameSiteMode.None;
-            //});
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
 
             //services.AddDbContext<ApplicationDbContext>(options =>
             //    options.UseSqlServer(

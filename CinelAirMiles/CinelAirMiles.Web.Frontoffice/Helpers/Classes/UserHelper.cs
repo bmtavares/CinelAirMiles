@@ -1,9 +1,9 @@
-﻿namespace CinelAirMiles.Web.Backoffice.Helpers.Classes
+﻿namespace CinelAirMiles.Web.Frontoffice.Helpers.Classes
 {
     using System.Threading.Tasks;
 
     using CinelAirMiles.Common.Entities;
-    using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
+    using CinelAirMiles.Web.Frontoffice.Helpers.Interfaces;
     using CinelAirMiles.Common.Models;
 
     using Microsoft.AspNetCore.Identity;
