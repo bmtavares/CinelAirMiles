@@ -1,19 +1,55 @@
 ﻿using CinelAirMiles.Web.Backoffice.Data.Entities;
 using CinelAirMiles.Web.Backoffice.Data.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace CinelAirMiles.Web.Backoffice.Data.Repositories.Classes
 {
     public class ClientRepository : GenericRepository<Client>, IClientRepository
     {
-        private readonly ApplicationDbContext _context;
+        readonly ApplicationDbContext _context;
+        Random _random;
 
-        public ClientRepository(ApplicationDbContext context) : base(context)
+        public ClientRepository(
+            ApplicationDbContext context) : base(context)
         {
             _context = context;
+            _random = new Random();
+        }
+
+        public async Task CreateClientWithUser(User user)
+        {
+            var programTier =
+                await _context.ProgramTiers
+                .Where(pt => pt.Description == "Basic")
+                .FirstOrDefaultAsync();
+
+            var allProgramNumbers = _context.Clients
+                .Select(c => c.MilesProgramNumber);
+
+            var currentNumber = _random.Next(100000000, 999999999).ToString();
+
+            foreach(var number in allProgramNumbers)
+            {
+                if(currentNumber == number)
+                {
+                    currentNumber = _random.Next(100000000, 999999999).ToString();
+                }
+            }
+
+            var client = new Client
+            {
+                User = user,
+                MembershipDate = DateTime.UtcNow,
+                Active = true,
+                IsInReferrerProgram = false,
+                MilesProgramNumber = currentNumber,
+                ProgramTier = programTier
+            };
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using CinelAirMiles.Web.Backoffice.Data.Entities;
+using CinelAirMiles.Web.Backoffice.Data.Repositories.Interfaces;
 using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
 using CinelAirMiles.Web.Backoffice.Models;
 using Microsoft.AspNetCore.Identity;
@@ -20,15 +21,18 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
         readonly IUserHelper _userHelper;
         readonly IConfiguration _configuration;
         readonly IMailHelper _mailHelper;
+        readonly IClientRepository _clientRepository;
 
         public AccountController(
             IUserHelper userHelper,
             IConfiguration configuration,
-            IMailHelper mailHelper)
+            IMailHelper mailHelper,
+            IClientRepository clientRepository)
         {
             _userHelper = userHelper;
             _configuration = configuration;
             _mailHelper = mailHelper;
+            _clientRepository = clientRepository;
         }
 
         public IActionResult Login()
@@ -103,11 +107,15 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
 
                     var result = await _userHelper.AddUserAsync(user, model.Password);
 
+                    
+
                     if (result != IdentityResult.Success)
                     {
                         ModelState.AddModelError(string.Empty, "The user couldn't be created");
                         return View(model);
                     }
+
+                    await _clientRepository.CreateClientWithUser(user);
 
                     var myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
                     var tokenLink = Url.Action("ConfirmEmail", "Account", new
