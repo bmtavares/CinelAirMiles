@@ -45,13 +45,14 @@
         // GET: Miles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            //TODO: Non draggable description textarea
             if (id == null)
             {
                 return NotFound();
             }
 
-            var mile = await _context.Miles
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var mile = await _mileRepository.GetMileWithClientAndType(id);
+
             if (mile == null)
             {
                 return NotFound();

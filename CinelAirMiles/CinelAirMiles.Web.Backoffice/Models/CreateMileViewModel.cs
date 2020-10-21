@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using CinelAirMiles.Common.Entities;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -18,5 +19,8 @@
         public DateTime ExpiryDate { get; set; }
 
         public string MilesProgramNumber { get; set; }
+
+        [DataType(DataType.MultilineText)]
+        public string Description { get; set; }
     }
 }

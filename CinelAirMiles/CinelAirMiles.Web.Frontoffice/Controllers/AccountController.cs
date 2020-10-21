@@ -49,6 +49,8 @@
         {
             if (ModelState.IsValid)
             {
+                //TODO: Use client number instead of e-mail for login
+
                 var result = await _userHelper.LoginAsync(model);
 
                 if (result.Succeeded)
@@ -70,6 +72,7 @@
             await _userHelper.LogoutAsync();
             return RedirectToAction("Index", "Home");
         }
+
 
         public IActionResult Register()
         {

@@ -15,6 +15,9 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
+    using Microsoft.AspNetCore.Authorization;
+
+    //TODO: User is given a predefined password given by the admin at first, and must change it on first login
     public class AccountController : Controller
     {
         readonly IUserHelper _userHelper;
@@ -68,6 +71,7 @@
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Register()
         {
             var model = new RegisterNewUserViewModel
@@ -81,6 +85,7 @@
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterNewUserViewModel model)
         {

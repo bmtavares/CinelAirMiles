@@ -14,7 +14,8 @@
                 Client = client,
                 MilesTypeId = mileType.Id,
                 CreditDate = model.CreditDate,
-                ExpiryDate = model.ExpiryDate
+                ExpiryDate = model.ExpiryDate,
+                Description = model.Description
             };
         }
     }
