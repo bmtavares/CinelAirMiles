@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class Client : IEntity
     {
@@ -23,6 +24,7 @@
         public bool Active { get; set; }
 
 
+        [Display(Name = "Client number")]
         public string MilesProgramNumber { get; set; }
 
 

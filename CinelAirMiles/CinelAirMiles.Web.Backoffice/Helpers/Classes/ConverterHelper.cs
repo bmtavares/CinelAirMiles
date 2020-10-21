@@ -1,21 +1,21 @@
 ﻿namespace CinelAirMiles.Web.Backoffice.Helpers.Classes
 {
     using CinelAirMiles.Common.Entities;
-    using CinelAirMiles.Common.Models;
     using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
-    using System;
+    using CinelAirMiles.Web.Backoffice.Models;
 
     public class ConverterHelper : IConverterHelper
     {
-        public Mile CreateMileViewModelToMile(CreateMileViewModel model, Client client)
+        public Mile CreateMileViewModelToMile(CreateMileViewModel model, Client client, MilesType mileType)
         {
             return new Mile
             {
                 Miles = model.Miles,
                 Client = client,
-                MilesType = model.MilesType,
+                MilesTypeId = mileType.Id,
                 CreditDate = model.CreditDate,
-                ExpiryDate = model.ExpiryDate
+                ExpiryDate = model.ExpiryDate,
+                Description = model.Description
             };
         }
     }

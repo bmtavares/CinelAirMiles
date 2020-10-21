@@ -55,6 +55,11 @@
                 .WithOne()
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Mile>()
+                .HasOne(m => m.MilesType)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
     }
