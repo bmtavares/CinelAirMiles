@@ -46,15 +46,20 @@
         {
             if (ModelState.IsValid)
             {
-                var result = await _userHelper.LoginAsync(model);
+                var user = await _userHelper.GetUserByEmailAsync(model.Username);
 
-                if (result.Succeeded)
+                if(await _userHelper.IsUserInRoleAsync(user, "Employee"))
                 {
-                    if (Request.Query.Keys.Contains("ReturnUrl"))
+                    var result = await _userHelper.LoginAsync(model);
+
+                    if (result.Succeeded)
                     {
-                        return Redirect(Request.Query["ReturnUrl"].First());
+                        if (Request.Query.Keys.Contains("ReturnUrl"))
+                        {
+                            return Redirect(Request.Query["ReturnUrl"].First());
+                        }
+                        return RedirectToAction("Index", "Home");
                     }
-                    return RedirectToAction("Index", "Home");
                 }
             }
 

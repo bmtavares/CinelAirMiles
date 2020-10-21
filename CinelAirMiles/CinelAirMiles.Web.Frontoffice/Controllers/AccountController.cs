@@ -45,11 +45,22 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(MembershipLoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _userHelper.LoginAsync(model);
+                var client = await _clientRepository.GetClientByNumber(model.ProgramNumber);
+
+                var user = await _userHelper.GetUserByIdAsync(client.UserId);
+
+                var loginModel = new LoginViewModel
+                {
+                    Username = user.UserName,
+                    Password = model.Password,
+                    RememberMe = model.RememberMe
+                };
+
+                var result = await _userHelper.LoginAsync(loginModel);
 
                 if (result.Succeeded)
                 {
