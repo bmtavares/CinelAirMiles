@@ -5,16 +5,29 @@
 
     using CinelAirMiles.Common.Data;
     using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Common.Repositories;
+    using CinelAirMiles.Common.Models;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
 
     public class MilesController : Controller
     {
         private readonly ApplicationDbContext _context; //TODO change to repo
+        readonly IClientRepository _clientRepository;
+        readonly IMileRepository _mileRepository;
+        readonly IConverterHelper _converterHelper;
 
-        public MilesController(ApplicationDbContext context)
+        public MilesController(
+            ApplicationDbContext context,
+            IClientRepository clientRepository,
+            IMileRepository mileRepository,
+            IConverterHelper converterHelper)
         {
             _context = context;
+            _clientRepository = clientRepository;
+            _mileRepository = mileRepository;
+            _converterHelper = converterHelper;
         }
 
         // GET: Miles
@@ -44,6 +57,7 @@
         // GET: Miles/Create
         public IActionResult Create()
         {
+
             return View();
         }
 
@@ -52,15 +66,25 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Miles,CreditDate,ExpiryDate")] Mile mile)
+        public async Task<IActionResult> Create(CreateMileViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(mile);
-                await _context.SaveChangesAsync();
+                var client = await _clientRepository
+                    .GetClientByNumber(model.MilesProgramNumber);
+
+                if(client == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Client does not exist");
+                    return View(model);
+                }
+
+                var mile = _converterHelper.CreateMileViewModelToMile(model, client);
+
+                await _mileRepository.CreateAsync(mile);
                 return RedirectToAction(nameof(Index));
             }
-            return View(mile);
+            return View(model);
         }
 
         // GET: Miles/Edit/5

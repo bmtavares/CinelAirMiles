@@ -10,6 +10,9 @@
         public Client Client { get; set; }
 
 
+        public int ClientId { get; set; }
+
+
         public int Miles { get; set; }
 
 
@@ -20,5 +23,8 @@
 
 
         public DateTime ExpiryDate { get; set; }
+
+
+        public string Description { get; set; }
     }
 }

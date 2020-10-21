@@ -1,6 +1,7 @@
 ﻿namespace CinelAirMiles.Common.Entities
 {
     using System;
+    using System.Collections.Generic;
 
     public class Client : IEntity
     {
@@ -11,6 +12,12 @@
 
 
         public string UserId { get; set; }
+
+
+        public IEnumerable<Mile> Miles { get; set; }
+
+
+        public int FlownSegments { get; set; }
 
 
         public bool Active { get; set; }

@@ -66,7 +66,7 @@
 
             services.AddDbContext<ApplicationDbContext>(cfg =>
             {
-                cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"));
+                cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"), b => b.MigrationsAssembly("CinelAirMiles.Web.Backoffice"));
             });
 
 

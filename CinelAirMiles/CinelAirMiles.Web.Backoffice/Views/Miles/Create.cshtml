@@ -1,4 +1,4 @@
-﻿@model CinelAirMiles.Common.Entities.Mile
+﻿@model CinelAirMiles.Common.Models.CreateMileViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -26,6 +26,12 @@
                 <label asp-for="ExpiryDate" class="control-label"></label>
                 <input asp-for="ExpiryDate" class="form-control" />
                 <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MilesProgramNumber" class="control-label"></label>
+                <input asp-for="MilesProgramNumber" class="form-control" />
+                <span asp-validation-for="MilesProgramNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />

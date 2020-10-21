@@ -11,7 +11,7 @@
     public class ClientRepository : GenericRepository<Client>, IClientRepository
     {
         readonly ApplicationDbContext _context;
-        Random _random;
+        readonly Random _random;
 
         public ClientRepository(
             ApplicationDbContext context) : base(context)
@@ -51,6 +51,11 @@
             };
 
             await CreateAsync(client);
+        }
+
+        public async Task<Client> GetClientByNumber(string number)
+        {
+            return await _context.Clients.Where(c => c.MilesProgramNumber == number).FirstOrDefaultAsync();
         }
     }
 }

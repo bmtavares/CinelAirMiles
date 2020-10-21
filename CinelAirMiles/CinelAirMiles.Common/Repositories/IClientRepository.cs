@@ -7,5 +7,7 @@
     public interface IClientRepository : IGenericRepository<Client>
     {
         Task CreateClientWithUser(User user);
+
+        Task<Client> GetClientByNumber(string number);
     }
 }
