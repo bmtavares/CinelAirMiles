@@ -19,6 +19,9 @@
         public MilesType MilesType { get; set; }
 
 
+        public int MilesTypeId { get; set; }
+
+
         public DateTime CreditDate { get; set; }
 
 

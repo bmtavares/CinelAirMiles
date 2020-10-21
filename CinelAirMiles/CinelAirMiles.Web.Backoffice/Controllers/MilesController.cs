@@ -6,28 +6,34 @@
     using CinelAirMiles.Common.Data;
     using CinelAirMiles.Common.Entities;
     using CinelAirMiles.Common.Repositories;
-    using CinelAirMiles.Common.Models;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
+    using CinelAirMiles.Web.Backoffice.Models;
 
     public class MilesController : Controller
     {
         private readonly ApplicationDbContext _context; //TODO change to repo
         readonly IClientRepository _clientRepository;
         readonly IMileRepository _mileRepository;
+        readonly IMilesTypeRepository _milesTypeRepository;
         readonly IConverterHelper _converterHelper;
+        readonly ICombosHelper _combosHelper;
 
         public MilesController(
             ApplicationDbContext context,
             IClientRepository clientRepository,
             IMileRepository mileRepository,
-            IConverterHelper converterHelper)
+            IConverterHelper converterHelper,
+            IMilesTypeRepository milesTypeRepository,
+            ICombosHelper combosHelper)
         {
             _context = context;
             _clientRepository = clientRepository;
             _mileRepository = mileRepository;
             _converterHelper = converterHelper;
+            _milesTypeRepository = milesTypeRepository;
+            _combosHelper = combosHelper;
         }
 
         // GET: Miles
@@ -57,8 +63,12 @@
         // GET: Miles/Create
         public IActionResult Create()
         {
+            var model = new CreateMileViewModel
+            {
+                MilesType = _combosHelper.GetComboMilesTypes()
+            };
 
-            return View();
+            return View(model);
         }
 
         // POST: Miles/Create
@@ -76,14 +86,31 @@
                 if(client == null)
                 {
                     ModelState.AddModelError(string.Empty, "Client does not exist");
+
+                    model.MilesType = _combosHelper.GetComboMilesTypes();
+
                     return View(model);
                 }
 
-                var mile = _converterHelper.CreateMileViewModelToMile(model, client);
+                var milesType = await _milesTypeRepository
+                    .GetByIdAsync(model.MilesTypeId);
+
+                if (milesType == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Type does not exist");
+
+                    model.MilesType = _combosHelper.GetComboMilesTypes();
+
+                    return View(model);
+                }
+
+                var mile = _converterHelper.CreateMileViewModelToMile(model, client, milesType);
 
                 await _mileRepository.CreateAsync(mile);
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(model);
         }
 

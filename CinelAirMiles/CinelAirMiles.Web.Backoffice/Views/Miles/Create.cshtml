@@ -1,4 +1,4 @@
-﻿@model CinelAirMiles.Common.Models.CreateMileViewModel
+﻿@model CinelAirMiles.Web.Backoffice.Models.CreateMileViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -12,16 +12,25 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Miles" class="control-label"></label>
                 <input asp-for="Miles" class="form-control" />
                 <span asp-validation-for="Miles" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="MilesTypeId" class="control-label"></label>
+                <select asp-for="MilesTypeId" asp-items="Model.MilesType" class="form-control"></select>
+                <span asp-validation-for="MilesTypeId" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="CreditDate" class="control-label"></label>
                 <input asp-for="CreditDate" class="form-control" />
                 <span asp-validation-for="CreditDate" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="ExpiryDate" class="control-label"></label>
                 <input asp-for="ExpiryDate" class="form-control" />
