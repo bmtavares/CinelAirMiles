@@ -51,24 +51,30 @@
             {
                 var client = await _clientRepository.GetClientByNumber(model.ProgramNumber);
 
-                var user = await _userHelper.GetUserByIdAsync(client.UserId);
-
-                var loginModel = new LoginViewModel
+                if(client != null)
                 {
-                    Username = user.UserName,
-                    Password = model.Password,
-                    RememberMe = model.RememberMe
-                };
+                    var user = await _userHelper.GetUserByIdAsync(client.UserId);
 
-                var result = await _userHelper.LoginAsync(loginModel);
-
-                if (result.Succeeded)
-                {
-                    if (Request.Query.Keys.Contains("ReturnUrl"))
+                    if(user != null)
                     {
-                        return Redirect(Request.Query["ReturnUrl"].First());
+                        var loginModel = new LoginViewModel
+                        {
+                            Username = user.UserName,
+                            Password = model.Password,
+                            RememberMe = model.RememberMe
+                        };
+
+                        var result = await _userHelper.LoginAsync(loginModel);
+
+                        if (result.Succeeded)
+                        {
+                            if (Request.Query.Keys.Contains("ReturnUrl"))
+                            {
+                                return Redirect(Request.Query["ReturnUrl"].First());
+                            }
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
-                    return RedirectToAction("Index", "Home");
                 }
             }
 
