@@ -11,5 +11,6 @@
 
         [Required]
         public string LastName { get; set; }
+
     }
 }

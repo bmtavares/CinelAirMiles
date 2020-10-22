@@ -112,7 +112,8 @@
                         LastName = model.LastName,
                         Email = model.Username,
                         UserName = model.Username,
-                        PhoneNumber = model.PhoneNumber
+                        PhoneNumber = model.PhoneNumber,
+                        
                     };
 
                     var result = await _userHelper.AddUserAsync(user, model.Password);
