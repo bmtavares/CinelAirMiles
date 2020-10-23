@@ -5,10 +5,11 @@
 
     using CinelAirMiles.Common.Data;
     using CinelAirMiles.Common.Entities;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
+    [Authorize]
     public class MilesTypesController : Controller
     {
         private readonly ApplicationDbContext _context;

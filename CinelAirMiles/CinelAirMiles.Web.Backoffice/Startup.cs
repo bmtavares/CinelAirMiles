@@ -95,7 +95,8 @@
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.AccessDeniedPath = "/account/notauthorized";
+                options.LoginPath = "/Login";
+                options.AccessDeniedPath = "/NotAuthorized";
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

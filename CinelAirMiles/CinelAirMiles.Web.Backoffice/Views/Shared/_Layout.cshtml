@@ -37,6 +37,18 @@
                     <li><a asp-area="" asp-controller="MilesTypes" asp-action="Index">MilesTypes</a></li>
                     <li><a asp-area="" asp-controller="ProgramTiers" asp-action="Index">ProgramTiers</a></li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Login -->
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-area="" asp-controller="Account" asp-action="ChangeUser">@this.User.Identity.Name</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+                    }
+                </ul>
             </div>
         </div>
     </nav>

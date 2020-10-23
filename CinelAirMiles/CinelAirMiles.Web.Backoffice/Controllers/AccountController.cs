@@ -34,6 +34,7 @@
             _mailHelper = mailHelper;
         }
 
+        [Route("Login")]
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
@@ -45,6 +46,7 @@
         }
 
         [HttpPost]
+        [Route("Login")]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -371,6 +373,7 @@
         //    return View(model);
         //}
 
+        [Route("NotAuthorized")]
         public IActionResult NotAuthorized()
         {
             return View();
