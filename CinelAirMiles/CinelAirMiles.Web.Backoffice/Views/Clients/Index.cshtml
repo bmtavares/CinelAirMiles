@@ -1,0 +1,59 @@
+﻿@model IEnumerable<CinelAirMiles.Common.Entities.Client>
+
+@{
+    ViewData["Title"] = "User Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MilesProgramNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlownSegments)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MembershipDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProgramTier)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MilesProgramNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.FirstName) @Html.DisplayFor(modelItem => item.User.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlownSegments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MembershipDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProgramTier.Description)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

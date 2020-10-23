@@ -385,5 +385,175 @@
 
         //    //return Json(country.Cities.OrderBy(c => c.Name));
         //}
+
+        #region Admin CRUD
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _userHelper.GetUsersListAsync());
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Details(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            var user = await _userHelper.GetUserByIdAsync(id);
+
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+
+       [Authorize(Roles = "Admin")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Create(RegisterNewUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userHelper.GetUserByEmailAsync(model.Username);
+
+                if (user == null)
+                {
+                    user = new User
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Username,
+                        UserName = model.Username,
+                        PhoneNumber = model.PhoneNumber
+                    };
+
+                    var result = await _userHelper.AddUserAsync(user, model.Password);
+
+                    if (result != IdentityResult.Success)
+                    {
+                        ModelState.AddModelError(string.Empty, "The user could not be created.");
+                        return View(model);
+                    }
+
+                    var token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+
+                    await _userHelper.ConfirmEmailAsync(user, token);
+
+                    return RedirectToAction("Index", "Account");
+
+                }
+
+                ModelState.AddModelError(string.Empty, "The username is already taken.");
+
+            }
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "Admin")] //TODO : Eventually change password/email (also implement in post)
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            var user = await _userHelper.GetUserByIdAsync(id);
+            var model = new EditUserViewModel();
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            model.FirstName = user.FirstName;
+            model.LastName = user.LastName;
+            model.PhoneNumber = user.PhoneNumber;
+            model.Id = id;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userHelper.GetUserByIdAsync(model.Id);
+                if (user != null)
+                {
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.PhoneNumber = model.PhoneNumber;
+
+                    var respose = await _userHelper.UpdateUserAsync(user);
+                    if (respose.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Account");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, respose.Errors.FirstOrDefault().Description);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "User not found.");
+                }
+            }
+
+            return View(model);
+        }
+
+        // GET: User/Delete/5
+        //[Authorize(Roles = "Admin")]
+        //[Route("User/Delete")]
+        //public async Task<IActionResult> Delete(string id)
+        //{
+        //    if (string.IsNullOrEmpty(id))
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var user = await _userHelper.GetUserByIdAsync(id);
+
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(user);
+        //}
+
+        // POST: User/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Admin")]
+        //[Route("User/Delete")]
+        //public async Task<IActionResult> DeleteConfirmed(string id)
+        //{
+        //    var user = await _userHelper.GetUserByIdAsync(id);
+
+        //    await _userHelper.DeleteUserAsync(user);
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+        #endregion
     }
 }

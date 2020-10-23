@@ -1,0 +1,25 @@
+﻿@model CinelAirMiles.Common.Entities.User
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+<div>
+    <h2>Confirm User Deletion</h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+</div>
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Permanently Delete" class="btn btn-danger"/>
+    <a asp-action="Index" class="btn btn-success">Back to List</a>
+</form>

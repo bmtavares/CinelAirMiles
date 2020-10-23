@@ -7,6 +7,9 @@
     using CinelAirMiles.Common.Models;
 
     using Microsoft.AspNetCore.Identity;
+    using System.Collections.Generic;
+    using Microsoft.EntityFrameworkCore;
+    using System.Linq;
 
     public class UserHelper : IUserHelper
     {
@@ -23,6 +26,11 @@
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+        }
+
+        public async Task<List<User>> GetUsersListAsync()
+        {
+            return await _userManager.Users.ToListAsync();
         }
 
         public async Task<IdentityResult> AddUserAsync(User user, string password)

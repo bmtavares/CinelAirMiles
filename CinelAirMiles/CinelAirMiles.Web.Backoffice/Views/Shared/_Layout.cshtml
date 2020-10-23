@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CinelAirMiles.Web.Backoffice</title>
+    <title>Backoffice | @ViewData["Title"]</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -26,28 +26,93 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">CinelAirMiles.Web.Backoffice</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">CinelAirMiles Backoffice</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    @*<li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
-                    <li><a asp-area="" asp-controller="Miles" asp-action="Index">Miles</a></li>
-                    <li><a asp-area="" asp-controller="MilesTypes" asp-action="Index">MilesTypes</a></li>
-                    <li><a asp-area="" asp-controller="ProgramTiers" asp-action="Index">ProgramTiers</a></li>
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        @if (this.User.IsInRole("Admin"))
+                        {
+                            <li><a asp-area="" asp-controller="Account" asp-action="Index">Users</a></li>
+                            <li><a asp-area="" asp-controller="Clients" asp-action="Index">Clients</a></li>
+                        }
+                        @if (this.User.IsInRole("SuperUser"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tier<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-area="" asp-controller="" asp-action="">Pending</a></li>
+                                    <li><a asp-area="" asp-controller="" asp-action="">Archive</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Redemption<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-area="" asp-controller="" asp-action="">Pending</a></li>
+                                    <li><a asp-area="" asp-controller="" asp-action="">Archive</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Seats<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-area="" asp-controller="" asp-action="">Pending</a></li>
+                                    <li><a asp-area="" asp-controller="" asp-action="">Archive</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Upgrades<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-area="" asp-controller="" asp-action="">Pending</a></li>
+                                    <li><a asp-area="" asp-controller="" asp-action="">Archive</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Partners<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-area="" asp-controller="" asp-action="">Pending</a></li>
+                                    <li><a asp-area="" asp-controller="" asp-action="">Archive</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ads<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a asp-area="" asp-controller="" asp-action="">Pending</a></li>
+                                    <li><a asp-area="" asp-controller="" asp-action="">Archive</a></li>
+                                </ul>
+                            </li>
+                        }
+                        @if (this.User.IsInRole("User"))
+                        {
+                            <li><a asp-area="" asp-controller="" asp-action="">???</a></li>
+                            <li><a asp-area="" asp-controller="" asp-action="">???</a></li>
+                        }
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Debugging<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Miles" asp-action="Index">Miles</a></li>
+                                <li><a asp-area="" asp-controller="MilesTypes" asp-action="Index">MilesTypes</a></li>
+                                <li><a asp-area="" asp-controller="ProgramTiers" asp-action="Index">ProgramTiers</a></li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Login -->
                     @if (this.User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-area="" asp-controller="Account" asp-action="ChangeUser">@this.User.Identity.Name</a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@this.User.Identity.Name<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                @*<li><a asp-area="" asp-controller="Account" asp-action="ChangeUser">Profile</a></li>*@
+                                <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                            </ul>
+                        </li>
                     }
-                    else
-                    {
-                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
-                    }
+                    @*else
+        {
+            <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+        }*@
                 </ul>
             </div>
         </div>
@@ -59,7 +124,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2020 - CinelAirMiles.Web.Backoffice</p>
+            <p>&copy; 2020 - CinelAir</p>
         </footer>
     </div>
 
