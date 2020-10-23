@@ -5,14 +5,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CinelAirMiles.Web.Frontoffice.Models;
+using CinelAirMiles.Web.Frontoffice.Helpers.Interfaces;
 
 namespace CinelAirMiles.Web.Frontoffice.Controllers
 {
     public class HomeController : Controller
     {
+        readonly IXmlHelper _xmlHelper;
+
+        public HomeController(
+            IXmlHelper xmlHelper)
+        {
+            _xmlHelper = xmlHelper;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var news = _xmlHelper.DeserializeNewsXml("https://aviationweek.com/rss.xml");
+
+            return View(news);
         }
 
         public IActionResult About()

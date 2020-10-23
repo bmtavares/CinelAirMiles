@@ -77,6 +77,7 @@
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<IMailHelper, MailHelper>();
+            services.AddScoped<IXmlHelper, XmlHelper>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
