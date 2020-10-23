@@ -1,5 +1,6 @@
 ﻿namespace CinelAirMiles.Web.Backoffice.Helpers.Interfaces
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using CinelAirMiles.Common.Entities;
@@ -9,6 +10,8 @@
 
     public interface IUserHelper
     {
+        Task<List<User>> GetUsersListAsync();
+
         Task<User> GetUserByEmailAsync(string email);
 
         Task<IdentityResult> AddUserAsync(User user, string password);

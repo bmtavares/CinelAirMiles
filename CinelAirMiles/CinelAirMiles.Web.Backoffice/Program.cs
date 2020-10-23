@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using CinelAirMiles.Web.Backoffice.Data;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
-namespace CinelAirMiles.Web.Backoffice
+﻿namespace CinelAirMiles.Web.Backoffice
 {
+    using CinelAirMiles.Web.Backoffice.Data;
+
+    using Microsoft.AspNetCore;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.DependencyInjection;
+
     public class Program
     {
         public static void Main(string[] args)

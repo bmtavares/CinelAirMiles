@@ -1,0 +1,60 @@
+﻿@model CinelAirMiles.Common.Entities.Client
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Client</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FlownSegments)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FlownSegments)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MilesProgramNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MilesProgramNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsInReferrerProgram)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsInReferrerProgram)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MembershipDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MembershipDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProgramTier)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ProgramTier.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

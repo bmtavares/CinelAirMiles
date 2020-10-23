@@ -10,7 +10,9 @@
     using Microsoft.EntityFrameworkCore;
     using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
     using CinelAirMiles.Web.Backoffice.Models;
+    using Microsoft.AspNetCore.Authorization;
 
+    [Authorize]
     public class MilesController : Controller
     {
         private readonly ApplicationDbContext _context; //TODO change to repo
