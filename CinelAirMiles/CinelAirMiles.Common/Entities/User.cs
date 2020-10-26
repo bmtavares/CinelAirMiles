@@ -15,5 +15,8 @@
 
         public string MainRole { get; set; }
 
+
+        public bool RequirePasswordChange { get; set; }
+
     }
 }

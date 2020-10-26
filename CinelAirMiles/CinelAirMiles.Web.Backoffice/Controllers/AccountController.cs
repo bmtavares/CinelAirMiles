@@ -61,6 +61,15 @@
 
                         if (result.Succeeded)
                         {
+                            if (user.RequirePasswordChange)
+                            {
+                                await _userHelper.LogoutAsync();
+
+                                var gennedToken = await _userHelper.GeneratePasswordResetTokenAsync(user);
+
+                                return RedirectToAction("ForcedChange", new { token = gennedToken, username = user.UserName });
+                            }
+
                             if (Request.Query.Keys.Contains("ReturnUrl"))
                             {
                                 return Redirect(Request.Query["ReturnUrl"].First());
@@ -81,69 +90,99 @@
             return RedirectToAction("Index", "Home");
         }
 
-        [Authorize(Roles = "Admin")]
-        public IActionResult Register()
+        public IActionResult ForcedChange(string token, string username)
         {
-            var model = new RegisterNewUserViewModel
-            {
-                //Countries = _countryRepository.GetComboCountries(),
-                //Cities = _countryRepository.GetComboCities(0)
-            };
-
-            View(model);
-
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterNewUserViewModel model)
+        public async Task<IActionResult> ForcedChange(ResetPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            var user = await _userHelper.GetUserByEmailAsync(model.UserName);
+            if (user != null)
             {
-                var user = await _userHelper.GetUserByEmailAsync(model.Username);
-
-                if (user == null)
+                var result = await _userHelper.ResetPasswordAsync(user, model.Token, model.Password);
+                if (result.Succeeded)
                 {
-                    //var city = await _countryRepository.GetCityAsync(model.CityId);
+                    user.RequirePasswordChange = false;
 
-                    user = new User
-                    {
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        Email = model.Username,
-                        UserName = model.Username,
-                        PhoneNumber = model.PhoneNumber
-                    };
+                    await _userHelper.UpdateUserAsync(user);
 
-                    var result = await _userHelper.AddUserAsync(user, model.Password);
-
-                    if (result != IdentityResult.Success)
-                    {
-                        ModelState.AddModelError(string.Empty, "The user couldn't be created");
-                        return View(model);
-                    }
-
-                    //var myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
-                    //var tokenLink = Url.Action("ConfirmEmail", "Account", new
-                    //{
-                    //    userid = user.Id,
-                    //    token = myToken
-                    //}, protocol: HttpContext.Request.Scheme);
-
-                    //_mailHelper.SendMail(model.Username, "Email confirmation", $"<h1>Email Confirmation</h1>" +
-                    //    $"To allow the user, " +
-                    //    $"plase click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
-                    //ViewBag.Message = "The instructions to allow your user has been sent to email.";
-
-                    return View(model);
+                    this.ViewBag.Message = "Password reset successful. Please login.";
+                    return this.View();
                 }
 
-                ModelState.AddModelError(string.Empty, "This username already exists");
+                this.ViewBag.Message = "Error while resetting the password.";
+                return View(model);
             }
 
+            this.ViewBag.Message = "User not found.";
             return View(model);
         }
+
+        //[Authorize(Roles = "Admin")]
+        //public IActionResult Register()
+        //{
+        //    var model = new RegisterNewUserViewModel
+        //    {
+        //        //Countries = _countryRepository.GetComboCountries(),
+        //        //Cities = _countryRepository.GetComboCities(0)
+        //    };
+
+        //    View(model);
+
+        //    return View();
+        //}
+
+        //[Authorize(Roles = "Admin")]
+        //[HttpPost]
+        //public async Task<IActionResult> Register(RegisterNewUserViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var user = await _userHelper.GetUserByEmailAsync(model.Username);
+
+        //        if (user == null)
+        //        {
+        //            //var city = await _countryRepository.GetCityAsync(model.CityId);
+
+        //            user = new User
+        //            {
+        //                FirstName = model.FirstName,
+        //                LastName = model.LastName,
+        //                Email = model.Username,
+        //                UserName = model.Username,
+        //                PhoneNumber = model.PhoneNumber
+        //            };
+
+        //            var result = await _userHelper.AddUserAsync(user, model.Password);
+
+        //            if (result != IdentityResult.Success)
+        //            {
+        //                ModelState.AddModelError(string.Empty, "The user couldn't be created");
+        //                return View(model);
+        //            }
+
+        //            //var myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+        //            //var tokenLink = Url.Action("ConfirmEmail", "Account", new
+        //            //{
+        //            //    userid = user.Id,
+        //            //    token = myToken
+        //            //}, protocol: HttpContext.Request.Scheme);
+
+        //            //_mailHelper.SendMail(model.Username, "Email confirmation", $"<h1>Email Confirmation</h1>" +
+        //            //    $"To allow the user, " +
+        //            //    $"plase click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
+        //            //ViewBag.Message = "The instructions to allow your user has been sent to email.";
+
+        //            return View(model);
+        //        }
+
+        //        ModelState.AddModelError(string.Empty, "This username already exists");
+        //    }
+
+        //    return View(model);
+        //}
 
         //public async Task<IActionResult> ConfirmEmail(string userId, string token)
         //{
@@ -257,7 +296,7 @@
         //    var user = await _userHelper.GetUserByEmailAsync(model.UserName);
         //    if (user != null)
         //    {
-        //        var result = await _userHelper.ResetPasswordAsync(user, model.Token, model.Password);
+        //      var result = await _userHelper.ResetPasswordAsync(user, model.Token, model.Password);
         //        if (result.Succeeded)
         //        {
         //            this.ViewBag.Message = "Password reset successful.";
@@ -438,7 +477,8 @@
                         LastName = model.LastName,
                         Email = model.Username,
                         UserName = model.Username,
-                        PhoneNumber = model.PhoneNumber
+                        PhoneNumber = model.PhoneNumber,
+                        RequirePasswordChange = true
                     };
 
                     var result = await _userHelper.AddUserAsync(user, model.Password);
@@ -452,6 +492,8 @@
                     var token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
 
                     await _userHelper.ConfirmEmailAsync(user, token);
+
+                    await _userHelper.AddUserToRoleAsync(user, "Employee");
 
                     return RedirectToAction("Index", "Account");
 

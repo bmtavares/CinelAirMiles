@@ -23,5 +23,9 @@ namespace CinelAirMiles.Web.Frontoffice.Models
         [Display(Name = "Publication date")]
         [XmlElement("pubDate")]
         public string PubDate { get; set; }
+
+
+        [XmlElement("author")]
+        public string Author { get; set; }
     }
 }
