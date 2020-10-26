@@ -433,7 +433,7 @@
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
-            var users = await _userHelper.GetUsersListAsync();
+            var users = await _userHelper.GetEmployeesListAsync();
 
             var models = _converterHelper.UsersToUserViewModels(users);
 

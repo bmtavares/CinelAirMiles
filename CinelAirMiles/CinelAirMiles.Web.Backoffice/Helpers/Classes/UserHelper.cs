@@ -162,6 +162,7 @@
         }
 
         //TODO: Output message if successful or error
+        //TODO: Admin can't edit its own role
         public async Task ChangeUserRole(UserViewModel model)
         {
             var user = await _userManager.FindByIdAsync(model.Id);
