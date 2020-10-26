@@ -10,6 +10,8 @@
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
     using System.Linq;
+    using CinelAirMiles.Web.Backoffice.Models;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class UserHelper : IUserHelper
     {
@@ -33,6 +35,21 @@
             return await _userManager.Users.ToListAsync();
         }
 
+        public async Task<List<UserViewModel>> GetUsersWithRolesListAsync(
+            List<UserViewModel> models)
+        {
+            foreach(var model in models)
+            {
+                var user = await _userManager.FindByIdAsync(model.Id);
+
+                var roles = await _userManager.GetRolesAsync(user);
+
+                model.RoleName = roles.FirstOrDefault();
+            }
+
+            return models;
+        }
+
         public async Task<IdentityResult> AddUserAsync(User user, string password)
         {
             return await _userManager.CreateAsync(user, password);
@@ -40,6 +57,10 @@
 
         public async Task AddUserToRoleAsync(User user, string roleName)
         {
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            await _userManager.RemoveFromRolesAsync(user, userRoles);
+
             await _userManager.AddToRoleAsync(user, roleName);
         }
 
@@ -121,6 +142,48 @@
                 user,
                 password,
                 false);
+        }
+
+        public async Task<UserViewModel> GetUserWithRoleAsync(UserViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            model.RoleName = roles.FirstOrDefault();
+
+            return model;
+        }
+
+        //TODO: Output message if successful or error
+        public async Task ChangeUserRole(UserViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            await AddUserToRoleAsync(user, model.RoleName);
+        }
+
+        public IEnumerable<SelectListItem> GetComboRoles()
+        {
+            var list = _roleManager.Roles.ToList().Select(
+                c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Name
+                }).ToList();
+
+            return list;
+        }
+
+        public async Task<EditUserViewModel> GetEditUserWithRoleAsync(EditUserViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            model.RoleName = roles.FirstOrDefault();
+
+            return model;
         }
     }
 }

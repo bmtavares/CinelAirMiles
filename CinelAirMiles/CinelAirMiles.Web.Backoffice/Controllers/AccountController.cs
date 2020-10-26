@@ -16,6 +16,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.AspNetCore.Authorization;
+    using CinelAirMiles.Web.Backoffice.Models;
 
     //TODO: User is given a predefined password given by the admin at first, and must change it on first login
     public class AccountController : Controller
@@ -23,15 +24,18 @@
         readonly IUserHelper _userHelper;
         readonly IConfiguration _configuration;
         readonly IMailHelper _mailHelper;
+        readonly IConverterHelper _converterHelper;
 
         public AccountController(
             IUserHelper userHelper,
             IConfiguration configuration,
-            IMailHelper mailHelper)
+            IMailHelper mailHelper,
+            IConverterHelper converterHelper)
         {
             _userHelper = userHelper;
             _configuration = configuration;
             _mailHelper = mailHelper;
+            _converterHelper = converterHelper;
         }
 
         [Route("Login")]
@@ -429,7 +433,13 @@
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
-            return View(await _userHelper.GetUsersListAsync());
+            var users = await _userHelper.GetUsersListAsync();
+
+            var models = _converterHelper.UsersToUserViewModels(users);
+
+            models = await _userHelper.GetUsersWithRolesListAsync(models);
+
+            return View(models);
         }
 
 
@@ -449,7 +459,11 @@
                 return NotFound();
             }
 
-            return View(user);
+            var model = _converterHelper.UserToUserViewModel(user);
+
+            model = await _userHelper.GetUserWithRoleAsync(model);
+
+            return View(model);
         }
 
 
@@ -515,17 +529,23 @@
             }
 
             var user = await _userHelper.GetUserByIdAsync(id);
-            var model = new EditUserViewModel();
+            //var model = new EditUserViewModel();
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            model.FirstName = user.FirstName;
-            model.LastName = user.LastName;
-            model.PhoneNumber = user.PhoneNumber;
-            model.Id = id;
+            //model.FirstName = user.FirstName;
+            //model.LastName = user.LastName;
+            //model.PhoneNumber = user.PhoneNumber;
+            //model.Id = id;
+
+            var model = _converterHelper.UserToEditUserViewModel(user);
+
+            model.Roles = _userHelper.GetComboRoles();
+
+            model = await _userHelper.GetEditUserWithRoleAsync(model);
 
             return View(model);
         }
@@ -540,11 +560,22 @@
                 var user = await _userHelper.GetUserByIdAsync(model.Id);
                 if (user != null)
                 {
+                    //TODO: VERY IMPORTANT: logout respective user if e-mail is changed by the admin
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
                     user.PhoneNumber = model.PhoneNumber;
+                    user.Email = model.Email;
+                    user.NormalizedEmail = model.Email.ToUpper();
+                    user.UserName = model.Email;
+                    user.NormalizedUserName = model.Email.ToUpper();
+
+
+
 
                     var respose = await _userHelper.UpdateUserAsync(user);
+
+                    await _userHelper.AddUserToRoleAsync(user, model.RoleName);
+
                     if (respose.Succeeded)
                     {
                         return RedirectToAction("Index", "Account");

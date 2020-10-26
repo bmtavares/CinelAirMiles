@@ -5,12 +5,19 @@
 
     using CinelAirMiles.Common.Entities;
     using CinelAirMiles.Common.Models;
-
+    using CinelAirMiles.Web.Backoffice.Models;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public interface IUserHelper
     {
         Task<List<User>> GetUsersListAsync();
+
+        Task<List<UserViewModel>> GetUsersWithRolesListAsync(List<UserViewModel> models);
+
+        Task<UserViewModel> GetUserWithRoleAsync(UserViewModel model);
+
+        Task ChangeUserRole(UserViewModel model);
 
         Task<User> GetUserByEmailAsync(string email);
 
@@ -41,5 +48,9 @@
         Task<string> GeneratePasswordResetTokenAsync(User user);
 
         Task<IdentityResult> ResetPasswordAsync(User user, string token, string password);
+
+        IEnumerable<SelectListItem> GetComboRoles();
+
+        Task<EditUserViewModel> GetEditUserWithRoleAsync(EditUserViewModel model);
     }
 }

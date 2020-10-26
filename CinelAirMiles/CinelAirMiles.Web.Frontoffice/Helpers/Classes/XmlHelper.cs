@@ -24,8 +24,8 @@ namespace CinelAirMiles.Web.Frontoffice.Helpers.Classes
             string data = Encoding.Default.GetString(client.DownloadData(url));
 
             Stream fileStream = new MemoryStream(Encoding.UTF8.GetBytes(data));
-            
-            var news = (NewsViewModel) serializer.Deserialize(fileStream);
+
+            var news = (NewsViewModel)serializer.Deserialize(fileStream);
 
             foreach (var item in news.Channel.Item)
             {
@@ -35,6 +35,7 @@ namespace CinelAirMiles.Web.Frontoffice.Helpers.Classes
             }
 
             return news;
+
         }
     }
 }
