@@ -61,7 +61,7 @@
                         <h3 class="menu-title">USERS</h3><!-- /.menu-title -->
 
                         <a asp-area="" asp-controller="Clients" asp-action="Index"><i class="menu-icon fa fa-user"></i>Clients</a>
-                        <a asp-area="" asp-controller="Employees" asp-action="Index"><i class="menu-icon fa fa-group"></i>Employees</a>
+                        <a asp-area="" asp-controller="Account" asp-action="Index"><i class="menu-icon fa fa-group"></i>Employees</a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -104,11 +104,7 @@
                     </a>
 
                     <div class="user-menu dropdown-menu">
-                        <a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
-
-                        <a class="nav-link" href="#"><i class="fa fa-cog"></i> Settings</a>
-
-                        <a class="nav-link" href="#"><i class="fa fa-power-off"></i> Logout</a>
+                        <a asp-controller="Account" asp-action="Logout"><i class="fa fa-power-off"></i> Logout</a>
                     </div>
                 </div>
 

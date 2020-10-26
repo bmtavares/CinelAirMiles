@@ -12,5 +12,8 @@
         [Required]
         public string LastName { get; set; }
 
+
+        public bool RequirePasswordChange { get; set; }
+
     }
 }
