@@ -80,7 +80,7 @@
                 }
             }
 
-            ModelState.AddModelError(string.Empty, "Failed to login");
+            ModelState.AddModelError(string.Empty, "*Failed to login");
             return View();
         }
 
@@ -429,9 +429,8 @@
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
-            return View(await _userHelper.GetUsersListAsync());
+            return View(await _userHelper.GetEmployeesListAsync());
         }
-
 
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(string id)
