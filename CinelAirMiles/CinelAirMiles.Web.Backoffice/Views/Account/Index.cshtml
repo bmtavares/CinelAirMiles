@@ -8,7 +8,7 @@
 <h2>@ViewData["Title"]</h2>
 <br />
 <p>
-    <a asp-action="Create" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
 <br />
 <div class="row">
@@ -50,8 +50,8 @@
                                 @Html.DisplayFor(modelItem => item.RoleName)
                             </td>
                             <td style="text-align:right">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary" style="width:5em"><i class="glyphicon glyphicon-pencil"></i><br />Editar</a>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary" style="width:5em"><i class="glyphicon glyphicon-th-list"></i><br />Detalhes</a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Editar</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Detalhes</a>
                                 @*<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" style="width:5em"><i class="glyphicon glyphicon-trash"></i><br />Apagar</a>*@
                             </td>
                         </tr>

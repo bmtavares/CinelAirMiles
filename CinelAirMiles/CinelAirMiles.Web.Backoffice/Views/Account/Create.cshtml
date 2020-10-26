@@ -1,4 +1,4 @@
-﻿@model CinelAirMiles.Common.Models.RegisterNewUserViewModel
+﻿@model CinelAirMiles.Web.Backoffice.Models.CreateUserViewModel
 
 @{
     ViewData["Title"] = "Create User";
@@ -34,6 +34,12 @@
                 <label asp-for="PhoneNumber">Phone Number</label>
                 <input asp-for="PhoneNumber" type="tel" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-warning"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RoleName" class="control-label">Select the user's role</label>
+                <select asp-for="RoleName" asp-items="Model.Roles" class="form-control"></select>
+                <span asp-validation-for="RoleName" class="text-danger"></span>
             </div>
 
             <div class="form-group">

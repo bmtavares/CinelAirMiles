@@ -30,7 +30,6 @@
             await _userHelper.CheckRoleAsync("Admin");
             await _userHelper.CheckRoleAsync("SuperUser");
             await _userHelper.CheckRoleAsync("User");
-            await _userHelper.CheckRoleAsync("Employee");
 
             var user = await _userHelper.GetUserByEmailAsync("noreply.projetoscinel@gmail.com");
 
@@ -57,13 +56,6 @@
                 if (!isInRole)
                 {
                     await _userHelper.AddUserToRoleAsync(user, "Admin");
-                }
-
-                isInRole = await _userHelper.IsUserInRoleAsync(user, "Employee");
-
-                if (!isInRole)
-                {
-                    await _userHelper.AddUserToRoleAsync(user, "Employee");
                 }
             }
 

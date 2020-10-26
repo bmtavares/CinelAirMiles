@@ -2,39 +2,47 @@
 
 @{
     ViewData["Title"] = "Forced Password Change";
+    Layout = "_Layout_login";
 }
 
-<h1>@ViewData["Title"]</h1>
-<h3>Your account has been flagged for a password change.</h3>
-<h4>You will not be able to login until you complete this change.</h4>
-
-<div class="row">
-    <div class="col-md-4 offset-md-4">
-        <form method="post">
-            <div asp-validation-summary="All"></div>
-            <input type="hidden" asp-for="Token" />
-            <input type="hidden" asp-for="UserName" />
-
-            <div class="form-group">
-                <label asp-for="Password">New password</label>
-                <input asp-for="Password" type="password" class="form-control" />
-                <span asp-validation-for="Password" class="text-warning"></span>
+<div class="sufee-login d-flex align-content-center flex-wrap">
+    <div class="container">
+        <div class="login-content">
+            <div class="login-logo">
+                <a href="index.html">
+                    <img class="align-content" src="~/backoffice/images/CAMlogo.png" alt="">
+                </a>
             </div>
+            <div class="login-form">
+                <p>Your account has been flagged for a password change.</p>
+                <p>You will not be able to login until you complete this change.</p>
+                <form method="post">
+                    <input type="hidden" asp-for="Token" />
+                    <input type="hidden" asp-for="UserName" />
 
-            <div class="form-group">
-                <label asp-for="ConfirmPassword">Confirm</label>
-                <input asp-for="ConfirmPassword" type="password" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-warning"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Password">New password</label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Enter your new password..." />
+                        <span asp-validation-for="Password" class="text-info"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmPassword">Confirm</label>
+                        <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm your password..." />
+                        <span asp-validation-for="ConfirmPassword" class="text-info"></span>
+                    </div>
+                    @ViewBag.Message
+                    <div asp-validation-summary="All" class="text-info" style="margin-left:20px"></div>
+                    <div class="checkbox" style="margin-left:20px">
+                        <label class="pull-right">
+                        </label>
+                    </div>
 
-            <div class="form-group">
-                <input type="submit" value="Change password" class="btn btn-primary" />
+                    <div class="form-group">
+                        <input type="submit" value="Change password" class="btn btn-warning btn-flat m-b-30 m-t-30" />
+                    </div>
+
+                </form>
             </div>
-        </form>
-        <div class="text-success">
-            <p>
-                @ViewBag.Message
-            </p>
         </div>
     </div>
 </div>

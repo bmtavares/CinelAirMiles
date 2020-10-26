@@ -59,7 +59,7 @@
 
                 if(user != null)
                 {
-                    if (await _userHelper.IsUserInRoleAsync(user, "Employee"))
+                    if (user.MainRole == "Employee")
                     {
                         var result = await _userHelper.LoginAsync(model);
 
@@ -112,8 +112,7 @@
 
                     await _userHelper.UpdateUserAsync(user);
 
-                    this.ViewBag.Message = "Password reset successful. Please login.";
-                    return this.View();
+                    return RedirectToAction("Login");
                 }
 
                 this.ViewBag.Message = "Error while resetting the password.";
@@ -469,14 +468,19 @@
        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
-            return View();
+            var model = new CreateUserViewModel
+            {
+                Roles = _userHelper.GetComboRoles()
+            };
+
+            return View(model);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create(RegisterNewUserViewModel model)
+        public async Task<IActionResult> Create(CreateUserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -491,7 +495,8 @@
                         Email = model.Username,
                         UserName = model.Username,
                         PhoneNumber = model.PhoneNumber,
-                        RequirePasswordChange = true
+                        RequirePasswordChange = true,
+                        MainRole = "Employee"
                     };
 
                     var result = await _userHelper.AddUserAsync(user, model.Password);
@@ -499,6 +504,7 @@
                     if (result != IdentityResult.Success)
                     {
                         ModelState.AddModelError(string.Empty, "The user could not be created.");
+                        model.Roles = _userHelper.GetComboRoles();
                         return View(model);
                     }
 
@@ -506,7 +512,7 @@
 
                     await _userHelper.ConfirmEmailAsync(user, token);
 
-                    await _userHelper.AddUserToRoleAsync(user, "Employee");
+                    await _userHelper.AddUserToRoleAsync(user, model.RoleName);
 
                     return RedirectToAction("Index", "Account");
 
@@ -515,6 +521,8 @@
                 ModelState.AddModelError(string.Empty, "The username is already taken.");
 
             }
+
+            model.Roles = _userHelper.GetComboRoles();
 
             return View(model);
         }
@@ -568,9 +576,6 @@
                     user.UserName = model.Email;
                     user.NormalizedUserName = model.Email.ToUpper();
 
-
-
-
                     var respose = await _userHelper.UpdateUserAsync(user);
 
                     await _userHelper.AddUserToRoleAsync(user, model.RoleName);
@@ -589,6 +594,8 @@
                     ModelState.AddModelError(string.Empty, "User not found.");
                 }
             }
+
+            model.Roles = _userHelper.GetComboRoles();
 
             return View(model);
         }

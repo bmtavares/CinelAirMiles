@@ -63,16 +63,26 @@
                         <br />
                         <a asp-area="" asp-controller="Home" asp-action="Index"><i class="menu-icon fa fa-laptop"></i>Home</a>
                     </li>
-                    <h3 class="menu-title">MILES</h3><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
+                        @if (this.User.IsInRole("Admin"))
+                        {
+                            <h3 class="menu-title">USERS</h3><!-- /.menu-title -->
+                            <a asp-area="" asp-controller="Clients" asp-action="Index"><i class="menu-icon fa fa-user"></i>Clients</a>
+                            <a asp-area="" asp-controller="Account" asp-action="Index"><i class="menu-icon fa fa-group"></i>Employees</a>
+                        }
+                        @if (this.User.IsInRole("SuperUser"))
+                        {
+                            <h3 class="menu-title">SUPERUSER MENU</h3><!-- /.menu-title -->
+                        }
+                        @if (this.User.IsInRole("User"))
+                        {
+                            <h3 class="menu-title">USER MENU</h3><!-- /.menu-title -->
+                        }
+
+                        <h3 class="menu-title">DEBUG</h3><!-- /.menu-title -->
                         <a asp-area="" asp-controller="Miles" asp-action="Index"><i class="menu-icon fa fa-spinner"></i>Miles</a>
                         <a asp-area="" asp-controller="MilesTypes" asp-action="Index"><i class="menu-icon fa fa-bars"></i>MilesTypes</a>
                         <a asp-area="" asp-controller="ProgramTiers" asp-action="Index"><i class="menu-icon fa fa-glass"></i>ProgramTiers</a>
-
-                        <h3 class="menu-title">USERS</h3><!-- /.menu-title -->
-
-                        <a asp-area="" asp-controller="Clients" asp-action="Index"><i class="menu-icon fa fa-user"></i>Clients</a>
-                        <a asp-area="" asp-controller="Account" asp-action="Index"><i class="menu-icon fa fa-group"></i>Employees</a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -90,7 +100,7 @@
 
                 <div class="col-sm-7">
                     <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
-                    <div class="header-left">
+                    @*<div class="header-left">
                         <button class="search-trigger"><i class="fa fa-search"></i></button>
                         <div class="form-inline">
                             <form class="search-form">
@@ -104,42 +114,15 @@
 
                         <div class="dropdown for-message">
                         </div>
-                    </div>
+                    </div>*@
                 </div>
 
                 <div class="col-sm-5">
                     <div class="user-area dropdown float-right">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="~/backoffice/images/admin.jpg" alt="User Avatar">
-                        </a>
-
-                        <div class="user-menu dropdown-menu">
-
-                            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-power-off"></i> Logout</a>
-
-                        </div>
+                        <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-power-off"></i> Logout</a>
                 </div>
 
-                    <div class="language-select dropdown" id="language-select">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="language" aria-haspopup="true" aria-expanded="true">
-                            <i class="flag-icon flag-icon-us"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="language">
-                            <div class="dropdown-item">
-                                <span class="flag-icon flag-icon-fr"></span>
-                            </div>
-                            <div class="dropdown-item">
-                                <i class="flag-icon flag-icon-es"></i>
-                            </div>
-                            <div class="dropdown-item">
-                                <i class="flag-icon flag-icon-us"></i>
-                            </div>
-                            <div class="dropdown-item">
-                                <i class="flag-icon flag-icon-it"></i>
-                            </div>
-                        </div>
-                    </div>
-
+                    
                 </div>
             </div>
 

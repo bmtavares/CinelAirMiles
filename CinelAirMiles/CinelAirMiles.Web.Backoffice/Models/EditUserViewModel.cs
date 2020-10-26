@@ -1,9 +1,8 @@
 ﻿namespace CinelAirMiles.Web.Backoffice.Models
 {
-    using Microsoft.AspNetCore.Mvc.Rendering;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class EditUserViewModel : UserViewModel
     {
