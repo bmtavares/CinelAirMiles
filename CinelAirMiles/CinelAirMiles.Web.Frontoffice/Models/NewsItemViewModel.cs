@@ -9,23 +9,23 @@ namespace CinelAirMiles.Web.Frontoffice.Models
 {
     public class NewsItemViewModel
     {
-        [XmlElement("title")]
+        [XmlElement("title", IsNullable = true)]
         public string Title { get; set; }
 
 
-        [XmlElement("link")]
+        [XmlElement("link", IsNullable = true)]
         public string Link { get; set; }
 
 
-        [XmlElement("description")]
+        [XmlElement("description", IsNullable = true)]
         public string Description { get; set; }
 
         [Display(Name = "Publication date")]
-        [XmlElement("pubDate")]
+        [XmlElement("pubDate", IsNullable = true)]
         public string PubDate { get; set; }
 
 
-        [XmlElement("author")]
+        [XmlElement("author", IsNullable = true)]
         public string Author { get; set; }
     }
 }

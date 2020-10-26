@@ -21,9 +21,28 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
 
         public IActionResult Index()
         {
-            //var news = _xmlHelper.DeserializeNewsXml("https://aviationweek.com/rss.xml");
-        
-            var news = _xmlHelper.DeserializeNewsXml("https://www.flightglobal.com/127.fullrss");
+            NewsViewModel news;
+
+            try
+            {
+                news = _xmlHelper.DeserializeNewsXml("https://www.flightglobal.com/127.fullrss");
+            }
+            catch
+            {
+                news = new NewsViewModel
+                {
+                    Channel = new NewsChannelViewModel
+                    {
+                        Item = new List<NewsItemViewModel>
+                        {
+                            new NewsItemViewModel
+                            {
+                                Title = "The news couldn't be displayed due to an internal error!\nContact the administrator"
+                            }
+                        }
+                    }
+                };
+            }
 
             return View(news);
         }

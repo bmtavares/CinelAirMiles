@@ -27,15 +27,77 @@ namespace CinelAirMiles.Web.Frontoffice.Helpers.Classes
 
             var news = (NewsViewModel)serializer.Deserialize(fileStream);
 
-            foreach (var item in news.Channel.Item)
+            for (int i = 0; i < news.Channel.Item.Count; i++)
             {
-                var substring = item.Author.Split("¦");
-
-                item.Author = substring[1];
+                if (news.Channel.Item[i] != null)
+                {
+                    news.Channel.Item[i].Title = CheckTitle(news.Channel.Item[i].Title);
+                    news.Channel.Item[i].Link = CheckLink(news.Channel.Item[i].Link);
+                    news.Channel.Item[i].Description = CheckDecription(news.Channel.Item[i].Description);
+                    news.Channel.Item[i].Author = CheckAuthor(news.Channel.Item[i].Author);
+                    news.Channel.Item[i].PubDate = CheckPubDate(news.Channel.Item[i].PubDate);
+                }
             }
 
-            return news;
+            news.Channel.Item.RemoveAll(n => n == null);
 
+            return news;
         }
+
+        string CheckAuthor(string author)
+        {
+            if(author != null)
+            {
+                var substring = author.Split("¦");
+
+                author = substring[1];
+
+                return author;
+            }
+
+            return "No author...";
+        }
+
+        string CheckTitle(string title)
+        {
+            if (title != null)
+            {
+                return title;
+            }
+
+            return "No title...";
+        }
+
+        string CheckLink(string link)
+        {
+            if (link != null)
+            {
+                return link;
+            }
+
+            return "#";
+        }
+
+        string CheckDecription(string description)
+        {
+            if (description != null)
+            {
+                return description;
+            }
+
+            return "No description...";
+        }
+
+        string CheckPubDate(string pubDate)
+        {
+            if (pubDate != null)
+            {
+                return pubDate;
+            }
+
+            return "No publication date...";
+        }
+
+
     }
 }
