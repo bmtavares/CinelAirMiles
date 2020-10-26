@@ -19,6 +19,8 @@
 
         Task ChangeUserRole(UserViewModel model);
 
+        Task<List<User>> GetEmployeesListAsync();
+
         Task<User> GetUserByEmailAsync(string email);
 
         Task<IdentityResult> AddUserAsync(User user, string password);

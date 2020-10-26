@@ -50,6 +50,12 @@
             return models;
         }
 
+        public async Task<List<User>> GetEmployeesListAsync()
+        {
+            return await _userManager.Users
+                .Where(u => u.MainRole == "Employee").ToListAsync();
+        }
+
         public async Task<IdentityResult> AddUserAsync(User user, string password)
         {
             return await _userManager.CreateAsync(user, password);
