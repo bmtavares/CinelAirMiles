@@ -1,0 +1,12 @@
+{
+  "solution": {
+    "path": "CinelAirMiles.sln",
+    "projects": [
+      "CinelAirMiles.Common\\CinelAirMiles.Common.csproj",
+      "CinelAirMiles.Prism\\CinelAirMiles.Prism.Android\\CinelAirMiles.Prism.Android.csproj",
+      "CinelAirMiles.Prism\\CinelAirMiles.Prism.iOS\\CinelAirMiles.Prism.iOS.csproj",
+      "CinelAirMiles.Prism\\CinelAirMiles.Prism\\CinelAirMiles.Prism.csproj",
+      "CinelAirMiles.Web.API\\CinelAirMiles.Web.API.csproj"
+    ]
+  }
+}
