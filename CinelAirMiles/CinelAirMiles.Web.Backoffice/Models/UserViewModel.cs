@@ -1,8 +1,13 @@
-﻿namespace CinelAirMiles.Common.Models
-{
-    using System.ComponentModel.DataAnnotations;
+﻿using CinelAirMiles.Common.Entities;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-    public class EditUserViewModel
+namespace CinelAirMiles.Web.Backoffice.Models
+{
+    public class UserViewModel
     {
         [Required]
         public string Id { get; set; }
@@ -21,5 +26,14 @@
 
         [MaxLength(20, ErrorMessage = "The field {0} only can contain {1} characters.")]
         public string PhoneNumber { get; set; }
+
+
+        public string Email { get; set; }
+
+
+        //TOOO: Make this prop required
+        //[Required]
+        [Display(Name = "Role")]
+        public string RoleName { get; set; }
     }
 }

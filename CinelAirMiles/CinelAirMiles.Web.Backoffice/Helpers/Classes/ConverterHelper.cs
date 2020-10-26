@@ -3,6 +3,7 @@
     using CinelAirMiles.Common.Entities;
     using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
     using CinelAirMiles.Web.Backoffice.Models;
+    using System.Collections.Generic;
 
     public class ConverterHelper : IConverterHelper
     {
@@ -16,6 +17,48 @@
                 CreditDate = model.CreditDate,
                 ExpiryDate = model.ExpiryDate,
                 Description = model.Description
+            };
+        }
+
+        public List<UserViewModel> UsersToUserViewModels(List<User> users)
+        {
+            var models = new List<UserViewModel>();
+            
+            foreach(var user in users)
+            {
+                models.Add(new UserViewModel
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email
+                });
+            }
+
+            return models;
+        }
+
+        public EditUserViewModel UserToEditUserViewModel(User user)
+        {
+            return new EditUserViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+            };
+        }
+
+        public UserViewModel UserToUserViewModel(User user)
+        {
+            return new UserViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber
             };
         }
     }

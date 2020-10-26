@@ -1,4 +1,4 @@
-﻿@model CinelAirMiles.Common.Entities.User
+﻿@model UserViewModel
 
 @{
     ViewData["Title"] = "User Details";
@@ -32,6 +32,12 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RoleName)
         </dd>
     </dl>
 </div>
