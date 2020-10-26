@@ -6,17 +6,19 @@
     using CinelAirMiles.Common.Data;
     using CinelAirMiles.Common.Entities;
     using CinelAirMiles.Common.Repositories;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
+    [Authorize]
     public class ClientsController : Controller //TODO: Create client with user
     {
         private readonly ApplicationDbContext _context;
         private readonly IClientRepository _clientRepository;
 
-        public ClientsController(ApplicationDbContext context,
+        public ClientsController(
+            ApplicationDbContext context,
             IClientRepository clientRepository)
         {
             _context = context;

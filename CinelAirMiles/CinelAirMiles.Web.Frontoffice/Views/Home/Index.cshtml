@@ -101,26 +101,26 @@
     <br />
     <h2>NEWS</h2>
     <br />
-    <hr style="border-width: thin; border-color: dimgray;"/>
+    <hr style="border-width: thin; border-color: dimgray;" />
     @foreach (var item in Model.Channel.Item)
     {
+        @*<h3>
+                @Html.DisplayNameFor(modelItem => item.Title)
+            </h3>*@
         <h3>
-            @Html.DisplayNameFor(modelItem => item.Title)
-        </h3>
-        <div>
             <a href="@item.Link">@Html.DisplayFor(modelItem => item.Title)</a>
-        </div>
-
-        <h3>
-            @Html.DisplayNameFor(modelItem => item.Description)
         </h3>
+        <h4>
+            By: @Html.DisplayFor(modelItem => item.Author)
+        </h4>
+        <br />
         <div>
             @Html.Raw(item.Description)
         </div>
-
-        <h3>
+        <br />
+        <h4>
             @Html.DisplayNameFor(modelItem => item.PubDate)
-        </h3>
+        </h4>
         <div>
             @Html.DisplayFor(modelItem => item.PubDate)
         </div>

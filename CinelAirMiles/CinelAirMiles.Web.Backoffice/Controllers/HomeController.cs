@@ -1,12 +1,11 @@
 ﻿namespace CinelAirMiles.Web.Backoffice.Controllers
 {
     using System.Diagnostics;
-
     using CinelAirMiles.Web.Backoffice.Models;
-
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    //TODO: News & welcome page
     [Authorize]
     public class HomeController : Controller
     {

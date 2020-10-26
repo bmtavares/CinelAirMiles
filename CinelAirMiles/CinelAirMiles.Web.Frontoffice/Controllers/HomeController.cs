@@ -21,7 +21,9 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
 
         public IActionResult Index()
         {
-            var news = _xmlHelper.DeserializeNewsXml("https://aviationweek.com/rss.xml");
+            //var news = _xmlHelper.DeserializeNewsXml("https://aviationweek.com/rss.xml");
+        
+            var news = _xmlHelper.DeserializeNewsXml("https://www.flightglobal.com/127.fullrss");
 
             return View(news);
         }
