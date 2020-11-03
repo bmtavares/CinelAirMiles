@@ -27,18 +27,7 @@
                 .Where(pt => pt.Description == "Basic")
                 .FirstOrDefaultAsync();
 
-            var allProgramNumbers = _context.Clients
-                .Select(c => c.MilesProgramNumber);
-
-            var currentNumber = _random.Next(100000000, 999999999).ToString();
-
-            foreach (var number in allProgramNumbers)
-            {
-                if (currentNumber == number)
-                {
-                    currentNumber = _random.Next(100000000, 999999999).ToString();
-                }
-            }
+            var programNumber = await GenerateProgramNumber();
 
             var client = new Client
             {
@@ -46,7 +35,7 @@
                 MembershipDate = DateTime.UtcNow,
                 Active = true,
                 IsInReferrerProgram = false,
-                MilesProgramNumber = currentNumber,
+                MilesProgramNumber = programNumber,
                 ProgramTier = programTier
             };
 
@@ -54,8 +43,25 @@
         }
 
         public async Task<Client> GetClientByNumber(string number)
+            => await _context.Clients.Where(c => c.MilesProgramNumber == number).FirstOrDefaultAsync();
+
+        async Task<string> GenerateProgramNumber()
         {
-            return await _context.Clients.Where(c => c.MilesProgramNumber == number).FirstOrDefaultAsync();
+            var programNumber = _random.Next(100000000, 1000000000).ToString();
+
+            var existingProgramNumbers = _context.Clients
+                .Select(c => c.MilesProgramNumber);
+
+            var exists = await existingProgramNumbers.AnyAsync(n => n == programNumber);
+
+            while (exists)
+            {
+                programNumber = _random.Next(100000000, 1000000000).ToString();
+
+                exists = await existingProgramNumbers.AnyAsync(n => n == programNumber);
+            }
+
+            return programNumber;
         }
     }
 }

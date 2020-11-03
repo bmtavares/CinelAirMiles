@@ -6,11 +6,9 @@
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
-
     using CinelAirMiles.Common.Entities;
     using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
     using CinelAirMiles.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
@@ -18,7 +16,7 @@
     using Microsoft.AspNetCore.Authorization;
     using CinelAirMiles.Web.Backoffice.Models;
 
-    //TODO: User is given a predefined password given by the admin at first, and must change it on first login
+
     public class AccountController : Controller
     {
         readonly IUserHelper _userHelper;

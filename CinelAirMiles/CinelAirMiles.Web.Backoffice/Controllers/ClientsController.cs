@@ -12,7 +12,7 @@
     using Microsoft.EntityFrameworkCore;
 
     [Authorize(Roles = "Admin")]
-    public class ClientsController : Controller //TODO: Create client with user
+    public class ClientsController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly IClientRepository _clientRepository;
