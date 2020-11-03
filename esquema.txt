@@ -1,0 +1,81 @@
+[Ferramentas úteis:]
+Windows Terminal - Um wrapper para a PowerShell com tabs; bom cliente de SSH "nativo" (https://aka.ms/terminal)
+WinSCP - Cliente gráfico para SCP: transferência de ficheiros por SSH (https://winscp.net)
+MySQL Workbench - Interface gráfica para interagir com sgdb MySQL (https://dev.mysql.com/downloads/workbench)
+
+Assumimos desde já que o Windows Server vai hospedar:
+    SQL Server
+    2-3 Aplicações ASPNet Core (Frontoffice/Backoffice, API bilhetes, API mobile)
+
+E o Linux Server:
+    MySQL Server
+    2-3 Aplicações ASPNet Core (Frontoffice/Backoffice, API bilhetes, API mobile)
+
+[Windows Server]
+  [Preparação]
+    Descarregar uma ISO do WS2019 ou 2016 diretamente da Microsoft através de estes links: (no nosso ambiente utilizamos o 2019, logo as informações a seguir podem ser diferentes no caso do 2016)
+    https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019?filetype=ISO
+    https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2016?filetype=ISO
+    São pedidos dados de contacto, mas não é obrigatório serem verdadeiros ou sequer válidos.
+    Uma maquina criada com esta imagem tem 180 dias de validade.
+    A imagem tem cerca de 5GB.
+
+    Na VirtualBox as settings por defeito para o Windows 2019 são: 2 cores, 2GB RAM, 50GB disco.
+
+    Enquanto corre o setup, atualizações e instalação das Guest Additions, podem ser descarregados os seguintes ficheiros:
+    (Aproveitar o tempo parado. Transferir com uma pasta virtual na rede ou com a """ajuda""" do copy paste das Guest Additions)
+    SQL Server Express (https://go.microsoft.com/fwlink/?linkid=866658)
+    SQL Server Management Studio (https://aka.ms/ssmsfullsetup)
+    dotNet Core 2.1 Hosting Bundle for Windows (https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-aspnetcore-2.1.23-windows-hosting-bundle-installer) ou para a mais atualizada (https://dotnet.microsoft.com/download/dotnet-core/2.1)
+    Web Platform Installer - para instalação de ferramentas necessárias para publish direto do Visual Studio (https://go.microsoft.com/?linkid=9805118)
+    
+    Garantir que o IIS está instalado, e após isso instalar o Web Platform Installer.
+    No Web Platform Installer procurar "Web Deploy 3.6 for Hosting Servers" e instalar.
+    No Server Manager instalar os Roles: IIS Management Scripts and Tools, e, Management Service, em Web Server (IIS) > Management Tools.
+
+    Links úteis:
+    https://docs.microsoft.com/en-us/aspnet/core/tutorials/publish-to-iis?view=aspnetcore-2.1&tabs=visual-studio
+    https://docs.microsoft.com/en-us/visualstudio/deployment/tutorial-import-publish-settings-iis?view=vs-2019
+    https://medium.com/@nishancw/how-to-enable-remote-connections-to-sql-server-dc5b6c812b5
+
+[Linux]
+    Após o setup inicial e atualização de pacotes com o devido reinicio, e enable ao root: instalar e fazer setup do SSH.
+    (Não esquecer de abrir as portas na firewall antes de a ativar. Eventuais users criados podem ter de ser adicionados ao grupo 'sudo'.)
+
+    [MySQL]
+        instalar -> apt install mysql-server
+        inicializar -> mysql_secure_installation
+        usar? -> https://www.digitalocean.com/community/tutorials/how-to-allow-remote-access-to-mysql e utilizar o Workbench a partir de uma maquina remota
+        (não esquecer de abrir a porta 3306)
+        {
+            CREATE USER 'andreia'@'192.168.193.2' IDENTIFIED BY 'P@ssw0rd!';
+            CREATE USER 'bruno'@'192.168.193.3' IDENTIFIED BY 'P@ssw0rd!';
+            CREATE USER 'ricardo'@'192.168.193.4' IDENTIFIED BY 'P@ssw0rd!';
+
+            GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'andreia'@'192.168.193.2' WITH GRANT OPTION;
+            GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'bruno'@'192.168.193.3' WITH GRANT OPTION;
+            GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'ricardo'@'192.168.193.4' WITH GRANT OPTION;
+        }
+
+    [dotNet]
+        instalar -> wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+                    dpkg -i packages-microsoft-prod.deb
+                    apt update
+                    apt install apt-transport-https
+                    apt update
+                    apt install aspnetcore-runtime-2.1
+
+    [apache]
+        instalar -> apt install apache2
+
+    Guia para setup de ASPNet Core com apache (é aqui que o WinSCP pode dar jeito)
+    https://odan.github.io/2018/07/17/aspnet-core-2-ubuntu-setup.html
+
+    [git]
+        Criar um novo utilizador (e.g. git)
+        Na home do utilizador novo criar uma pasta para o repositório (e.g. MyRepo)
+        Alterar permissões para todos apenas do utilizador (chmod 700 MyRepo/)
+        Entrar na pasta
+        Correr: git init --bare
+
+        Remotamente este repositório pode ser clonado neste endereço: git@ip-da-maquina:/home/git/MyRepo
