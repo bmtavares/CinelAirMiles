@@ -15,7 +15,7 @@
     [Authorize]
     public class MilesController : Controller
     {
-        private readonly ApplicationDbContext _context; //TODO change to repo
+        //private readonly ApplicationDbContext _context; //TODO change to repo
         readonly IClientRepository _clientRepository;
         readonly IMileRepository _mileRepository;
         readonly IMilesTypeRepository _milesTypeRepository;
@@ -23,14 +23,14 @@
         readonly ICombosHelper _combosHelper;
 
         public MilesController(
-            ApplicationDbContext context,
+            //ApplicationDbContext context,
             IClientRepository clientRepository,
             IMileRepository mileRepository,
             IConverterHelper converterHelper,
             IMilesTypeRepository milesTypeRepository,
             ICombosHelper combosHelper)
         {
-            _context = context;
+            //_context = context;
             _clientRepository = clientRepository;
             _mileRepository = mileRepository;
             _converterHelper = converterHelper;
@@ -41,7 +41,9 @@
         // GET: Miles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Miles.ToListAsync());
+            //return View(await _context.Miles.ToListAsync());
+
+            return View(await _mileRepository.GetAll().ToListAsync());
         }
 
         // GET: Miles/Details/5
@@ -53,7 +55,7 @@
                 return NotFound();
             }
 
-            var mile = await _mileRepository.GetMileWithClientAndType(id);
+            var mile = await _mileRepository.GetMileWithClientAndTypeAsync(id);
 
             if (mile == null)
             {
@@ -84,7 +86,7 @@
             if (ModelState.IsValid)
             {
                 var client = await _clientRepository
-                    .GetClientByNumber(model.MilesProgramNumber);
+                    .GetClientByNumberAsync(model.MilesProgramNumber);
 
                 if(client == null)
                 {
@@ -125,7 +127,10 @@
                 return NotFound();
             }
 
-            var mile = await _context.Miles.FindAsync(id);
+            //var mile = await _context.Miles.FindAsync(id);
+
+            var mile = await _mileRepository.GetByIdAsync(id.Value);
+
             if (mile == null)
             {
                 return NotFound();
@@ -138,7 +143,7 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Miles,CreditDate,ExpiryDate")] Mile mile)
+        public async Task<IActionResult> Edit(int id, Mile mile)
         {
             if (id != mile.Id)
             {
@@ -149,12 +154,14 @@
             {
                 try
                 {
-                    _context.Update(mile);
-                    await _context.SaveChangesAsync();
+                    //_context.Update(mile);
+                    //await _context.SaveChangesAsync();
+
+                    await _mileRepository.UpdateAsync(mile);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MileExists(mile.Id))
+                    if (!await MileExistsAsync(mile.Id))
                     {
                         return NotFound();
                     }
@@ -176,8 +183,11 @@
                 return NotFound();
             }
 
-            var mile = await _context.Miles
-                .FirstOrDefaultAsync(m => m.Id == id);
+            //var mile = await _context.Miles
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+
+            var mile = await _mileRepository.GetByIdAsync(id.Value);
+
             if (mile == null)
             {
                 return NotFound();
@@ -191,15 +201,21 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var mile = await _context.Miles.FindAsync(id);
-            _context.Miles.Remove(mile);
-            await _context.SaveChangesAsync();
+            //var mile = await _context.Miles.FindAsync(id);
+            //_context.Miles.Remove(mile);
+            //await _context.SaveChangesAsync();
+
+            var mile = await _mileRepository.GetByIdAsync(id);
+            await _mileRepository.DeleteAsync(mile);
+
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MileExists(int id)
+        private async Task<bool> MileExistsAsync(int id)
         {
-            return _context.Miles.Any(e => e.Id == id);
+            return await _mileRepository.ExistsAsync(id);
+
+            //return _context.Miles.Any(e => e.Id == id);
         }
     }
 }

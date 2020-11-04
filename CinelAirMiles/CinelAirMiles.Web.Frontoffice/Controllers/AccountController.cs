@@ -49,7 +49,7 @@
         {
             if (ModelState.IsValid)
             {
-                var client = await _clientRepository.GetClientByNumber(model.ProgramNumber);
+                var client = await _clientRepository.GetClientByNumberAsync(model.ProgramNumber);
 
                 if(client != null)
                 {
@@ -132,8 +132,8 @@
                         return View(model);
                     }
 
-                    //TODO: Error message if there's an error
-                    await _clientRepository.CreateClientWithUser(user);
+                    //TODO: Error message
+                    await _clientRepository.CreateClientWithUserAsync(user);
 
                     var myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
                     var tokenLink = Url.Action("ConfirmEmail", "Account", new

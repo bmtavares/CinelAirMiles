@@ -5,6 +5,6 @@
 
     public interface IMileRepository : IGenericRepository<Mile>
     {
-        Task<Mile> GetMileWithClientAndType(int? id);
+        Task<Mile> GetMileWithClientAndTypeAsync(int? id);
     }
 }

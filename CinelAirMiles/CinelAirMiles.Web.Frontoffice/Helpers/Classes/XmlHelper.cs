@@ -25,7 +25,7 @@ namespace CinelAirMiles.Web.Frontoffice.Helpers.Classes
 
             Stream fileStream = new MemoryStream(Encoding.UTF8.GetBytes(data));
 
-            var news = (NewsViewModel)serializer.Deserialize(fileStream);
+            var news = (NewsViewModel) serializer.Deserialize(fileStream);
 
             for (int i = 0; i < news.Channel.Item.Count; i++)
             {

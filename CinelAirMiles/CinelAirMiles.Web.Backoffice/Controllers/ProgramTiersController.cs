@@ -5,6 +5,7 @@
 
     using CinelAirMiles.Common.Data;
     using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Common.Repositories;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
@@ -12,18 +13,24 @@
     [Authorize]
     public class ProgramTiersController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
+        readonly IProgramTierRepository _programTierRepository;
 
-        public ProgramTiersController(ApplicationDbContext context) //TODO change to repo
+        public ProgramTiersController(
+            //ApplicationDbContext context,
+            IProgramTierRepository programTierRepository) //TODO change to repo
         {
-            _context = context;
+            //_context = context;
+            _programTierRepository = programTierRepository;
         }
 
 
         // GET: ProgramTiers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ProgramTiers.ToListAsync());
+            //return View(await _context.ProgramTiers.ToListAsync());
+
+            return View(await _programTierRepository.GetAll().ToListAsync());
         }
 
 
@@ -35,8 +42,11 @@
                 return NotFound();
             }
 
-            var programTier = await _context.ProgramTiers
-                .FirstOrDefaultAsync(m => m.Id == id);
+            //var programTier = await _context.ProgramTiers
+            //.FirstOrDefaultAsync(m => m.Id == id);
+
+            var programTier = await _programTierRepository.GetByIdAsync(id.Value);
+
             if (programTier == null)
             {
                 return NotFound();
@@ -62,8 +72,11 @@
         {
             if (ModelState.IsValid)
             {
-                _context.Add(programTier);
-                await _context.SaveChangesAsync();
+                //_context.Add(programTier);
+                //await _context.SaveChangesAsync();
+
+                await _programTierRepository.CreateAsync(programTier);
+
                 return RedirectToAction(nameof(Index));
             }
             return View(programTier);
@@ -78,7 +91,10 @@
                 return NotFound();
             }
 
-            var programTier = await _context.ProgramTiers.FindAsync(id);
+            //var programTier = await _context.ProgramTiers.FindAsync(id);
+
+            var programTier = await _programTierRepository.GetByIdAsync(id.Value);
+
             if (programTier == null)
             {
                 return NotFound();
@@ -103,12 +119,14 @@
             {
                 try
                 {
-                    _context.Update(programTier);
-                    await _context.SaveChangesAsync();
+                    //_context.Update(programTier);
+                    //await _context.SaveChangesAsync();
+
+                    await _programTierRepository.UpdateAsync(programTier);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProgramTiersExists(programTier.Id))
+                    if (!await ProgramTiersExistsAsync(programTier.Id))
                     {
                         return NotFound();
                     }
@@ -130,8 +148,11 @@
                 return NotFound();
             }
 
-            var programTier = await _context.ProgramTiers
-                .FirstOrDefaultAsync(m => m.Id == id);
+            //var programTier = await _context.ProgramTiers
+            //.FirstOrDefaultAsync(m => m.Id == id);
+
+            var programTier = await _programTierRepository.GetByIdAsync(id.Value);
+
             if (programTier == null)
             {
                 return NotFound();
@@ -145,16 +166,22 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var programTier = await _context.ProgramTiers.FindAsync(id);
-            _context.ProgramTiers.Remove(programTier);
-            await _context.SaveChangesAsync();
+            //var programTier = await _context.ProgramTiers.FindAsync(id);
+            //_context.ProgramTiers.Remove(programTier);
+            //await _context.SaveChangesAsync();
+
+            var programTier = await _programTierRepository.GetByIdAsync(id);
+            await _programTierRepository.DeleteAsync(programTier);
+
             return RedirectToAction(nameof(Index));
         }
 
 
-        private bool ProgramTiersExists(int id)
+        private async Task<bool> ProgramTiersExistsAsync(int id)
         {
-            return _context.ProgramTiers.Any(e => e.Id == id);
+            return await _programTierRepository.ExistsAsync(id);
+
+            //return _context.ProgramTiers.Any(e => e.Id == id);
         }
     }
 }

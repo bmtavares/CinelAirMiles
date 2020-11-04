@@ -11,7 +11,7 @@
 
         Task<Client> GetClientWithDetailsAsync(int? id);
 
-        Task CreateClientWithUser(User user);
+        Task CreateClientWithUserAsync(User user);
 
         Task<Client> GetClientByNumber(string number);
     }

@@ -15,7 +15,7 @@
             _context = context;
         }
 
-        public async Task<Mile> GetMileWithClientAndType(int? id)
+        public async Task<Mile> GetMileWithClientAndTypeAsync(int? id)
         {
             return await _context.Miles
                 .Include(m => m.Client)

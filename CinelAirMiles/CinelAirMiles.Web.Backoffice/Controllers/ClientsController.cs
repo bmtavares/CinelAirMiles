@@ -111,7 +111,7 @@
 
                     user = await _userHelper.GetUserByEmailAsync(user.Email);
 
-                    await _clientRepository.CreateClientWithUser(user);
+                    await _clientRepository.CreateClientWithUserAsync(user);
 
                     return RedirectToAction(nameof(Index));
                 }

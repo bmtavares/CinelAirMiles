@@ -5,6 +5,7 @@
 
     using CinelAirMiles.Common.Data;
     using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Common.Repositories;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
@@ -12,18 +13,24 @@
     [Authorize]
     public class MilesTypesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        //readonly ApplicationDbContext _context;
+        readonly IMilesTypeRepository _milesTypeRepository;
 
-        public MilesTypesController(ApplicationDbContext context) //TODO change to repo
+        public MilesTypesController(
+            //ApplicationDbContext context,
+            IMilesTypeRepository milesTypeRepository)
         {
-            _context = context;
+            //_context = context;
+            _milesTypeRepository = milesTypeRepository;
         }
 
 
         // GET: MilesTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.MilesTypes.ToListAsync());
+            //return View(await _context.MilesTypes.ToListAsync());
+            return View(await _milesTypeRepository.GetAll().ToListAsync());
+
         }
 
 
@@ -35,8 +42,11 @@
                 return NotFound();
             }
 
-            var milesType = await _context.MilesTypes
-                .FirstOrDefaultAsync(m => m.Id == id);
+            //var milesType = await _context.MilesTypes
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+
+            var milesType = await _milesTypeRepository.GetByIdAsync(id.Value);
+
             if (milesType == null)
             {
                 return NotFound();
@@ -62,8 +72,12 @@
         {
             if (ModelState.IsValid)
             {
-                _context.Add(milesType);
-                await _context.SaveChangesAsync();
+
+                //_context.Add(milesType);
+                //await _context.SaveChangesAsync();
+
+                await _milesTypeRepository.CreateAsync(milesType);
+
                 return RedirectToAction(nameof(Index));
             }
             return View(milesType);
@@ -78,11 +92,15 @@
                 return NotFound();
             }
 
-            var milesType = await _context.MilesTypes.FindAsync(id);
+            //var milesType = await _context.MilesTypes.FindAsync(id);
+
+            var milesType = await _milesTypeRepository.GetByIdAsync(id.Value);
+
             if (milesType == null)
             {
                 return NotFound();
             }
+
             return View(milesType);
         }
 
@@ -103,12 +121,14 @@
             {
                 try
                 {
-                    _context.Update(milesType);
-                    await _context.SaveChangesAsync();
+                    //_context.Update(milesType);
+                    //await _context.SaveChangesAsync();
+
+                    await _milesTypeRepository.UpdateAsync(milesType);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MilesTypeExists(milesType.Id))
+                    if (!await MilesTypeExistsAsync(milesType.Id))
                     {
                         return NotFound();
                     }
@@ -130,14 +150,17 @@
                 return NotFound();
             }
 
-            var milesTypes = await _context.MilesTypes
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (milesTypes == null)
+            //var milesTypes = await _context.MilesTypes
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+
+            var milesType = await _milesTypeRepository.GetByIdAsync(id.Value);
+
+            if (milesType == null)
             {
                 return NotFound();
             }
 
-            return View(milesTypes);
+            return View(milesType);
         }
 
         // POST: MilesTypes/Delete/5
@@ -145,15 +168,21 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var milesTypes = await _context.MilesTypes.FindAsync(id);
-            _context.MilesTypes.Remove(milesTypes);
-            await _context.SaveChangesAsync();
+            //var milesTypes = await _context.MilesTypes.FindAsync(id);
+            //_context.MilesTypes.Remove(milesTypes);
+            //await _context.SaveChangesAsync();
+
+            var milesType = await _milesTypeRepository.GetByIdAsync(id);
+            await _milesTypeRepository.DeleteAsync(milesType);
+
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MilesTypeExists(int id)
+        private async Task<bool> MilesTypeExistsAsync(int id)
         {
-            return _context.MilesTypes.Any(e => e.Id == id);
+            //return _context.MilesTypes.Any(e => e.Id == id);
+
+            return await _milesTypeRepository.ExistsAsync(id);
         }
     }
 }

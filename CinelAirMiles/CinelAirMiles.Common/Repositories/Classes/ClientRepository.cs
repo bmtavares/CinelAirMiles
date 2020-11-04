@@ -38,14 +38,14 @@
                     .FirstOrDefaultAsync();
         }
 
-        public async Task CreateClientWithUser(User user)
+        public async Task CreateClientWithUserAsync(User user)
         {
             var programTier =
                 await _context.ProgramTiers
                 .Where(pt => pt.Description == "Basic")
                 .FirstOrDefaultAsync();
 
-            var programNumber = await GenerateProgramNumber();
+            var programNumber = await GenerateProgramNumberAsync();
 
             var client = new Client
             {
@@ -63,7 +63,7 @@
         public async Task<Client> GetClientByNumber(string number)
             => await _context.Clients.Where(c => c.MilesProgramNumber == number).FirstOrDefaultAsync();
 
-        async Task<string> GenerateProgramNumber()
+        async Task<string> GenerateProgramNumberAsync()
         {
             var programNumber = _random.Next(100000000, 1000000000).ToString();
 
