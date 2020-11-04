@@ -61,5 +61,21 @@
                 PhoneNumber = user.PhoneNumber
             };
         }
+
+        public EditClientViewModel ClientToEditClientViewModel(User user, Client client)
+        {
+            return new EditClientViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                //Email = user.Email,
+                ClientId = client.Id,
+                FlownSegments = client.FlownSegments,
+                MembershipDate = client.MembershipDate,
+                ProgramTierId = client.ProgramTierId
+            };
+        }
     }
 }

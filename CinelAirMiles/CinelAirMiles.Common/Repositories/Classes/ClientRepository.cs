@@ -2,6 +2,7 @@
 {
 
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using CinelAirMiles.Common.Data;
@@ -18,6 +19,23 @@
         {
             _context = context;
             _random = new Random();
+        }
+
+        public List<Client> GetClientsWithUsers()
+        {
+            return _context.Clients
+                    .Include(c => c.User)
+                    .ToList();
+        }
+
+        public async Task<Client> GetClientWithDetailsAsync(int? id)
+        {
+            return await _context.Clients
+                    .Include(c => c.User)
+                    .Include(c => c.ProgramTier)
+                    .Where(c => c.Id == id.Value)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync();
         }
 
         public async Task CreateClientWithUser(User user)

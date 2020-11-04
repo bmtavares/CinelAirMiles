@@ -1,10 +1,10 @@
-﻿using CinelAirMiles.Common.Entities;
-using CinelAirMiles.Common.Models;
-using CinelAirMiles.Web.Backoffice.Models;
-using System.Collections.Generic;
-
-namespace CinelAirMiles.Web.Backoffice.Helpers.Interfaces
+﻿namespace CinelAirMiles.Web.Backoffice.Helpers.Interfaces
 {
+    using System.Collections.Generic;
+
+    using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Web.Backoffice.Models;
+
     public interface IConverterHelper
     {
         Mile CreateMileViewModelToMile(CreateMileViewModel model, Client client, MilesType mileType);
@@ -14,5 +14,7 @@ namespace CinelAirMiles.Web.Backoffice.Helpers.Interfaces
         EditUserViewModel UserToEditUserViewModel(User user);
 
         List<UserViewModel> UsersToUserViewModels(List<User> users);
+
+        EditClientViewModel ClientToEditClientViewModel(User user, Client client);
     }
 }

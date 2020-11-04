@@ -19,14 +19,14 @@
                 @Html.DisplayNameFor(model => model.User)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FlownSegments)
+                @Html.DisplayNameFor(model => model.User.Email)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.MembershipDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProgramTier)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -41,18 +41,18 @@
                     @Html.DisplayFor(modelItem => item.User.FirstName) @Html.DisplayFor(modelItem => item.User.LastName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FlownSegments)
+                    @Html.DisplayFor(modelItem => item.User.Email)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.MembershipDate)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ProgramTier.Description)
-                </td>
+                </td>*@
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Delete</a>
+                    <a asp-action="Edit" asp-route-clientId="@item.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Details" asp-route-clientId="@item.Id" class="btn btn-primary">Details</a>
+                    @*<a asp-action="Delete" asp-route-clientId="@item.Id" class="btn btn-primary">Delete</a>*@
                 </td>
             </tr>
         }
