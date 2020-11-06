@@ -73,10 +73,12 @@
                         @if (this.User.IsInRole("SuperUser"))
                         {
                             <h3 class="menu-title">SUPERUSER MENU</h3><!-- /.menu-title -->
+                            <a asp-area="" asp-controller="" asp-action="Index"><i class="menu-icon fa fa-id-badge"></i>Notifications</a>
                         }
                         @if (this.User.IsInRole("User"))
                         {
                             <h3 class="menu-title">USER MENU</h3><!-- /.menu-title -->
+                            <a asp-area="" asp-controller="Clients" asp-action="Index"><i class="menu-icon fa fa-user"></i>Clients</a>
                         }
 
                         <h3 class="menu-title">DEBUG</h3><!-- /.menu-title -->
@@ -117,10 +119,16 @@
                     </div>*@
                 </div>
 
+
+                
                 <div class="col-sm-5">
+                    
                     <div class="user-area dropdown float-right">
+                        <!--ADDED-LINE-->
+                        <span class="badge badge-dark" id="notificationCount" style="position: absolute; margin: 11px -15px;"></span>
+                        <!-------------->
                         <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-power-off"></i> Logout</a>
-                </div>
+                    </div>
 
                     
                 </div>
@@ -139,10 +147,12 @@
             </footer>*@
         </div>
 
+    </div>
+
         <environment include="Development">
-            @*<script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/jquery/dist/jquery.js"></script>
             <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>*@
+            <script src="~/js/site.js" asp-append-version="true"></script>
 
             <script src="~/backoffice/vendors/jquery/dist/jquery.min.js"></script>
             <script src="~/backoffice/vendors/popper.js/dist/umd/popper.min.js"></script>

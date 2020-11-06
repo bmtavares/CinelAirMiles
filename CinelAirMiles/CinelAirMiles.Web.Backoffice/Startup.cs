@@ -79,6 +79,7 @@
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
             services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
@@ -99,7 +100,11 @@
                 options.AccessDeniedPath = "/NotAuthorized";
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                .AddJsonOptions(options =>
+                    options.SerializerSettings.ReferenceLoopHandling =
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

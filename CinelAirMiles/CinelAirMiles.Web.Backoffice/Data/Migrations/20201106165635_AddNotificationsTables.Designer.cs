@@ -4,37 +4,22 @@ using CinelAirMiles.Common.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CinelAirMiles.Web.Backoffice.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201106165635_AddNotificationsTables")]
+    partial class AddNotificationsTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("CinelAirMiles.Common.Entities.ChangeClientTierTemp", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool?>("ChangeConfirmed");
-
-                    b.Property<int?>("ClientId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.ToTable("ChangeClientsTierTemp");
-                });
 
             modelBuilder.Entity("CinelAirMiles.Common.Entities.Client", b =>
                 {
@@ -437,13 +422,6 @@ namespace CinelAirMiles.Web.Backoffice.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("CinelAirMiles.Common.Entities.ChangeClientTierTemp", b =>
-                {
-                    b.HasOne("CinelAirMiles.Common.Entities.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
                 });
 
             modelBuilder.Entity("CinelAirMiles.Common.Entities.Client", b =>

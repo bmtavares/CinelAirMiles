@@ -49,6 +49,22 @@
 
                 await _context.SaveChangesAsync();
             }
+
+            if (!await _context.NotificationsTypes.AnyAsync())
+            {
+                await CreateNotificationType("Personal");
+                await CreateNotificationType("Alert");
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        async Task CreateNotificationType(string type)
+        {
+            await _context.NotificationsTypes.AddAsync(new NotificationType
+            {
+                Type = type
+            });
         }
 
         async Task CreateMileType(string description)

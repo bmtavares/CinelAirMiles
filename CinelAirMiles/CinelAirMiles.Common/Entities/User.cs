@@ -1,5 +1,7 @@
 ﻿namespace CinelAirMiles.Common.Entities
 {
+    using System.Collections;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using Microsoft.AspNetCore.Identity;
@@ -18,5 +20,6 @@
 
         public bool RequirePasswordChange { get; set; }
 
+        public List<NotificationUser> NotificationUsers { get; set; }
     }
 }

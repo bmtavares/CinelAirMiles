@@ -27,6 +27,14 @@
 
         public DbSet<ContactForm> ContactForms { get; set; }
 
+        public DbSet<Notification> Notifications { get ;set; }
+
+        public DbSet<NotificationUser> NotificationsUsers { get; set; }
+
+        public DbSet<NotificationType> NotificationsTypes { get; set; }
+
+        public DbSet<ChangeClientTierTemp> ChangeClientsTierTemp { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -63,6 +71,9 @@
                 .HasOne(m => m.MilesType)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<NotificationUser>()
+                .HasKey(nu => new { nu.Id, nu.UserId });
 
             base.OnModelCreating(builder);
         }

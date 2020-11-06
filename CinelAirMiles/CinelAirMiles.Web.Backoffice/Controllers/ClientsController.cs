@@ -16,7 +16,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, User")]
     public class ClientsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -179,10 +179,11 @@
                                 client.FlownSegments = model.FlownSegments;
                                 client.MembershipDate = model.MembershipDate;
                                 client.ProgramTierId = model.ProgramTierId;
-                                // TODO Fix program tier not changing
                                 // model passes Id
 
-                                await _clientRepository.UpdateAsync(client);
+                                var currentUser = await _userHelper.GetUserByEmailAsync(User.Identity.Name);
+
+                                await _clientRepository.EditClientAsync(client, user);
 
                                 return RedirectToAction(nameof(Index));
                             }

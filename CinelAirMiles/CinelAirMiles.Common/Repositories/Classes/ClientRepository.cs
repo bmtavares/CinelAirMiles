@@ -4,6 +4,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using CinelAirMiles.Common.Data;
     using CinelAirMiles.Common.Entities;
@@ -12,12 +13,15 @@
     public class ClientRepository : GenericRepository<Client>, IClientRepository
     {
         readonly ApplicationDbContext _context;
+        readonly INotificationRepository _notificationRepository;
         readonly Random _random;
 
         public ClientRepository(
-            ApplicationDbContext context) : base(context)
+            ApplicationDbContext context,
+            INotificationRepository notificationRepository) : base(context)
         {
             _context = context;
+            _notificationRepository = notificationRepository;
             _random = new Random();
         }
 
@@ -80,6 +84,38 @@
             }
 
             return programNumber;
+        }
+
+        //TODO: Not allow various users to request came change if it's already been requested
+        //TODO: Not allow various superusers to confirm or deny a request if another superuser has already confirmed or denied it
+        public async Task RequestClientTierChangeAsync(Client client, User user)
+        {
+            var notification = new Notification
+            {
+                Text = $"User {user.UserName} has requested a tier change for client number {client.MilesProgramNumber} to tier {client.ProgramTier.Description}"
+            };
+
+            await _notificationRepository.CreateNotificationWithUserAndTypeAsync(notification, user.Id, "Alert");
+        }
+
+        public async Task EditClientAsync(Client clientChange, User user)
+        {
+            var client = await _context.Clients
+                .Include(c => c.ProgramTier)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Id == clientChange.Id);
+
+            if(client.ProgramTier.Id == clientChange.ProgramTierId)
+            {
+                await UpdateAsync(clientChange);
+            }
+            else
+            {
+                await RequestClientTierChangeAsync(clientChange, user);
+
+                clientChange.ProgramTier = client.ProgramTier;
+                await UpdateAsync(clientChange);
+            }
         }
     }
 }
