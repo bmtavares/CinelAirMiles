@@ -5,14 +5,23 @@
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
+    using System;
 
     public class Program
     {
         public static void Main(string[] args)
         {
-            IWebHost host = CreateWebHostBuilder(args).Build();
-            RunSeeding(host);
-            host.Run();
+            try
+            {
+                IWebHost host = CreateWebHostBuilder(args).Build();
+                RunSeeding(host);
+                host.Run();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
         }
 
         private static void RunSeeding(IWebHost host)

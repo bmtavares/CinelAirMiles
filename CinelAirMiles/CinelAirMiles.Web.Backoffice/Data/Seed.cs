@@ -31,7 +31,53 @@
             await _userHelper.CheckRoleAsync("SuperUser");
             await _userHelper.CheckRoleAsync("User");
 
-            var user = await _userHelper.GetUserByEmailAsync("noreply.projetoscinel@gmail.com");
+            await CreateDefaultUsers();
+
+            if (!await _context.MilesTypes.AnyAsync())
+            {
+                await CreateMileType("Status");
+                await CreateMileType("Bonus");
+
+                await _context.SaveChangesAsync();
+            }
+
+            if (!await _context.ProgramTiers.AnyAsync())
+            {
+                await CreateProgramTier("Basic");
+                await CreateProgramTier("Silver");
+                await CreateProgramTier("Gold");
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        async Task CreateMileType(string description)
+        {
+            await _context.MilesTypes.AddAsync(new MilesType
+            {
+                Description = description
+            });
+        }
+
+        async Task CreateProgramTier(string description)
+        {
+            await _context.ProgramTiers.AddAsync(new ProgramTier
+            {
+                Description = description
+            });
+        }
+
+        async Task CreateDefaultUsers()
+        {
+            await CreateDefaultAdmin();
+            await CreateDefaultSuperUser();
+            await CreateDefaultUser();
+        }
+
+        //TODO: Change to a valid e-mail address before publishing
+        async Task CreateDefaultAdmin()
+        {
+            var user = await _userHelper.GetUserByEmailAsync("admin@mail.com");
 
             if (user == null)
             {
@@ -39,16 +85,18 @@
                 {
                     FirstName = "Default",
                     LastName = "Admin",
-                    Email = "noreply.projetoscinel@gmail.com",
-                    UserName = "noreply.projetoscinel@gmail.com",
+                    Email = "admin@mail.com",
+                    UserName = "admin@mail.com",
+                    MainRole = "Employee",
+                    RequirePasswordChange = false,
                     EmailConfirmed = true
                 };
 
-                var result = await _userHelper.AddUserAsync(user, "ABab12!?");
+                var result = await _userHelper.AddUserAsync(user, "P@ssw0rd!");
 
                 if (!result.Succeeded)
                 {
-                    throw new InvalidOperationException($"An error occurred trying to create the default Admin Ricardo Lourenço in the seeder");
+                    throw new InvalidOperationException($"An error occurred trying to create the default Admin in the seeder");
                 }
 
                 var isInRole = await _userHelper.IsUserInRoleAsync(user, "Admin");
@@ -58,39 +106,74 @@
                     await _userHelper.AddUserToRoleAsync(user, "Admin");
                 }
             }
+        }
 
-            if (!await _context.MilesTypes.AnyAsync())
+        //TODO: Remove this method before publishing
+        async Task CreateDefaultSuperUser()
+        {
+            var user = await _userHelper.GetUserByEmailAsync("superuser@mail.com");
+
+            if (user == null)
             {
-                CreateMileType("Status");
-                CreateMileType("Bonus");
+                user = new User
+                {
+                    FirstName = "Default",
+                    LastName = "SuperUser",
+                    Email = "superuser@mail.com",
+                    UserName = "superuser@mail.com",
+                    MainRole = "Employee",
+                    RequirePasswordChange = false,
+                    EmailConfirmed = true
+                };
 
-                await _context.SaveChangesAsync();
-            }
+                var result = await _userHelper.AddUserAsync(user, "P@ssw0rd!");
 
-            if (!await _context.ProgramTiers.AnyAsync())
-            {
-                CreateProgramTier("Basic");
-                CreateProgramTier("Silver");
-                CreateProgramTier("Gold");
+                if (!result.Succeeded)
+                {
+                    throw new InvalidOperationException($"An error occurred trying to create the default SuperUser in the seeder");
+                }
 
-                await _context.SaveChangesAsync();
+                var isInRole = await _userHelper.IsUserInRoleAsync(user, "SuperUser");
+
+                if (!isInRole)
+                {
+                    await _userHelper.AddUserToRoleAsync(user, "SuperUser");
+                }
             }
         }
 
-        void CreateMileType(string description)
+        //TODO: Remove this method before publishing
+        async Task CreateDefaultUser()
         {
-            _context.MilesTypes.Add(new MilesType
-            {
-                Description = description
-            });
-        }
+            var user = await _userHelper.GetUserByEmailAsync("user@mail.com");
 
-        void CreateProgramTier(string description)
-        {
-            _context.ProgramTiers.Add(new ProgramTier
+            if (user == null)
             {
-                Description = description
-            });
+                user = new User
+                {
+                    FirstName = "Default",
+                    LastName = "User",
+                    Email = "user@mail.com",
+                    UserName = "user@mail.com",
+                    MainRole = "Employee",
+                    RequirePasswordChange = false,
+                    EmailConfirmed = true
+                };
+
+                var result = await _userHelper.AddUserAsync(user, "P@ssw0rd!");
+
+                if (!result.Succeeded)
+                {
+                    throw new InvalidOperationException($"An error occurred trying to create the default User in the seeder");
+                }
+
+                var isInRole = await _userHelper.IsUserInRoleAsync(user, "User");
+
+                if (!isInRole)
+                {
+                    await _userHelper.AddUserToRoleAsync(user, "User");
+                }
+            }
         }
     }
 }

@@ -17,6 +17,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
+    using Syncfusion.Licensing;
 
     public class Startup
     {
@@ -101,6 +102,9 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            SyncfusionLicenseProvider
+                .RegisterLicense("MzQ2OTU5QDMxMzgyZTMzMmUzMGlnZm82N0V2TUFTM2ZsSEJlRFZMZk1CSVVVZHlDN3VndUNwakhHczRNeWs9");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
