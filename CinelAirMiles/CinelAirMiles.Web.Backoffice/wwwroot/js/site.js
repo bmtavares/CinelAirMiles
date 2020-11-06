@@ -4,6 +4,15 @@
 // Write your JavaScript code.
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover({
+        placement: 'bottom',
+        content: function () {
+            return $("#notification-content").html();
+        },
+        html: true
+    });
+
+    $('body').append('<div id="notification-content" class="hide">Notification content goes here</div>')
 
     function getNotification() {
         $.ajax({

@@ -8,7 +8,7 @@ namespace CinelAirMiles.Common.Repositories
 {
     public interface INotificationRepository : IGenericRepository<Notification>
     {
-        Task CreateNotificationWithUserAndTypeAsync(Notification notification, string userId, string notificationType);
+        //Task CreateNotificationWithUserAndTypeAsync(Notification notification, string userId, string notificationType);
 
         Task<List<NotificationUser>> GetUserNotificationsAsync(string userId);
 

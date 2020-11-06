@@ -8,20 +8,24 @@
     using System.Threading.Tasks;
     using CinelAirMiles.Common.Data;
     using CinelAirMiles.Common.Entities;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
     public class ClientRepository : GenericRepository<Client>, IClientRepository
     {
         readonly ApplicationDbContext _context;
-        readonly INotificationRepository _notificationRepository;
+        readonly UserManager<User> _userManager;
+        //readonly INotificationRepository _notificationRepository;
         readonly Random _random;
 
         public ClientRepository(
             ApplicationDbContext context,
-            INotificationRepository notificationRepository) : base(context)
+            UserManager<User> userManager /*,
+            INotificationRepository notificationRepository*/) : base(context)
         {
             _context = context;
-            _notificationRepository = notificationRepository;
+            _userManager = userManager;
+            //_notificationRepository = notificationRepository;
             _random = new Random();
         }
 
@@ -86,7 +90,7 @@
             return programNumber;
         }
 
-        //TODO: Not allow various users to request came change if it's already been requested
+        //TODO: Not allow various users to request a change if it's already been requested
         //TODO: Not allow various superusers to confirm or deny a request if another superuser has already confirmed or denied it
         public async Task RequestClientTierChangeAsync(Client client, User user)
         {
@@ -95,7 +99,7 @@
                 Text = $"User {user.UserName} has requested a tier change for client number {client.MilesProgramNumber} to tier {client.ProgramTier.Description}"
             };
 
-            await _notificationRepository.CreateNotificationWithUserAndTypeAsync(notification, user.Id, "Alert");
+            await CreateNotificationWithUserAndTypeAsync(notification, user.Id, "Alert");
         }
 
         public async Task EditClientAsync(Client clientChange, User user)
@@ -115,6 +119,43 @@
 
                 clientChange.ProgramTier = client.ProgramTier;
                 await UpdateAsync(clientChange);
+            }
+        }
+
+
+        async Task CreateNotificationWithUserAndTypeAsync(Notification notification, string userId, string notificationType)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                //TODO: Proper error treatment
+                return;
+            }
+
+            var type = await _context.NotificationsTypes.FirstOrDefaultAsync(nt => nt.Type == notificationType);
+
+            if (type == null)
+            {
+                //TODO: Proper error treatment
+                return;
+            }
+
+            notification.NotificationType = type;
+
+            await _context.Notifications.AddAsync(notification);
+
+            var superUsers = await _userManager.GetUsersInRoleAsync("SuperUser");
+
+            var notificationUser = new NotificationUser
+            {
+                Notification = notification
+            };
+
+            foreach (var superUser in superUsers)
+            {
+                notificationUser.User = superUser;
+                await _context.NotificationsUsers.AddAsync(notificationUser);
             }
         }
     }
