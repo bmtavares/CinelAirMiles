@@ -95,8 +95,9 @@
                                         <ul id="navigation">
                                             <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                                             <li><a asp-area="" asp-controller="Home" asp-action="News">News</a></li>
-                                            <li><a href="category.html">Benefits</a></li>
-                                            <li><a href="category.html">Partners</a></li>
+                                            <li><a asp-area="" asp-controller="Home" asp-action="Benefits">Benefits</a></li>
+                                            <li><a asp-area="" asp-controller="Home" asp-action="Partners">Partners</a></li>
+                                            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -113,7 +114,7 @@
         <!-- Header End -->
     </header>
 
-    <partial name="_CookieConsentPartial" />
+    @*<partial name="_CookieConsentPartial" />*@
 
     <div class="container body-content">
         @RenderBody()
@@ -186,11 +187,10 @@
         <script src="~/frontoffice/js/hover-direction-snake.min.js"></script>
 
         <!-- contact js -->
-        <script src="~/frontoffice/js/contact.js"></script>
+       
         <script src="~/frontoffice/js/jquery.form.js"></script>
         <script src="~/frontoffice/js/jquery.validate.min.js"></script>
-        <script src="~/frontoffice/js/mail-script.js"></script>
-        <script src="~/frontoffice/js/jquery.ajaxchimp.min.js"></script>
+      
 
         <!-- Jquery Plugins, main Jquery -->
         <script src="~/frontoffice/js/plugins.js"></script>
@@ -235,11 +235,10 @@
         <script src="~/frontoffice/js/hover-direction-snake.min.js"></script>
 
         <!-- contact js -->
-        <script src="~/frontoffice/js/contact.js"></script>
+      
         <script src="~/frontoffice/js/jquery.form.js"></script>
         <script src="~/frontoffice/js/jquery.validate.min.js"></script>
-        <script src="~/frontoffice/js/mail-script.js"></script>
-        <script src="~/frontoffice/js/jquery.ajaxchimp.min.js"></script>
+        
 
         <!-- Jquery Plugins, main Jquery -->
         <script src="~/frontoffice/js/plugins.js"></script>

@@ -23,6 +23,10 @@
 
         public DbSet<ProgramTier> ProgramTiers { get; set; }
 
+        public DbSet<Subscription> Subscriptions { get; set; }
+
+        public DbSet<ContactForm> ContactForms { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

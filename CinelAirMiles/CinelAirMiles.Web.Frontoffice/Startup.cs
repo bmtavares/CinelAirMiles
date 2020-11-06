@@ -78,6 +78,9 @@
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<IMailHelper, MailHelper>();
             services.AddScoped<IXmlHelper, XmlHelper>();
+            services.AddScoped<IContactFormRepository, ContactFormRepository>();
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+
 
             services.Configure<CookiePolicyOptions>(options =>
             {

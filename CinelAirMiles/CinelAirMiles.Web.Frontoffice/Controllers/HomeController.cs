@@ -6,17 +6,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CinelAirMiles.Web.Frontoffice.Models;
 using CinelAirMiles.Web.Frontoffice.Helpers.Interfaces;
+using CinelAirMiles.Common.Repositories;
+using CinelAirMiles.Common.Entities;
 
 namespace CinelAirMiles.Web.Frontoffice.Controllers
 {
     public class HomeController : Controller
     {
         readonly IXmlHelper _xmlHelper;
+        private readonly ISubscriptionRepository _subscriptionRepository;
+        private readonly IContactFormRepository _contactFormRepository;
 
         public HomeController(
-            IXmlHelper xmlHelper)
+            IXmlHelper xmlHelper,
+            ISubscriptionRepository subscriptionRepository,
+            IContactFormRepository contactFormRepository)
         {
             _xmlHelper = xmlHelper;
+            _subscriptionRepository = subscriptionRepository;
+            _contactFormRepository = contactFormRepository;
         }
 
         public IActionResult Index()
@@ -54,6 +62,19 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
             return View(news);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddSubscriptionAsync(Subscription subscription)
+        {
+            if (ModelState.IsValid)
+            {
+                await _subscriptionRepository.CreateAsync(subscription);
+
+                ModelState.AddModelError(string.Empty, "Subscription ok");
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -64,8 +85,21 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
+            var model = new ContactForm();
+            return View(model);
+        }
 
-            return View();
+        [HttpPost]
+        public async Task<IActionResult> Contact(ContactForm model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _contactFormRepository.CreateAsync(model);
+            }
+
+            ModelState.AddModelError(string.Empty, "Contact form inserted succesfully");
+
+            return RedirectToAction(nameof(Contact));
         }
 
         public IActionResult Privacy()
