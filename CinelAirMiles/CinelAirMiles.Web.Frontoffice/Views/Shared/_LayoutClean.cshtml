@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] CinelAirMiles</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/frontoffice/img/favicon.ico">
+    <style>
+        body {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -40px;
+            bottom: -40px;
+            width: auto;
+            height: auto;
+            background-image: url(https://images.unsplash.com/photo-1530521954074-e64f6810b32d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80);
+            background-size: cover;
+            /*-webkit-filter: blur(5px);*/
+            z-index: -1;
+        }
+    </style>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/frontoffice/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/slicknav.css">
+        <link rel="stylesheet" href="~/frontoffice/css/flaticon.css">
+        <link rel="stylesheet" href="~/frontoffice/css/progressbar_barfiller.css">
+        <link rel="stylesheet" href="~/frontoffice/css/gijgo.css">
+        <link rel="stylesheet" href="~/frontoffice/css/animate.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/animated-headline.css">
+        <link rel="stylesheet" href="~/frontoffice/css/magnific-popup.css">
+        <link rel="stylesheet" href="~/frontoffice/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/themify-icons.css">
+        <link rel="stylesheet" href="~/frontoffice/css/slick.css">
+        <link rel="stylesheet" href="~/frontoffice/css/nice-select.css">
+        <link rel="stylesheet" href="~/frontoffice/css/style.css">
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/frontoffice/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/slicknav.css">
+        <link rel="stylesheet" href="~/frontoffice/css/flaticon.css">
+        <link rel="stylesheet" href="~/frontoffice/css/progressbar_barfiller.css">
+        <link rel="stylesheet" href="~/frontoffice/css/gijgo.css">
+        <link rel="stylesheet" href="~/frontoffice/css/animate.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/animated-headline.css">
+        <link rel="stylesheet" href="~/frontoffice/css/magnific-popup.css">
+        <link rel="stylesheet" href="~/frontoffice/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/themify-icons.css">
+        <link rel="stylesheet" href="~/frontoffice/css/slick.css">
+        <link rel="stylesheet" href="~/frontoffice/css/nice-select.css">
+        <link rel="stylesheet" href="~/frontoffice/css/style.css">
+    </environment>
+</head>
+<body>
+
+    @*<partial name="_CookieConsentPartial" />*@
+
+    <div class="container body-content">
+        @RenderBody()
+        <footer>
+            <!-- Footer Start-->
+            <!-- footer-bottom area -->
+            <div class="footer-bottom-area">
+                <div class="container">
+                    <div class="footer-border">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-xl-9 col-lg-8">
+                                <div class="footer-copy-right text-center">
+                                    <p style="color:white;">
+                                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                        Copyright &copy;
+                                        <script>document.write(new Date().getFullYear());</script> All rights reserved | Made by <a href="https://cinel.pt" style="color:white;" target="_blank">Andreia Correia | Bruno Tavares | Ricardo Lourenço - CET46</a>
+                                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End-->
+        </footer>
+
+    </div>
+
+    <environment include="Development">
+
+        <!-- JS here -->
+
+        <script src="~/frontoffice/js/vendor/modernizr-3.5.0.min.js"></script>
+        <!-- Jquery, Popper, Bootstrap -->
+        <script src="~/frontoffice/js/vendor/jquery-1.12.4.min.js"></script>
+        <script src="~/frontoffice/js/popper.min.js"></script>
+        <script src="~/frontoffice/js/bootstrap.min.js"></script>
+        <!-- Jquery Mobile Menu -->
+        <script src="~/frontoffice/js/jquery.slicknav.min.js"></script>
+
+        <!-- Jquery Slick , Owl-Carousel Plugins -->
+        <script src="~/frontoffice/js/owl.carousel.min.js"></script>
+        <script src="~/frontoffice/js/slick.min.js"></script>
+        <!-- One Page, Animated-HeadLin -->
+        <script src="~/frontoffice/js/wow.min.js"></script>
+        <script src="~/frontoffice/js/animated.headline.js"></script>
+        <script src="~/frontoffice/js/jquery.magnific-popup.js"></script>
+
+        <!-- Date Picker -->
+        <script src="~/frontoffice/js/gijgo.min.js"></script>
+        <!-- Nice-select, sticky -->
+        <script src="~/frontoffice/js/jquery.nice-select.min.js"></script>
+        <script src="~/frontoffice/js/jquery.sticky.js"></script>
+        <!-- Progress -->
+        <script src="~/frontoffice/js/jquery.barfiller.js"></script>
+
+        <!-- counter , waypoint,Hover Direction -->
+        <script src="~/frontoffice/js/jquery.counterup.min.js"></script>
+        <script src="~/frontoffice/js/waypoints.min.js"></script>
+        <script src="~/frontoffice/js/jquery.countdown.min.js"></script>
+        <script src="~/frontoffice/js/hover-direction-snake.min.js"></script>
+
+        <!-- contact js -->
+        <script src="~/frontoffice/js/contact.js"></script>
+        <script src="~/frontoffice/js/jquery.form.js"></script>
+        <script src="~/frontoffice/js/jquery.validate.min.js"></script>
+        <script src="~/frontoffice/js/mail-script.js"></script>
+        <script src="~/frontoffice/js/jquery.ajaxchimp.min.js"></script>
+
+        <!-- Jquery Plugins, main Jquery -->
+        <script src="~/frontoffice/js/plugins.js"></script>
+        <script src="~/frontoffice/js/main.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <!-- Scroll Up -->
+        <div id="back-top">
+            <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+        </div>
+
+        <!-- JS here -->
+
+        <script src="~/frontoffice/js/vendor/modernizr-3.5.0.min.js"></script>
+        <!-- Jquery, Popper, Bootstrap -->
+        <script src="~/frontoffice/js/vendor/jquery-1.12.4.min.js"></script>
+        <script src="~/frontoffice/js/popper.min.js"></script>
+        <script src="~/frontoffice/js/bootstrap.min.js"></script>
+        <!-- Jquery Mobile Menu -->
+        <script src="~/frontoffice/js/jquery.slicknav.min.js"></script>
+
+        <!-- Jquery Slick , Owl-Carousel Plugins -->
+        <script src="~/frontoffice/js/owl.carousel.min.js"></script>
+        <script src="~/frontoffice/js/slick.min.js"></script>
+        <!-- One Page, Animated-HeadLin -->
+        <script src="~/frontoffice/js/wow.min.js"></script>
+        <script src="~/frontoffice/js/animated.headline.js"></script>
+        <script src="~/frontoffice/js/jquery.magnific-popup.js"></script>
+
+        <!-- Date Picker -->
+        <script src="~/frontoffice/js/gijgo.min.js"></script>
+        <!-- Nice-select, sticky -->
+        <script src="~/frontoffice/js/jquery.nice-select.min.js"></script>
+        <script src="~/frontoffice/js/jquery.sticky.js"></script>
+        <!-- Progress -->
+        <script src="~/frontoffice/js/jquery.barfiller.js"></script>
+
+        <!-- counter , waypoint,Hover Direction -->
+        <script src="~/frontoffice/js/jquery.counterup.min.js"></script>
+        <script src="~/frontoffice/js/waypoints.min.js"></script>
+        <script src="~/frontoffice/js/jquery.countdown.min.js"></script>
+        <script src="~/frontoffice/js/hover-direction-snake.min.js"></script>
+
+        <!-- contact js -->
+        <script src="~/frontoffice/js/contact.js"></script>
+        <script src="~/frontoffice/js/jquery.form.js"></script>
+        <script src="~/frontoffice/js/jquery.validate.min.js"></script>
+        <script src="~/frontoffice/js/mail-script.js"></script>
+        <script src="~/frontoffice/js/jquery.ajaxchimp.min.js"></script>
+
+        <!-- Jquery Plugins, main Jquery -->
+        <script src="~/frontoffice/js/plugins.js"></script>
+        <script src="~/frontoffice/js/main.js"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

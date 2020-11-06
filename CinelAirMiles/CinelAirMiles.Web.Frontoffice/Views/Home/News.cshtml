@@ -1,0 +1,33 @@
+﻿@model CinelAirMiles.Web.Frontoffice.Models.NewsViewModel
+
+<div>
+    <br />
+    <h1>NEWS</h1>
+    <br />
+    <hr style="border-width: thin; border-color: dimgray;" />
+    @foreach (var item in Model.Channel.Item)
+    {
+        @*<h3>
+                @Html.DisplayNameFor(modelItem => item.Title)
+            </h3>*@
+        <h2>
+            <a href="@item.Link">@Html.DisplayFor(modelItem => item.Title)</a>
+        </h2>
+        <h3>
+            By: @Html.DisplayFor(modelItem => item.Author)
+        </h3>
+        <br />
+        <div>
+            @Html.Raw(item.Description)
+        </div>
+        <br />
+        <h3>
+            @Html.DisplayNameFor(modelItem => item.PubDate)
+        </h3>
+        <div>
+            @Html.DisplayFor(modelItem => item.PubDate)
+        </div>
+        <br />
+        <hr style="border-width: thin; border-color: dimgray;" />
+    }
+</div>

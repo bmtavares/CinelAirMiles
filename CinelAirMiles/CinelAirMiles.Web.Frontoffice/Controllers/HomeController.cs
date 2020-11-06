@@ -21,6 +21,13 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Message"] = "Your application Index page.";
+
+            return View();
+        }
+
+        public IActionResult News()
+        {
             NewsViewModel news;
 
             try

@@ -1,64 +1,75 @@
 ﻿@model CinelAirMiles.Common.Models.RegisterNewUserViewModel
 @{
     ViewData["Title"] = "Register";
+    Layout = "_LayoutClean";
 }
-
-<h2>Register New User</h2>
-
-<div class="row">
-    <div class="col-md-4 offset-md-4">
+<main>
+    <!-- Register Area Start -->
+    <div class="register-form-area">
         <form method="post">
             <div asp-validation-summary="ModelOnly"></div>
-
-            <div class="form-group">
-                <label asp-for="FirstName">First Name</label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-warning"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="LastName">Last Name</label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-warning"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Username">Username</label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-warning"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="PhoneNumber">Phone Number</label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-warning"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Password">Password</label>
-                @*TODO validação*@
-                <input asp-for="Password" type="password" class="form-control" />
-                <span asp-validation-for="Password" class="text-warning"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Confirm">Confirm</label>
-                <input asp-for="Confirm" type="password" class="form-control" />
-                <span asp-validation-for="Confirm" class="text-warning"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Register New User" class="btn btn-primary" />
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-6 col-lg-8">
+                        <div class="register-form text-center">
+                            <!-- Login Heading -->
+                            <div class="register-heading">
+                                <span>Register New User</span>
+                            </div>
+                            <!-- Single Input Fields -->
+                            <div class="input-box">
+                                @*<div class="text-success">
+                                    <p>
+                                        @ViewBag.Message
+                                    </p>
+                                </div>*@
+                                <div class="single-input-fields">
+                                    <label asp-for="FirstName">First Name</label>
+                                    <input asp-for="FirstName" class="form-control" type="text" placeholder="Enter first name.." />
+                                    <span asp-validation-for="FirstName" class="text-warning"></span>
+                                </div>
+                                <div class="single-input-fields">
+                                    <label asp-for="LastName">Last Name</label>
+                                    <input asp-for="LastName" class="form-control" type="text" placeholder="Enter last name.." />
+                                    <span asp-validation-for="LastName" class="text-warning"></span>
+                                </div>
+                                <div class="single-input-fields">
+                                    <label asp-for="Username">Username</label>
+                                    <input asp-for="Username" class="form-control" type="email" placeholder="Enter email.." />
+                                    <span asp-validation-for="Username" class="text-warning"></span>
+                                </div>
+                                <div class="single-input-fields">
+                                    <label asp-for="PhoneNumber">Phone Number</label>
+                                    <input asp-for="PhoneNumber" class="form-control" placeholder="Enter phone number.." />
+                                    <span asp-validation-for="PhoneNumber" class="text-warning"></span>
+                                </div>
+                                <div class="single-input-fields">
+                                    <label asp-for="Password">Password</label>
+                                    @*TODO validação*@
+                                    <input asp-for="Password" type="password" class="form-control" placeholder="Enter password.." />
+                                    <span asp-validation-for="Password" class="text-warning"></span>
+                                </div>
+                                <div class="single-input-fields">
+                                    <label asp-for="Confirm">Confirm</label>
+                                    <input asp-for="Confirm" type="password" class="form-control" placeholder="Confirm password.." />
+                                    <span asp-validation-for="Confirm" class="text-warning"></span>
+                                </div>
+                                <div class="register-footer">
+                                    <p> Already have an account? <a href="login.html"> Login</a> here</p>
+                                </div>
+                            </div>
+                            <!-- form Footer -->
+                            <div class="register-footer">
+                                <input type="submit" value="Register New User" class="submit-btn3" id="myBtn"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
-</div>
-
-<div class="text-success">
-    <p>
-        @ViewBag.Message
-    </p>
-</div>
+    <!-- Register Area End -->
+</main>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

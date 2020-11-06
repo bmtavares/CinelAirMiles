@@ -13,6 +13,6 @@
 
         Task CreateClientWithUserAsync(User user);
 
-        Task<Client> GetClientByNumber(string number);
+        Task<Client> GetClientByNumberAsync(string number);
     }
 }

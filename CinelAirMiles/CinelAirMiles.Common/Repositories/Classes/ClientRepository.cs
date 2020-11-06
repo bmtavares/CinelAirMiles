@@ -60,7 +60,7 @@
             await CreateAsync(client);
         }
 
-        public async Task<Client> GetClientByNumber(string number)
+        public async Task<Client> GetClientByNumberAsync(string number)
             => await _context.Clients.Where(c => c.MilesProgramNumber == number).FirstOrDefaultAsync();
 
         async Task<string> GenerateProgramNumberAsync()

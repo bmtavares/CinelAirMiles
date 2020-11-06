@@ -2,86 +2,248 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - CinelAirMiles.Web.Frontoffice</title>
+    <title>@ViewData["Title"] CinelAirMiles</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/frontoffice/img/favicon.ico">
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/frontoffice/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/slicknav.css">
+        <link rel="stylesheet" href="~/frontoffice/css/flaticon.css">
+        <link rel="stylesheet" href="~/frontoffice/css/progressbar_barfiller.css">
+        <link rel="stylesheet" href="~/frontoffice/css/gijgo.css">
+        <link rel="stylesheet" href="~/frontoffice/css/animate.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/animated-headline.css">
+        <link rel="stylesheet" href="~/frontoffice/css/magnific-popup.css">
+        <link rel="stylesheet" href="~/frontoffice/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/themify-icons.css">
+        <link rel="stylesheet" href="~/frontoffice/css/slick.css">
+        <link rel="stylesheet" href="~/frontoffice/css/nice-select.css">
+        <link rel="stylesheet" href="~/frontoffice/css/style.css">
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/frontoffice/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/slicknav.css">
+        <link rel="stylesheet" href="~/frontoffice/css/flaticon.css">
+        <link rel="stylesheet" href="~/frontoffice/css/progressbar_barfiller.css">
+        <link rel="stylesheet" href="~/frontoffice/css/gijgo.css">
+        <link rel="stylesheet" href="~/frontoffice/css/animate.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/animated-headline.css">
+        <link rel="stylesheet" href="~/frontoffice/css/magnific-popup.css">
+        <link rel="stylesheet" href="~/frontoffice/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="~/frontoffice/css/themify-icons.css">
+        <link rel="stylesheet" href="~/frontoffice/css/slick.css">
+        <link rel="stylesheet" href="~/frontoffice/css/nice-select.css">
+        <link rel="stylesheet" href="~/frontoffice/css/style.css">
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">CinelAirMiles.Web.Frontoffice</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
+   
+    <!-- Preloader Start-->
+    <header>
+        <!-- Header Start -->
+        <div class="header-area">
+            <div class="main-header ">
+                <div class="header-top ">
+                    <div class="container-fluid">
+                        <div class="col-xl-12">
+                            <div class="row d-flex justify-content-lg-between align-items-center">
+                                
+                                <div class="header-info-left">
+                                    <!-- logo -->
+                                    <div class="logo">
+                                        <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/frontoffice/img/logo/CinelAirMilesLogo.png" alt="" style="width:75px"></a>
+                                    </div>
+                                </div>
+                                <div class="header-info-right d-flex align-items-center">
+                                    <!--Login-->
+                                    <ul class="nav navbar-nav navbar-right">
+                                        @if (this.User.Identity.IsAuthenticated)
+                                        {
+                                            <li><a asp-area="" asp-controller="Account" asp-action="ChangeUser">@this.User.Identity.Name</a></li>
+                                            <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
+                                        }
+                                    </ul>
 
-                <!--Login-->
-                <ul class="nav navbar-nav navbar-right">
-                    @if (this.User.Identity.IsAuthenticated)
-                    {
-                        <li><a asp-area="" asp-controller="Account" asp-action="ChangeUser">@this.User.Identity.Name</a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a></li>
-                    }
-                    else
-                    {
-                        <li><a asp-area="" asp-controller="Account" asp-action="Login">Login</a></li>
-                    }
-                </ul>
-
-                @*<partial name="_LoginPartial" />*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-bottom  header-sticky">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <!-- logo 2 -->
+                                <div class="logo2">
+                                    <a href="index.html"><img src="~/frontoffice/img/logo/logo.png" alt=""></a>
+                                </div>
+                                <!-- logo 3 -->
+                                <div class="logo3 d-block d-sm-none">
+                                    <a href="index.html"><img src="~/frontoffice/img/logo/logo-mobile.png" alt=""></a>
+                                </div>
+                                <!-- Main-menu -->
+                                <div class="main-menu text-center d-none d-lg-block">
+                                    <nav>
+                                        <ul id="navigation">
+                                            <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                                            <li><a asp-area="" asp-controller="Home" asp-action="News">News</a></li>
+                                            <li><a href="category.html">Benefits</a></li>
+                                            <li><a href="category.html">Partners</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <!-- Mobile Menu -->
+                            <div class="col-12">
+                                <div class="mobile_menu d-block d-lg-none"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
+        <!-- Header End -->
+    </header>
 
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
         @RenderBody()
-        <hr />
+
+
         <footer>
-            <p>&copy; 2020 - CinelAirMiles.Web.Frontoffice</p>
+            <!-- Footer Start-->
+            
+            <!-- footer-bottom area -->
+            <div class="footer-bottom-area">
+                <div class="container">
+                    <div class="footer-border">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-xl-9 col-lg-8">
+                                <div class="footer-copy-right text-center">
+                                    <p>
+                                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                        Copyright &copy;
+                                        <script>document.write(new Date().getFullYear());</script> All rights reserved | Made by <a href="https://cinel.pt" target="_blank">Andreia Correia | Bruno Tavares | Ricardo Lourenço - CET46</a>
+                                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End-->
         </footer>
+
+        <!-- Scroll Up -->
+        <div id="back-top">
+            <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+        </div>
     </div>
 
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        
+
+        <!-- JS here -->
+
+        <script src="~/frontoffice/js/vendor/modernizr-3.5.0.min.js"></script>
+        <!-- Jquery, Popper, Bootstrap -->
+        <script src="~/frontoffice/js/vendor/jquery-1.12.4.min.js"></script>
+        <script src="~/frontoffice/js/popper.min.js"></script>
+        <script src="~/frontoffice/js/bootstrap.min.js"></script>
+        <!-- Jquery Mobile Menu -->
+        <script src="~/frontoffice/js/jquery.slicknav.min.js"></script>
+
+        <!-- Jquery Slick , Owl-Carousel Plugins -->
+        <script src="~/frontoffice/js/owl.carousel.min.js"></script>
+        <script src="~/frontoffice/js/slick.min.js"></script>
+        <!-- One Page, Animated-HeadLin -->
+        <script src="~/frontoffice/js/wow.min.js"></script>
+        <script src="~/frontoffice/js/animated.headline.js"></script>
+        <script src="~/frontoffice/js/jquery.magnific-popup.js"></script>
+
+        <!-- Date Picker -->
+        <script src="~/frontoffice/js/gijgo.min.js"></script>
+        <!-- Nice-select, sticky -->
+        <script src="~/frontoffice/js/jquery.nice-select.min.js"></script>
+        <script src="~/frontoffice/js/jquery.sticky.js"></script>
+        <!-- Progress -->
+        <script src="~/frontoffice/js/jquery.barfiller.js"></script>
+
+        <!-- counter , waypoint,Hover Direction -->
+        <script src="~/frontoffice/js/jquery.counterup.min.js"></script>
+        <script src="~/frontoffice/js/waypoints.min.js"></script>
+        <script src="~/frontoffice/js/jquery.countdown.min.js"></script>
+        <script src="~/frontoffice/js/hover-direction-snake.min.js"></script>
+
+        <!-- contact js -->
+        <script src="~/frontoffice/js/contact.js"></script>
+        <script src="~/frontoffice/js/jquery.form.js"></script>
+        <script src="~/frontoffice/js/jquery.validate.min.js"></script>
+        <script src="~/frontoffice/js/mail-script.js"></script>
+        <script src="~/frontoffice/js/jquery.ajaxchimp.min.js"></script>
+
+        <!-- Jquery Plugins, main Jquery -->
+        <script src="~/frontoffice/js/plugins.js"></script>
+        <script src="~/frontoffice/js/main.js"></script>
     </environment>
     <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <!-- Scroll Up -->
+        <div id="back-top">
+            <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+        </div>
+
+        <!-- JS here -->
+
+        <script src="~/frontoffice/js/vendor/modernizr-3.5.0.min.js"></script>
+        <!-- Jquery, Popper, Bootstrap -->
+        <script src="~/frontoffice/js/vendor/jquery-1.12.4.min.js"></script>
+        <script src="~/frontoffice/js/popper.min.js"></script>
+        <script src="~/frontoffice/js/bootstrap.min.js"></script>
+        <!-- Jquery Mobile Menu -->
+        <script src="~/frontoffice/js/jquery.slicknav.min.js"></script>
+
+        <!-- Jquery Slick , Owl-Carousel Plugins -->
+        <script src="~/frontoffice/js/owl.carousel.min.js"></script>
+        <script src="~/frontoffice/js/slick.min.js"></script>
+        <!-- One Page, Animated-HeadLin -->
+        <script src="~/frontoffice/js/wow.min.js"></script>
+        <script src="~/frontoffice/js/animated.headline.js"></script>
+        <script src="~/frontoffice/js/jquery.magnific-popup.js"></script>
+
+        <!-- Date Picker -->
+        <script src="~/frontoffice/js/gijgo.min.js"></script>
+        <!-- Nice-select, sticky -->
+        <script src="~/frontoffice/js/jquery.nice-select.min.js"></script>
+        <script src="~/frontoffice/js/jquery.sticky.js"></script>
+        <!-- Progress -->
+        <script src="~/frontoffice/js/jquery.barfiller.js"></script>
+
+        <!-- counter , waypoint,Hover Direction -->
+        <script src="~/frontoffice/js/jquery.counterup.min.js"></script>
+        <script src="~/frontoffice/js/waypoints.min.js"></script>
+        <script src="~/frontoffice/js/jquery.countdown.min.js"></script>
+        <script src="~/frontoffice/js/hover-direction-snake.min.js"></script>
+
+        <!-- contact js -->
+        <script src="~/frontoffice/js/contact.js"></script>
+        <script src="~/frontoffice/js/jquery.form.js"></script>
+        <script src="~/frontoffice/js/jquery.validate.min.js"></script>
+        <script src="~/frontoffice/js/mail-script.js"></script>
+        <script src="~/frontoffice/js/jquery.ajaxchimp.min.js"></script>
+
+        <!-- Jquery Plugins, main Jquery -->
+        <script src="~/frontoffice/js/plugins.js"></script>
+        <script src="~/frontoffice/js/main.js"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)
