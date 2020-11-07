@@ -94,9 +94,11 @@
         //TODO: Not allow various superusers to confirm or deny a request if another superuser has already confirmed or denied it
         public async Task RequestClientTierChangeAsync(Client client, User user)
         {
+            var tier = await _context.ProgramTiers.FirstOrDefaultAsync(pt => pt.Id == client.ProgramTierId);
+
             var notification = new Notification
             {
-                Text = $"User {user.UserName} has requested a tier change for client number {client.MilesProgramNumber} to tier {client.ProgramTier.Description}"
+                Text = $"User {user.UserName} has requested a tier change for client number {client.MilesProgramNumber} from {client.ProgramTier.Description} to {tier.Description}"
             };
 
             await CreateNotificationWithUserAndTypeAsync(notification, user.Id, "Alert");
