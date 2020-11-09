@@ -46,7 +46,7 @@
                     .FirstOrDefaultAsync();
         }
 
-        public async Task CreateClientWithUserAsync(User user)
+        public async Task CreateClientWithUserAsync(User user, DateTime birthDate)
         {
             var programTier =
                 await _context.ProgramTiers
@@ -62,7 +62,8 @@
                 Active = true,
                 IsInReferrerProgram = false,
                 MilesProgramNumber = programNumber,
-                ProgramTier = programTier
+                ProgramTier = programTier,
+                BirthDate = birthDate
             };
 
             await CreateAsync(client);

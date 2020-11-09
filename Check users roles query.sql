@@ -22,4 +22,3 @@ select
 	right join Clients on Clients.UserId = AspNetUsers.Id
 	left join ProgramTiers on ProgramTiers.Id = Clients.ProgramTierId
 	order by 'E-mail'
-

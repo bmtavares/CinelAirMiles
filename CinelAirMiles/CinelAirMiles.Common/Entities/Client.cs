@@ -31,6 +31,11 @@
         public bool IsInReferrerProgram { get; set; }
 
 
+        //[Required]
+        [DataType(DataType.DateTime)]
+        public DateTime BirthDate { get; set; }
+
+
         public DateTime MembershipDate { get; set; }
 
 

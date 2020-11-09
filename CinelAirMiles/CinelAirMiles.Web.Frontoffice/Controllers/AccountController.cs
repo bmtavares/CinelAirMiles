@@ -90,7 +90,7 @@
 
         public IActionResult Register()
         {
-            var model = new RegisterNewUserViewModel
+            var model = new RegisterNewClientViewModel
             {
                 //Countries = _countryRepository.GetComboCountries(),
                 //Cities = _countryRepository.GetComboCities(0)
@@ -102,55 +102,67 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterNewUserViewModel model)
+        public async Task<IActionResult> Register(RegisterNewClientViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = await _userHelper.GetUserByEmailAsync(model.Username);
+                var today = DateTime.Today;
 
-                if (user == null)
+                var age = today.Year - model.BirthDate.Value.Year;
+
+                if (model.BirthDate.Value.Date > today.AddYears(-age)) { age--; }
+
+                if(age >= 2)
                 {
-                    //var city = await _countryRepository.GetCityAsync(model.CityId);
+                    var user = await _userHelper.GetUserByEmailAsync(model.Username);
 
-                    user = new User
+                    if (user == null)
                     {
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        Email = model.Username,
-                        UserName = model.Username,
-                        PhoneNumber = model.PhoneNumber,
-                        
-                    };
+                        //var city = await _countryRepository.GetCityAsync(model.CityId);
 
-                    var result = await _userHelper.AddUserAsync(user, model.Password);
+                        user = new User
+                        {
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            Email = model.Username,
+                            UserName = model.Username,
+                            PhoneNumber = model.PhoneNumber,
+
+                        };
+
+                        var result = await _userHelper.AddUserAsync(user, model.Password);
 
 
 
-                    if (result != IdentityResult.Success)
-                    {
-                        ModelState.AddModelError(string.Empty, "The user couldn't be created");
+                        if (result != IdentityResult.Success)
+                        {
+                            ModelState.AddModelError(string.Empty, "The user couldn't be created");
+                            return View(model);
+                        }
+
+                        //TODO: Error message
+                        await _clientRepository.CreateClientWithUserAsync(user, model.BirthDate.Value);
+
+                        var myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                        var tokenLink = Url.Action("ConfirmEmail", "Account", new
+                        {
+                            userid = user.Id,
+                            token = myToken
+                        }, protocol: HttpContext.Request.Scheme);
+
+                        //TODO Send respective client number in the e-mail
+                        _mailHelper.SendMail(model.Username, "Email confirmation", $"<h1>Email Confirmation</h1>" +
+                            $"To allow the user, " +
+                            $"plase click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
+                        ViewBag.Message = "The instructions to allow your user has been sent to email.";
+
                         return View(model);
                     }
 
-                    //TODO: Error message
-                    await _clientRepository.CreateClientWithUserAsync(user);
-
-                    var myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
-                    var tokenLink = Url.Action("ConfirmEmail", "Account", new
-                    {
-                        userid = user.Id,
-                        token = myToken
-                    }, protocol: HttpContext.Request.Scheme);
-
-                    _mailHelper.SendMail(model.Username, "Email confirmation", $"<h1>Email Confirmation</h1>" +
-                        $"To allow the user, " +
-                        $"plase click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
-                    ViewBag.Message = "The instructions to allow your user has been sent to email.";
-
-                    return View(model);
+                    ModelState.AddModelError(string.Empty, "This username already exists");
                 }
 
-                ModelState.AddModelError(string.Empty, "This username already exists");
+                ModelState.AddModelError("BirthDate", "The client must be older than 2 years old");
             }
 
             return View(model);
