@@ -1,10 +1,57 @@
-﻿@{
-    ViewData["Title"] = "Confirm email";
+﻿@model CinelAirMiles.Common.Entities.Client
+
+@{
+    Layout = "_LayoutO";
 }
 
-<h2>@ViewData["Title"]</h2>
-<div>
-    <p>
-        Thank you for confirming your email. Now you can login into system.
-    </p>
-</div>
+<body>
+    <section class="page_404">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 ">
+                    <div style="text-align:center;">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <h1 class="text-center">Confirm Email</h1>
+
+                        <div class="four_zero_four_bg">
+                        </div>
+                        <div class="contant_box_404">
+                        </div>
+                        <br />
+                        <br />
+                        <div search-form>
+                            <p>Thank you for confirming your email. Now you can login into system.</p>
+                            <br />
+                            <br />
+                            <p style="color:red">
+                                Program Number:  @Html.DisplayFor(model => model.MilesProgramNumber)
+                                <br />
+                                <br />
+                                Falta aqui o program number
+                            </p>
+                            <br />
+                            <br />
+                            <a asp-area="" asp-controller="Home" asp-action="Index" class="submit-btn2">Back to Home</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+@*@{
+        ViewData["Title"] = "Confirm email";
+    }
+
+    <h2>@ViewData["Title"]</h2>
+    <div>
+        <p>
+            Thank you for confirming your email. Now you can login into system.
+        </p>
+    </div>*@

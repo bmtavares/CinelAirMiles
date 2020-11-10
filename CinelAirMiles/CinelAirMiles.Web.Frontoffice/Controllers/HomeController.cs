@@ -29,9 +29,9 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Message"] = "Your application Index page.";
-
+            ViewData["Message"] = "Index";
             return View();
+            
         }
 
         public IActionResult News()
@@ -69,17 +69,10 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
             {
                 await _subscriptionRepository.CreateAsync(subscription);
 
-                ModelState.AddModelError(string.Empty, "Subscription ok");
+                ViewBag.Subscription = "Subscription succesfully";
             }
 
             return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
         }
 
         public IActionResult Contact()

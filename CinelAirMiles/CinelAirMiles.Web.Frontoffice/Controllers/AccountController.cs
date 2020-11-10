@@ -145,9 +145,9 @@
                     _mailHelper.SendMail(model.Username, "Email confirmation", $"<h1>Email Confirmation</h1>" +
                         $"To allow the user, " +
                         $"plase click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
-                    ViewBag.Message = "The instructions to allow your user has been sent to email.";
-
-                    return View(model);
+                    //ViewBag.Message = "The instructions to allow your user has been sent to email.";
+                    return RedirectToAction(nameof(SuccessfulRegistration));
+                    //return View(model);
                 }
 
                 ModelState.AddModelError(string.Empty, "This username already exists");
@@ -155,6 +155,12 @@
 
             return View(model);
         }
+
+        public IActionResult SuccessfulRegistration()
+        {
+            return View();
+        }
+
 
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {

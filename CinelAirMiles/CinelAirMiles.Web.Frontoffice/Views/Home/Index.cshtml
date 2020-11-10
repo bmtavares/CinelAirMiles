@@ -8,7 +8,7 @@
                     <div class="single-baner-nw mb-30 text-center">
                         <div class="banner-img-cap">
                             <div class="banner-img">
-                                <img src="~/frontoffice/img/gallery/banner-cap1.png" alt="">
+                                <img src="~/frontoffice/img/gallery/foto1.jpg" alt="">
                                 <!--video iocn -->
                                 <div class="video-icon">
                                     <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0" data-animation="bounceIn" data-delay=".4s"><i class="fas fa-play"></i></a>
@@ -25,7 +25,7 @@
                     <div class="single-baner-nw mb-30 text-center">
                         <div class="banner-img-cap">
                             <div class="banner-img">
-                                <img src="~/frontoffice/img/gallery/banner-cap2.png" alt="">
+                                <img src="~/frontoffice/img/gallery/foto2.jpg" alt="">
                             </div>
                             <div class="banner-cap">
                                 <p>Trending</p>
@@ -38,7 +38,7 @@
                     <div class="single-baner-nw mb-30 text-center">
                         <div class="banner-img-cap">
                             <div class="banner-img">
-                                <img src="~/frontoffice/img/gallery/banner-cap3.png" alt="">
+                                <img src="~/frontoffice/img/gallery/foto3.jpg" alt="">
                                 <!--video iocn -->
                                 <div class="video-icon">
                                     <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0" data-animation="bounceIn" data-delay=".4s"><i class="fas fa-play"></i></a>
@@ -55,7 +55,7 @@
                     <div class="single-baner-nw mb-30 text-center">
                         <div class="banner-img-cap">
                             <div class="banner-img">
-                                <img src="~/frontoffice/img/gallery/banner-cap4.png" alt="">
+                                <img src="~/frontoffice/img/gallery/foto4.jpg" alt="">
                             </div>
                             <div class="banner-cap">
                                 <p>Trending</p>
@@ -68,7 +68,7 @@
                     <div class="single-baner-nw mb-30 text-center">
                         <div class="banner-img-cap">
                             <div class="banner-img">
-                                <img src="~/frontoffice/img/gallery/banner-cap2.png" alt="">
+                                <img src="~/frontoffice/img/gallery/foto5.jpg" alt="">
                                 <!--video iocn -->
                                 <div class="video-icon">
                                     <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0" data-animation="bounceIn" data-delay=".4s"><i class="fas fa-play"></i></a>
@@ -97,14 +97,18 @@
                         </div>
                     </div>
                     <div class="col-xl-5 col-lg-5 col-md-12">
-                        <form class="search-box" asp-action="AddSubscriptionAsync">
-                            <div asp-validation-summary="ModelOnly"></div>
+                        <form class="search-box" asp-controller="Home" asp-action="AddSubscriptionAsync">
+               
                             <div class="input-form">
                                 <input name="email" asp-for="Email" type="email" placeholder="Enter your email.." />
                             </div>
                             <div class="search-form">
-                                <button name="email" type="submit" class="button">Subscribe</button>
+                                <input type="submit" value="Subscribe" class="submit-btn3" />
                             </div>
+                            <span asp-validation-for="Email"></span>
+                            <span style="color:black;">
+                                @ViewBag.Subscription
+                            </span>
                         </form>
                     </div>
                 </div>
