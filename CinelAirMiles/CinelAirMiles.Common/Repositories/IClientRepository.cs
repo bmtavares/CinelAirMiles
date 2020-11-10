@@ -16,6 +16,8 @@
 
         Task<Client> GetClientByNumberAsync(string number);
 
+        Task<Client> GetClientByUserAsync(User user);
+
         /// <summary>
         /// Edits a client, and if applicable, requests a tier change to be confirmed by a SuperUser. The logged user's username is required
         /// </summary>

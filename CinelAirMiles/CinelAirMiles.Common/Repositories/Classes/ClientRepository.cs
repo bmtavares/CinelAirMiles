@@ -4,7 +4,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using CinelAirMiles.Common.Data;
     using CinelAirMiles.Common.Entities;
@@ -69,8 +68,21 @@
             await CreateAsync(client);
         }
 
+        /// <summary>
+        /// Returns a client from the context that matches the supplied ProgramNumber.
+        /// </summary>
+        /// <param name="number">MilesProgramNumber</param>
+        /// <returns>Client</returns>
         public async Task<Client> GetClientByNumberAsync(string number)
             => await _context.Clients.Where(c => c.MilesProgramNumber == number).FirstOrDefaultAsync();
+
+        /// <summary>
+        /// Returns a client from the context that matches the supplied user.
+        /// </summary>
+        /// <param name="user">User</param>
+        /// <returns>Client</returns>
+        public async Task<Client> GetClientByUserAsync(User user)
+            => await _context.Clients.Where(c => c.UserId == user.Id).FirstOrDefaultAsync();
 
         async Task<string> GenerateProgramNumberAsync()
         {

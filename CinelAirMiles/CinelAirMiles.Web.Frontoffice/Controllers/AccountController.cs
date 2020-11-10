@@ -150,10 +150,13 @@
                             token = myToken
                         }, protocol: HttpContext.Request.Scheme);
 
-                        //TODO Send respective client number in the e-mail
+                        var client = await _clientRepository.GetClientByUserAsync(user);
+
+                        //TODO Prettify Email
                         _mailHelper.SendMail(model.Username, "Email confirmation", $"<h1>Email Confirmation</h1>" +
-                            $"To allow the user, " +
-                            $"plase click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
+                            "Welcome to CinelAirMiles!<br/><br/>" +
+                            $"To confirm that this is your email, <a href = \"{tokenLink}\">click here</a> and we will activate your account.<br/>" +
+                            $"After that is done, you may login using your personal, newly issued, Program Number: <b>{client.MilesProgramNumber}</b>");
                         ViewBag.Message = "The instructions to allow your user has been sent to email.";
 
                         return View(model);
