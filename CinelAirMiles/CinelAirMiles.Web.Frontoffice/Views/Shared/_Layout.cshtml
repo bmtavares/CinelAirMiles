@@ -7,12 +7,6 @@
     <title>@ViewData["Title"] CinelAirMiles</title>
     <link rel="shortcut icon" type="image/x-icon" href="~/frontoffice/img/favicon.ico">
 
-    <!-- Syncfusion Essential JS 2 Styles -->
-    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
-
-    <!-- Syncfusion Essential JS 2 Scripts -->
-    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
-
     <environment include="Development">
         <link rel="stylesheet" href="~/frontoffice/css/bootstrap.min.css">
         <link rel="stylesheet" href="~/frontoffice/css/owl.carousel.min.css">
@@ -45,9 +39,15 @@
         <link rel="stylesheet" href="~/frontoffice/css/nice-select.css">
         <link rel="stylesheet" href="~/frontoffice/css/style.css">
     </environment>
+
+    <!-- Syncfusion Essential JS 2 Styles -->
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
+
+    <!-- Syncfusion Essential JS 2 Scripts -->
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
 </head>
 <body>
-   
+
     <!-- Preloader Start-->
     <header>
         <!-- Header Start -->
@@ -57,7 +57,7 @@
                     <div class="container-fluid">
                         <div class="col-xl-12">
                             <div class="row d-flex justify-content-lg-between align-items-center">
-                                
+
                                 <div class="header-info-left">
                                     <!-- logo -->
                                     <div class="logo">
@@ -128,7 +128,6 @@
 
         <footer>
             <!-- Footer Start-->
-            
             <!-- footer-bottom area -->
             <div class="footer-bottom-area">
                 <div class="container">
@@ -158,7 +157,7 @@
     </div>
 
     <environment include="Development">
-        
+
 
         <!-- JS here -->
 
@@ -193,10 +192,10 @@
         <script src="~/frontoffice/js/hover-direction-snake.min.js"></script>
 
         <!-- contact js -->
-       
+
         <script src="~/frontoffice/js/jquery.form.js"></script>
         <script src="~/frontoffice/js/jquery.validate.min.js"></script>
-      
+
 
         <!-- Jquery Plugins, main Jquery -->
         <script src="~/frontoffice/js/plugins.js"></script>
@@ -241,10 +240,10 @@
         <script src="~/frontoffice/js/hover-direction-snake.min.js"></script>
 
         <!-- contact js -->
-      
+
         <script src="~/frontoffice/js/jquery.form.js"></script>
         <script src="~/frontoffice/js/jquery.validate.min.js"></script>
-        
+
 
         <!-- Jquery Plugins, main Jquery -->
         <script src="~/frontoffice/js/plugins.js"></script>
@@ -252,5 +251,8 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+
+    <!-- Syncfusion Essential JS 2 ScriptManager -->
+    <ejs-scripts></ejs-scripts>
 </body>
 </html>

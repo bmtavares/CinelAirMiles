@@ -10,6 +10,8 @@
     <Compile Remove="Data\Migrations\20201106162038_AddedNotificationsTables.Designer.cs" />
     <Compile Remove="Data\Migrations\20201106181101_ChangeClientsTierTempTable.cs" />
     <Compile Remove="Data\Migrations\20201106181101_ChangeClientsTierTempTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201109173541_AddedClientBirthDate.cs" />
+    <Compile Remove="Data\Migrations\20201109173541_AddedClientBirthDate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +41,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="18.3.0.47" />
+    <PackageReference Include="Syncfusion.Licensing" Version="18.3.0.47" />
   </ItemGroup>
 
   <ItemGroup>

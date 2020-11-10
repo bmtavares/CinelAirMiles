@@ -1,4 +1,4 @@
-﻿@model CinelAirMiles.Common.Models.RegisterNewUserViewModel
+﻿@model CinelAirMiles.Common.Models.RegisterNewClientViewModel
 @{
     ViewData["Title"] = "Register";
     Layout = "_LayoutClean";
@@ -18,11 +18,11 @@
                             </div>
                             <!-- Single Input Fields -->
                             <div class="input-box">
-                                @*<div>
-                                    <p style="color:olivedrab;">
-                                        @ViewBag.Message
-                                    </p>
-                                </div>*@
+                                @*<div class="text-success">
+            <p>
+                @ViewBag.Message
+            </p>
+        </div>*@
                                 <div class="single-input-fields">
                                     <label asp-for="FirstName">First Name</label>
                                     <input asp-for="FirstName" class="form-control" type="text" placeholder="Enter first name.." />
@@ -36,8 +36,15 @@
                                 <div class="single-input-fields">
                                     <label asp-for="Username">Username</label>
                                     <input asp-for="Username" class="form-control" type="email" placeholder="Enter email.." />
-                                    @*<span asp-validation-for="Username" class="text-warning"></span>*@
+                                    <span asp-validation-for="Username" class="text-warning"></span>
                                 </div>
+
+                                <div class="form-group">
+                                    <label asp-for="BirthDate" style="width:100%; text-align:left">Date of birth</label>
+                                    <ejs-datepicker id="datePicker" start="Month" ejs-for="BirthDate" strictMode="true" max="DateTime.UtcNow" firstDayOfWeek="1" placeholder="Enter birth date" format="dd/MM/yyyy"></ejs-datepicker>
+                                    <span asp-validation-for="BirthDate" class="text-warning"></span>
+                                </div>
+
                                 <div class="single-input-fields">
                                     <label asp-for="PhoneNumber">Phone Number</label>
                                     <input asp-for="PhoneNumber" class="form-control" placeholder="Enter phone number.." />
@@ -45,9 +52,8 @@
                                 </div>
                                 <div class="single-input-fields">
                                     <label asp-for="Password">Password</label>
-                                    @*TODO validação*@
+                                    @*TODO validation*@
                                     <input asp-for="Password" type="password" class="form-control" placeholder="Enter password.." />
-                                    <label asp-for="Password" style="font-size:12px;margin-top:15px" class="text-warning">Use 8 or more characters with a mix of letters, numbers & symbols</label>
                                     <span asp-validation-for="Password" class="text-warning"></span>
                                 </div>
                                 <div class="single-input-fields">
@@ -56,7 +62,7 @@
                                     <span asp-validation-for="Confirm" class="text-warning"></span>
                                 </div>
                                 <div class="register-footer">
-                                    <p> Already have an account? <a asp-action="Login"> Login</a> here</p>
+                                    <p> Already have an account? <a href="login.html"> Login</a> here</p>
                                 </div>
                             </div>
                             <!-- form Footer -->

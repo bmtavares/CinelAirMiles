@@ -1,5 +1,6 @@
 ﻿namespace CinelAirMiles.Common.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@
 
         Task<Client> GetClientWithDetailsAsync(int? id);
 
-        Task CreateClientWithUserAsync(User user);
+        Task CreateClientWithUserAsync(User user, DateTime birthDate);
 
         Task<Client> GetClientByNumberAsync(string number);
 

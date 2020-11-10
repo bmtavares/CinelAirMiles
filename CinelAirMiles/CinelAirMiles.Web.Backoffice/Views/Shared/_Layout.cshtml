@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CinelAirMiles - Backoffice</title>
 
+    <!-- Syncfusion Essential JS 2 Styles -->
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
+
+    <!-- Syncfusion Essential JS 2 Scripts -->
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
+
     <environment include="Development">
+
+
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -120,9 +128,9 @@
                 </div>
 
 
-                
+
                 <div class="col-sm-5">
-                    
+
                     <div class="user-area dropdown float-right">
                         <!--ADDED-LINE-->
                         <span class="badge badge-dark" id="notificationCount" data-toggle="popover" title="Notifications" style="position: absolute; margin: 11px -15px;"></span>
@@ -130,14 +138,14 @@
                         <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-power-off"></i> Logout</a>
                     </div>
 
-                    
+
                 </div>
             </div>
 
         </header><!-- /header -->
         <!-- Header-->
 
-        
+
 
         <div class="container body-content">
             @RenderBody()
@@ -146,8 +154,6 @@
                 <p>&copy; 2020 - CinelAirMiles - Backoffice</p>
             </footer>*@
         </div>
-
-    </div>
 
         <environment include="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -218,5 +224,6 @@
         </environment>
 
         @RenderSection("Scripts", required: false)
+    </div>
 </body>
 </html>

@@ -183,7 +183,7 @@
 
                                 var currentUser = await _userHelper.GetUserByEmailAsync(User.Identity.Name);
 
-                                await _clientRepository.EditClientAsync(client, user);
+                                await _clientRepository.EditClientAsync(client, currentUser);
 
                                 return RedirectToAction(nameof(Index));
                             }
