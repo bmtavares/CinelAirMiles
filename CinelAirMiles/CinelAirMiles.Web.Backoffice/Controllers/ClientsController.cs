@@ -5,6 +5,7 @@
 
     using CinelAirMiles.Common.Data;
     using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Common.Models;
     using CinelAirMiles.Common.Repositories;
     using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
     using CinelAirMiles.Web.Backoffice.Models;
@@ -66,7 +67,7 @@
         // GET: Clients/Create
         public IActionResult Create()
         {
-            var model = new CreateClientViewModel()
+            var model = new RegisterNewClientViewModel()
             {
                 //ProgramTiers = _combosHelper.GetProgramTiers()
             };
@@ -77,7 +78,7 @@
         // POST: Clients/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateClientViewModel model)
+        public async Task<IActionResult> Create(RegisterNewClientViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -106,12 +107,13 @@
                     }
 
                     var token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+
                     // TODO: Confirm with human interaction
                     await _userHelper.ConfirmEmailAsync(user, token);
 
                     user = await _userHelper.GetUserByEmailAsync(user.Email);
 
-                    await _clientRepository.CreateClientWithUserAsync(user);
+                    await _clientRepository.CreateClientWithUserAsync(user, model.BirthDate.Value);
 
                     return RedirectToAction(nameof(Index));
                 }

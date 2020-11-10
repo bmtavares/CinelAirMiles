@@ -1,4 +1,4 @@
-﻿@model CinelAirMiles.Web.Backoffice.Models.CreateClientViewModel
+﻿@model CinelAirMiles.Common.Models.RegisterNewClientViewModel
 
 @{
     ViewData["Title"] = "Create Client";
@@ -28,6 +28,12 @@
                 <label asp-for="Username">Email</label>
                 <input asp-for="Username" type="email" class="form-control" />
                 <span asp-validation-for="Username" class="text-warning"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BirthDate" style="width:100%; text-align:left">Date of birth</label>
+                <ejs-datepicker id="datePicker" ejs-for="BirthDate" strictMode="true" max="DateTime.UtcNow" firstDayOfWeek="1" placeholder="Enter birth date" format="dd/MM/yyyy"></ejs-datepicker>
+                <span asp-validation-for="BirthDate" class="text-warning"></span>
             </div>
 
             <div class="form-group">
