@@ -410,5 +410,33 @@
 
         //    //return Json(country.Cities.OrderBy(c => c.Name));
         //}
+
+
+        #region Client
+
+        public async Task<IActionResult> MyAccount()
+        {
+            var client = await _clientRepository.GetClientByEmailAsync(this.User.Identity.Name);
+
+            return View(client);
+        }
+
+        public async Task<IActionResult> MyStatus()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> MyBalance()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> ManageMiles()
+        {
+            return View();
+        }
+
+
+        #endregion
     }
 }

@@ -19,7 +19,7 @@
 
         public ClientRepository(
             ApplicationDbContext context,
-            UserManager<User> userManager /*,
+            UserManager<User> userManager/*,
             INotificationRepository notificationRepository*/) : base(context)
         {
             _context = context;
@@ -172,6 +172,14 @@
                 notificationUser.User = superUser;
                 await _context.NotificationsUsers.AddAsync(notificationUser);
             }
+        }
+
+        public async Task<Client> GetClientByEmailAsync(string username)
+        {
+            return await _context.Clients
+                .Include(c => c.User)    
+                .Join(_context.Users.Where(u => u.UserName == username),
+                        c => c.UserId, u => u.Id, (c, u) => c).FirstOrDefaultAsync();
         }
     }
 }
