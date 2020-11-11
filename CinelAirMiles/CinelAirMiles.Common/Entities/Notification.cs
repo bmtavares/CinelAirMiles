@@ -18,6 +18,9 @@ namespace CinelAirMiles.Common.Entities
         public bool IsRead { get; set; } = false;
 
 
+        public int TempTableId { get; set; }
+
+
         [Required]
         public NotificationType NotificationType { get; set; }
 

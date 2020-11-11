@@ -52,8 +52,11 @@
 
             if (!await _context.NotificationsTypes.AnyAsync())
             {
-                await CreateNotificationType("Personal");
-                await CreateNotificationType("Alert");
+                await CreateNotificationType("TierChange");
+                await CreateNotificationType("Complaint");
+                await CreateNotificationType("SeatAvailability");
+                await CreateNotificationType("PartnerReference");
+                await CreateNotificationType("AdInsertion");
 
                 await _context.SaveChangesAsync();
             }

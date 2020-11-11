@@ -67,6 +67,16 @@
                 .WithOne()
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<ChangeClientTierTemp>()
+                .HasOne(c => c.Client)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ChangeClientTierTemp>()
+                .HasOne(c => c.ProgramTier)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.Entity<Mile>()
                 .HasOne(m => m.MilesType)
                 .WithOne()

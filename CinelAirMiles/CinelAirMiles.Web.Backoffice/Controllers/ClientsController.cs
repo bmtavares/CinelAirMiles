@@ -185,9 +185,14 @@
 
                                 var currentUser = await _userHelper.GetUserByEmailAsync(User.Identity.Name);
 
-                                await _clientRepository.EditClientAsync(client, currentUser);
+                                var message = await _clientRepository.EditClientAsync(client, currentUser);
 
-                                return RedirectToAction(nameof(Index));
+                                ViewData["Message"] = message;
+
+
+                                model.ProgramTiers = _combosHelper.GetProgramTiers();
+
+                                return View(model);
                             }
                             else
                             {

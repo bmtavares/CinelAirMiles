@@ -4,14 +4,16 @@ using CinelAirMiles.Common.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CinelAirMiles.Web.Backoffice.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201110225617_ChangeClientTierTempProgramTierColumn")]
+    partial class ChangeClientTierTempProgramTierColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,9 +27,9 @@ namespace CinelAirMiles.Web.Backoffice.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClientId");
+                    b.Property<int?>("ClientId");
 
-                    b.Property<int>("ProgramTierId");
+                    b.Property<int?>("ProgramTierId");
 
                     b.HasKey("Id");
 
@@ -449,13 +451,11 @@ namespace CinelAirMiles.Web.Backoffice.Data.Migrations
                 {
                     b.HasOne("CinelAirMiles.Common.Entities.Client", "Client")
                         .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ClientId");
 
                     b.HasOne("CinelAirMiles.Common.Entities.ProgramTier", "ProgramTier")
                         .WithMany()
-                        .HasForeignKey("ProgramTierId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ProgramTierId");
                 });
 
             modelBuilder.Entity("CinelAirMiles.Common.Entities.Client", b =>

@@ -81,7 +81,7 @@
                         @if (this.User.IsInRole("SuperUser"))
                         {
                             <h3 class="menu-title">SUPERUSER MENU</h3><!-- /.menu-title -->
-                            <a asp-area="" asp-controller="" asp-action="Index"><i class="menu-icon fa fa-id-badge"></i>Notifications</a>
+                            <a asp-area="" asp-controller="Notifications" asp-action="Index"><i class="menu-icon fa fa-id-badge"></i>Notifications</a>
                         }
                         @if (this.User.IsInRole("User"))
                         {
@@ -133,7 +133,7 @@
 
                     <div class="user-area dropdown float-right">
                         <!--ADDED-LINE-->
-                        <span class="badge badge-dark" id="notificationCount" data-toggle="popover" title="Notifications" style="position: absolute; margin: 11px -15px;"></span>
+                        <a class="badge badge-dark" id="notificationCount" asp-controller="Notifications" asp-action="Index" data-show="popover" title="Notifications" style="position: absolute; margin: 11px -15px;"></a>
                         <!-------------->
                         <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-power-off"></i> Logout</a>
                     </div>

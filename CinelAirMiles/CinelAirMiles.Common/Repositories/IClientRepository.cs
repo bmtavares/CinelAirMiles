@@ -24,6 +24,6 @@
         /// <param name="client"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        Task EditClientAsync(Client client, User user);
+        Task<string> EditClientAsync(Client client, User user);
     }
 }

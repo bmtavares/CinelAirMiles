@@ -13,5 +13,9 @@ namespace CinelAirMiles.Common.Repositories
         Task<List<NotificationUser>> GetUserNotificationsAsync(string userId);
 
         Task ReadNotificationAsync(int id);
+
+        Task AcceptAlertAsync(int id);
+
+        //Task DenyTierChangeAsync(int id);
     }
 }

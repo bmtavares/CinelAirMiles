@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CinelAirMiles.Common.Entities;
 using CinelAirMiles.Common.Repositories;
 using CinelAirMiles.Web.Backoffice.Helpers.Classes;
 using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
@@ -24,11 +25,49 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
             _notificationRepository = notificationRepository;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            var notificationsUsers = await GetUsersNotificationsAsync();
+            var notifications = notificationsUsers.Select(nt => nt.Notification).Where(nt => nt.IsRead == false);
+
+            return View(notifications);
+        }
+
+        public async Task<IActionResult> AcceptAlert(int? id)
+        {
+            if(id == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            //await _notificationRepository.ReadNotificationAsync(id.Value);
+
+            await ReadNotification(id.Value);
+
+            await _notificationRepository.AcceptAlertAsync(id.Value);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> DenyAlert(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            //await _notificationRepository.ReadNotificationAsync(id.Value);
+
+            await ReadNotification(id.Value);
+
+            //await _notificationRepository.DenyTierChangeAsync(id.Value);
+
+            return RedirectToAction(nameof(Index));
+        }
 
         public async Task<IActionResult> GetNotifications()
         {
-            var user = await _userHelper.GetUserByEmailAsync(User.Identity.Name);
-            var notifications = await _notificationRepository.GetUserNotificationsAsync(user.Id);
+            var notifications = await GetUsersNotificationsAsync();
 
             return Ok(new { UserNotifications = notifications, Count = notifications.Count });
         }
@@ -38,6 +77,14 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
             await _notificationRepository.ReadNotificationAsync(notificationId);
 
             return Ok();
+        }
+
+        async Task<List<NotificationUser>> GetUsersNotificationsAsync()
+        {
+            var user = await _userHelper.GetUserByEmailAsync(User.Identity.Name);
+            var notifications = await _notificationRepository.GetUserNotificationsAsync(user.Id);
+
+            return notifications;
         }
     }
 }

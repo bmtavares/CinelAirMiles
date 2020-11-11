@@ -105,40 +105,66 @@
 
         //TODO: Not allow various users to request a change if it's already been requested
         //TODO: Not allow various superusers to confirm or deny a request if another superuser has already confirmed or denied it
-        public async Task RequestClientTierChangeAsync(Client client, User user)
+        public async Task RequestClientTierChangeAsync(Client clientWithNewTier, User user)
         {
-            var tier = await _context.ProgramTiers.FirstOrDefaultAsync(pt => pt.Id == client.ProgramTierId);
+            var tier = await _context.ProgramTiers.FirstOrDefaultAsync(pt => pt.Id == clientWithNewTier.ProgramTierId);
 
             var notification = new Notification
             {
-                Text = $"User {user.UserName} has requested a tier change for client number {client.MilesProgramNumber} from {client.ProgramTier.Description} to {tier.Description}"
+                Text = $"User {user.UserName} has requested a tier change for client number {clientWithNewTier.MilesProgramNumber} from {clientWithNewTier.ProgramTier.Description} to {tier.Description}"
             };
 
-            await CreateNotificationWithUserAndTypeAsync(notification, user.Id, "Alert");
+            clientWithNewTier.ProgramTierId = clientWithNewTier.ProgramTier.Id;
+
+            await _context.ChangeClientsTierTemp.AddAsync(new ChangeClientTierTemp
+            {
+                ClientId = clientWithNewTier.Id,
+                ProgramTierId = tier.Id
+            });
+            await _context.SaveChangesAsync();
+
+            var tempTable = await _context.ChangeClientsTierTemp.FirstOrDefaultAsync(cc => cc.ClientId == clientWithNewTier.Id);
+
+            await CreateNotificationWithUserAndTypeAsync(notification, user.Id, tempTable.Id, "TierChange");
         }
 
-        public async Task EditClientAsync(Client clientChange, User user)
+        public async Task<string> EditClientAsync(Client clientWithNewTier, User user)
         {
-            var client = await _context.Clients
+            var clientWithOldTier = await _context.Clients
                 .Include(c => c.ProgramTier)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.Id == clientChange.Id);
+                .FirstOrDefaultAsync(c => c.Id == clientWithNewTier.Id);
 
-            if(client.ProgramTier.Id == clientChange.ProgramTierId)
+            if(clientWithOldTier.ProgramTier.Id == clientWithNewTier.ProgramTierId)
             {
-                await UpdateAsync(clientChange);
+                await UpdateAsync(clientWithNewTier);
+
+                return "Changes saved successfully";
             }
             else
             {
-                await RequestClientTierChangeAsync(clientChange, user);
+                var pendingClientChange = _context.ChangeClientsTierTemp.Any(cc => cc.ClientId == clientWithNewTier.Id);
 
-                clientChange.ProgramTier = client.ProgramTier;
-                await UpdateAsync(clientChange);
+                if(pendingClientChange == false)
+                {
+                    await RequestClientTierChangeAsync(clientWithNewTier, user);
+
+                    clientWithNewTier.ProgramTier = clientWithOldTier.ProgramTier;
+                    await UpdateAsync(clientWithNewTier);
+
+                    return "Tier change was requested to a Super user\nOther changes saved successfully";
+                }
+                else
+                {
+                    clientWithNewTier.ProgramTier = clientWithOldTier.ProgramTier;
+                    await UpdateAsync(clientWithNewTier);
+                    return "Tier change request not saved because there is already a pending tier change to this user\nOther changes saved successfully";
+                }
             }
         }
 
 
-        async Task CreateNotificationWithUserAndTypeAsync(Notification notification, string userId, string notificationType)
+        async Task CreateNotificationWithUserAndTypeAsync(Notification notification, string userId, int tempTableId, string notificationType)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
@@ -157,8 +183,10 @@
             }
 
             notification.NotificationType = type;
+            notification.TempTableId = tempTableId;
 
             await _context.Notifications.AddAsync(notification);
+            await _context.SaveChangesAsync();
 
             var superUsers = await _userManager.GetUsersInRoleAsync("SuperUser");
 
@@ -172,6 +200,7 @@
                 notificationUser.User = superUser;
                 await _context.NotificationsUsers.AddAsync(notificationUser);
             }
+            await _context.SaveChangesAsync();
         }
     }
 }

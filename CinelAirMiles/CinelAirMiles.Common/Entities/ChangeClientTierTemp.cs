@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CinelAirMiles.Common.Entities
+﻿namespace CinelAirMiles.Common.Entities
 {
     public class ChangeClientTierTemp : IEntity
     {
@@ -12,6 +8,12 @@ namespace CinelAirMiles.Common.Entities
         public Client Client { get; set; }
 
 
-        public bool? ChangeConfirmed { get; set; } = null;
+        public int ClientId { get; set; }
+
+
+        public ProgramTier ProgramTier { get; set; }
+
+
+        public int ProgramTierId { get; set; }
     }
 }

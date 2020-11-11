@@ -12,6 +12,10 @@
     <Compile Remove="Data\Migrations\20201106181101_ChangeClientsTierTempTable.Designer.cs" />
     <Compile Remove="Data\Migrations\20201109173541_AddedClientBirthDate.cs" />
     <Compile Remove="Data\Migrations\20201109173541_AddedClientBirthDate.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201111001004_test.cs" />
+    <Compile Remove="Data\Migrations\20201111001004_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201111001228_test.cs" />
+    <Compile Remove="Data\Migrations\20201111001228_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

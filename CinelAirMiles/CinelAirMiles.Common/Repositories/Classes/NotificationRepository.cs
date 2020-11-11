@@ -23,6 +23,56 @@ namespace CinelAirMiles.Common.Repositories.Classes
             //_userManager = userManager;
         }
 
+        public async Task AcceptAlertAsync(int id)
+        {
+            var notification = await _context.Notifications
+                .Include(n => n.NotificationType)
+                .FirstOrDefaultAsync(n => n.Id == id);
+
+            var notificationType = notification.NotificationType.Type;
+
+            switch (notificationType)
+            {
+                case "TierChange":
+                    var tempTable = await _context.ChangeClientsTierTemp
+                        .Include(cc => cc.Client)
+                        .ThenInclude(c => c.ProgramTier)
+                        .Include(cc => cc.ProgramTier)
+                        .FirstOrDefaultAsync(cc => cc.Id == notification.TempTableId);
+
+                    var client = tempTable.Client;
+                    var programTier = tempTable.ProgramTier;
+
+                    client.ProgramTier = programTier;
+
+                    _context.Clients.Update(client);
+                    _context.ChangeClientsTierTemp.Remove(tempTable);
+                    await _context.SaveChangesAsync();
+                    break;
+
+                case "Complaint":
+                    //TODO Pending
+                    break;
+
+                case "SeatAvailability":
+                    //TODO Pending
+                    break;
+
+                case "PartnerReference":
+                    //TODO Pending
+                    break;
+
+                case "AdInsertion":
+                    //TODO Pending
+                    break;
+            }
+        }
+
+        //public async Task DenyTierChangeAsync(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
 
         //public async Task CreateNotificationWithUserAndTypeAsync(Notification notification, string userId, string notificationType)
         //{
@@ -64,6 +114,7 @@ namespace CinelAirMiles.Common.Repositories.Classes
         {
             return await _context.NotificationsUsers.Where(nu => nu.UserId == userId)
                 .Include(nu => nu.Notification)
+                .Where(nu => nu.Notification.IsRead == false)
                 .ToListAsync();
         }
 

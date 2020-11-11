@@ -1,0 +1,34 @@
+﻿@model IEnumerable<CinelAirMiles.Common.Entities.Notification>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Text)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                <a class="btn btn-success" asp-controller="Notifications" asp-action="AcceptAlert" asp-route-id="@item.Id">Accept</a>
+                <a class="btn btn-danger" asp-controller="Notifications" asp-action="DenyAlert" asp-route-id="@item.Id">Deny</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
