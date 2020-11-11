@@ -66,8 +66,6 @@
                 cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"));
             });
 
-
-            //services.AddTransient<Backoffice.Data.Seed>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<ICreditCardRepository, CreditCardRepository>();
             services.AddScoped<IMileRepository, MileRepository>();

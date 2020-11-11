@@ -5,12 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CinelAirMiles - Backoffice</title>
 
-    <!-- Syncfusion Essential JS 2 Styles -->
-    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
-
-    <!-- Syncfusion Essential JS 2 Scripts -->
-    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
-
     <environment include="Development">
 
 
@@ -49,6 +43,12 @@
 
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     </environment>
+
+    <!-- Syncfusion Essential JS 2 Styles -->
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
+
+    <!-- Syncfusion Essential JS 2 Scripts -->
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
 </head>
 <body>
     <aside id="left-panel" class="left-panel">
@@ -133,7 +133,8 @@
 
                     <div class="user-area dropdown float-right">
                         <!--ADDED-LINE-->
-                        <a class="badge badge-dark" id="notificationCount" asp-controller="Notifications" asp-action="Index" data-show="popover" title="Notifications" style="position: absolute; margin: 11px -15px;"></a>
+                        <a class="fa fa-bell" style="position: absolute; margin: 11px -25px;" asp-controller="Notifications" asp-action="Index"></a>
+                        <a class="e-badge e-badge-danger" id="notificationCount" asp-controller="Notifications" asp-action="Index" data-show="popover" title="Notifications" style="position: absolute; margin: 3px -16px; font-size: x-small;"></a>
                         <!-------------->
                         <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-power-off"></i> Logout</a>
                     </div>
@@ -224,6 +225,9 @@
         </environment>
 
         @RenderSection("Scripts", required: false)
+
+        <!-- Syncfusion Essential JS 2 ScriptManager -->
+        <ejs-scripts></ejs-scripts>
     </div>
 </body>
 </html>

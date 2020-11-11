@@ -70,7 +70,6 @@
                 cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"), b => b.MigrationsAssembly("CinelAirMiles.Web.Backoffice"));
             });
 
-
             services.AddTransient<Seed>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<ICreditCardRepository, CreditCardRepository>();
