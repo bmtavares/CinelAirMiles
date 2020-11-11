@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using CinelAirMiles.Common.Entities;
@@ -24,6 +25,9 @@
         /// <param name="client"></param>
         /// <param name="user"></param>
         /// <returns></returns>
+
+
+        Task<Client> GetClientByEmailAsync(string username);
         Task<string> EditClientAsync(Client client, User user);
     }
 }
