@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly"></div>
 
             <div class="form-group">
@@ -42,6 +42,12 @@
                 <span asp-validation-for="PhoneNumber" class="text-warning"></span>
             </div>
 
+            @*<div class="form-group">
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" class="form-control" type="file" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>*@
+                
             <div class="form-group">
                 <label asp-for="Password">Password</label>
                 <input asp-for="Password" type="password" class="form-control" />
@@ -54,9 +60,9 @@
                 <span asp-validation-for="Confirm" class="text-warning"></span>
             </div>
 
-            <div class="form-group">
-                <input type="submit" value="Register New Client" class="btn btn-primary" />
-            </div>
+                <div class="form-group">
+                    <input type="submit" value="Register New Client" class="btn btn-primary" />
+                </div>
         </form>
     </div>
 </div>

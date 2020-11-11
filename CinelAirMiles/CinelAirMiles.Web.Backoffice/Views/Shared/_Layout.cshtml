@@ -13,8 +13,6 @@
 
     <environment include="Development">
 
-
-
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="apple-touch-icon" href="apple-icon.png">
@@ -60,8 +58,8 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="./" style="font-size:18px"><img src="~/backoffice/images/CAMlogo.png" alt="Logo" style="width:100px;"><br /></a>
-                <a class="navbar-brand hidden" href="./"><img src="~/backoffice/images/planeicon.png" alt="Logo" style="width:100px;" /></a>
+                <a class="navbar-brand" href="./" style="font-size:18px"><img src="~/backoffice/images/flyt_preview_rev_1.png" alt="Logo" style="width:100px;"><br /></a>
+                <a class="navbar-brand hidden" href="./"><img src="~/backoffice/images/flyt_logo.png" alt="Logo" style="width:100px;" /></a>
             </div>
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
@@ -127,25 +125,19 @@
                     </div>*@
                 </div>
 
-
-
                 <div class="col-sm-5">
-
+                    
                     <div class="user-area dropdown float-right">
                         <!--ADDED-LINE-->
-                        <a class="badge badge-dark" id="notificationCount" asp-controller="Notifications" asp-action="Index" data-show="popover" title="Notifications" style="position: absolute; margin: 11px -15px;"></a>
+                        <a class="fa fa-bell" style="position: absolute; margin: 11px -25px;" asp-controller="Notifications" asp-action="Index"></a>
+                        <a class="e-badge e-badge-danger" id="notificationCount" asp-controller="Notifications" asp-action="Index" data-show="popover" title="Notifications" style="position: absolute; margin: 3px -16px; font-size: x-small;"></a>
                         <!-------------->
                         <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-power-off"></i> Logout</a>
                     </div>
-
-
                 </div>
             </div>
-
         </header><!-- /header -->
         <!-- Header-->
-
-
 
         <div class="container body-content">
             @RenderBody()

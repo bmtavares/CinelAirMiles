@@ -1,4 +1,6 @@
-﻿using CinelAirMiles.Common.Repositories;
+﻿using CinelAirMiles.Common.Models;
+using CinelAirMiles.Common.Repositories;
+using CinelAirMiles.Web.Frontoffice.Helpers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,27 +12,36 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
     public class ClientsController : Controller
     {
         readonly IClientRepository _clientRepository;
+        private readonly IUserHelper _userHelper;
 
         public ClientsController(
-            IClientRepository clientRepository)
+            IClientRepository clientRepository,
+            IUserHelper userHelper)
         {
             _clientRepository = clientRepository;
+            _userHelper = userHelper;
         }
 
-        public async Task<IActionResult> MyAccount(int? id)
+        public async Task<IActionResult> MyAccount()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var client = await _clientRepository.GetClientWithDetailsAsync(id.Value);
-            if (client == null)
-            {
-                return NotFound();
-            }
+            var client = await _clientRepository.GetClientByEmailAsync(this.User.Identity.Name);
 
             return View(client);
+        }
+
+        public async Task<IActionResult> MyStatus()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> MyBalance()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> ManageMiles()
+        {
+            return View();
         }
     }
 }

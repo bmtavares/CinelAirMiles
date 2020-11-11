@@ -68,6 +68,15 @@
 
                         if (result.Succeeded)
                         {
+                            if (user.RequirePasswordChange)
+                            {
+                                await _userHelper.LogoutAsync();
+
+                                var gennedToken = await _userHelper.GeneratePasswordResetTokenAsync(user);
+
+                                return RedirectToAction("ForcedChange", new { token = gennedToken, username = user.UserName });
+                            }
+
                             if (Request.Query.Keys.Contains("ReturnUrl"))
                             {
                                 return Redirect(Request.Query["ReturnUrl"].First());
@@ -325,6 +334,7 @@
 
             //model.Cities = _countryRepository.GetComboCities(model.CountryId);
             //model.Countries = _countryRepository.GetComboCountries();
+            
             return this.View(model);
         }
 
@@ -349,7 +359,8 @@
                     var respose = await _userHelper.UpdateUserAsync(user);
                     if (respose.Succeeded)
                     {
-                        this.ViewBag.UserMessage = "User updated!";
+                        this.ViewBag.Message = "User changed sucessfuly.";
+                        //this.ViewBag.UserMessage = "User updated!";
                     }
                     else
                     {
@@ -411,32 +422,34 @@
         //    //return Json(country.Cities.OrderBy(c => c.Name));
         //}
 
-
-        #region Client
-
-        public async Task<IActionResult> MyAccount()
-        {
-            var client = await _clientRepository.GetClientByEmailAsync(this.User.Identity.Name);
-
-            return View(client);
-        }
-
-        public async Task<IActionResult> MyStatus()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> MyBalance()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> ManageMiles()
+        public IActionResult ForcedChange(string token, string username)
         {
             return View();
         }
 
 
-        #endregion
+        [HttpPost]
+        public async Task<IActionResult> ForcedChange(ResetPasswordViewModel model)
+        {
+            var user = await _userHelper.GetUserByEmailAsync(model.UserName);
+            if (user != null)
+            {
+                var result = await _userHelper.ResetPasswordAsync(user, model.Token, model.Password);
+                if (result.Succeeded)
+                {
+                    user.RequirePasswordChange = false;
+
+                    await _userHelper.UpdateUserAsync(user);
+
+                    return RedirectToAction("Login");
+                }
+
+                this.ViewBag.Message = "Error while resetting the password.";
+                return View(model);
+            }
+
+            this.ViewBag.Message = "User not found.";
+            return View(model);
+        }
     }
 }

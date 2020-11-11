@@ -23,10 +23,8 @@
                             </div>
                             <div>
                                 
-                            </div>
-                                                       
+                            </div>                                                       
                         </article>
-
 
                         <nav class="blog-pagination justify-content-center d-flex">
                             <ul class="pagination">
@@ -56,7 +54,7 @@
                         <aside class="single_sidebar_widget popular_post_widget">
                             <div class="media post_item">
 
-                                <img src="~/frontoffice/img/post/post_2.png" alt="post">
+                                @*<img src="~/frontoffice/img/post/post_2.png" alt="post">*@
                                 @*@if (!string.IsNullOrEmpty(Model.ImageUrl))
                                 {
                                     <img src=" @Url.Content(Model.ImageUrl)" alt="Image" style="width:100px;height:150px;max-height100%;height:auto" />
@@ -65,35 +63,23 @@
                                 {
                                     <img src="~/images/Doctors/noImage.png" class="rounded-circle" asp-append-version="true" style="width:100px;height:150px;max-height:100%;height:auto" />
                                 }*@
-                                <div class="media-body">
-                                    <a href="blog_details.html">
-                                        <h3 style="color: #2d2d2d;">@Html.DisplayFor(model => model.User.FirstName) @Html.DisplayFor(model => model.User.LastName)</h3>
-                                    </a>
-                                    <p><strong>Client Number :</strong> @Html.DisplayFor(model => model.MilesProgramNumber)</p>
-                                </div>
+
+                                <h5 style="color: #2d2d2d;">@Html.DisplayFor(model => model.User.FirstName) @Html.DisplayFor(model => model.User.LastName)</h5>
+                                <br />
+                               
+                            </div>
+                            <div class="media post_item">
+                                <h6><strong>Client Number :</strong> @Html.DisplayFor(model => model.MilesProgramNumber)</h6>
                             </div>
                             <div class="media post_item">
                                 <br />
                                 <h3>@Html.DisplayFor(model => model.FlownSegments) Flight Segments</h3>
 
                             </div>
-                            <br />
-                            <a class="submit-btn3" asp-action="ChangeUser">Edit profile</a>
-                        </aside>
 
-                        @*<aside class="single_sidebar_widget newsletter_widget">
-                            <h4 class="widget_title" style="color: #2d2d2d;">Newsletter</h4>
-                            <form action="#">
-                                <div class="form-group">
-                                    <input type="email" class="form-control" onfocus="this.placeholder = ''"
-                                           onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
-                                </div>
-                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                        type="submit">
-                                    Subscribe
-                                </button>
-                            </form>
-                        </aside>*@
+                            <br />
+                            <a class="submit-btn3" asp-controller="Account" asp-action="ChangeUser">Edit profile</a>
+                        </aside>                       
                     </div>
                 </div>
             </div>
