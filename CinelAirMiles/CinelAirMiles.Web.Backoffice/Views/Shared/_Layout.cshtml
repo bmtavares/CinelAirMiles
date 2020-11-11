@@ -5,12 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CinelAirMiles - Backoffice</title>
 
-    <!-- Syncfusion Essential JS 2 Styles -->
-    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
-
-    <!-- Syncfusion Essential JS 2 Scripts -->
-    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
-
     <environment include="Development">
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,6 +41,12 @@
 
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
     </environment>
+
+    <!-- Syncfusion Essential JS 2 Styles -->
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
+
+    <!-- Syncfusion Essential JS 2 Scripts -->
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
 </head>
 <body>
     <aside id="left-panel" class="left-panel">
@@ -216,6 +216,9 @@
         </environment>
 
         @RenderSection("Scripts", required: false)
+
+        <!-- Syncfusion Essential JS 2 ScriptManager -->
+        <ejs-scripts></ejs-scripts>
     </div>
 </body>
 </html>
