@@ -40,11 +40,10 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            //await _notificationRepository.ReadNotificationAsync(id.Value);
-
             await ReadNotification(id.Value);
 
-            await _notificationRepository.AcceptAlertAsync(id.Value);
+            //TODO Show this message in the index view
+            var message = await _notificationRepository.AcceptAlertAsync(id.Value);
 
             return RedirectToAction(nameof(Index));
         }
@@ -56,11 +55,9 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            //await _notificationRepository.ReadNotificationAsync(id.Value);
-
             await ReadNotification(id.Value);
 
-            //await _notificationRepository.DenyTierChangeAsync(id.Value);
+            await _notificationRepository.DenyTierChangeAsync(id.Value);
 
             return RedirectToAction(nameof(Index));
         }

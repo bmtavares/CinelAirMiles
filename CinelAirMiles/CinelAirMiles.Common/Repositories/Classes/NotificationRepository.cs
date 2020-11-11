@@ -13,17 +13,14 @@ namespace CinelAirMiles.Common.Repositories.Classes
     public class NotificationRepository : GenericRepository<Notification>, INotificationRepository
     {
         readonly ApplicationDbContext _context;
-        //readonly UserManager<User> _userManager;
 
         public NotificationRepository(
-            ApplicationDbContext context /*,
-            UserManager<User> userManager*/) : base(context)
+            ApplicationDbContext context) : base(context)
         {
             _context = context;
-            //_userManager = userManager;
         }
 
-        public async Task AcceptAlertAsync(int id)
+        public async Task<string> AcceptAlertAsync(int id)
         {
             var notification = await _context.Notifications
                 .Include(n => n.NotificationType)
@@ -40,6 +37,11 @@ namespace CinelAirMiles.Common.Repositories.Classes
                         .Include(cc => cc.ProgramTier)
                         .FirstOrDefaultAsync(cc => cc.Id == notification.TempTableId);
 
+                    if(tempTable == null)
+                    {
+                        return "Client tier not changed because the change has already been confirmed or denied";
+                    }
+
                     var client = tempTable.Client;
                     var programTier = tempTable.ProgramTier;
 
@@ -48,7 +50,8 @@ namespace CinelAirMiles.Common.Repositories.Classes
                     _context.Clients.Update(client);
                     _context.ChangeClientsTierTemp.Remove(tempTable);
                     await _context.SaveChangesAsync();
-                    break;
+
+                    return "Client tier changed succefully";
 
                 case "Complaint":
                     //TODO Pending
@@ -66,12 +69,51 @@ namespace CinelAirMiles.Common.Repositories.Classes
                     //TODO Pending
                     break;
             }
+
+            return "An unknown error occurred";
         }
 
-        //public async Task DenyTierChangeAsync(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task DenyTierChangeAsync(int id)
+        {
+            var notification = await _context.Notifications
+                .Include(n => n.NotificationType)
+                .FirstOrDefaultAsync(n => n.Id == id);
+
+            var notificationType = notification.NotificationType.Type;
+
+            switch (notificationType)
+            {
+                case "TierChange":
+                    var tempTable = await _context.ChangeClientsTierTemp
+                        .FirstOrDefaultAsync(cc => cc.Id == notification.TempTableId);
+
+                    if (tempTable == null)
+                    {
+                        return;
+                    }
+
+                    _context.ChangeClientsTierTemp.Remove(tempTable);
+                    await _context.SaveChangesAsync();
+
+                    return;
+
+                case "Complaint":
+                    //TODO Pending
+                    return;
+
+                case "SeatAvailability":
+                    //TODO Pending
+                    return;
+
+                case "PartnerReference":
+                    //TODO Pending
+                    return;
+
+                case "AdInsertion":
+                    //TODO Pending
+                    return;
+            }
+        }
 
 
         //public async Task CreateNotificationWithUserAndTypeAsync(Notification notification, string userId, string notificationType)

@@ -14,17 +14,14 @@
     {
         readonly ApplicationDbContext _context;
         readonly UserManager<User> _userManager;
-        //readonly INotificationRepository _notificationRepository;
         readonly Random _random;
 
         public ClientRepository(
             ApplicationDbContext context,
-            UserManager<User> userManager/*,
-            INotificationRepository notificationRepository*/) : base(context)
+            UserManager<User> userManager) : base(context)
         {
             _context = context;
             _userManager = userManager;
-            //_notificationRepository = notificationRepository;
             _random = new Random();
         }
 
@@ -103,7 +100,6 @@
             return programNumber;
         }
 
-        //TODO: Not allow various users to request a change if it's already been requested
         //TODO: Not allow various superusers to confirm or deny a request if another superuser has already confirmed or denied it
         public async Task RequestClientTierChangeAsync(Client clientWithNewTier, User user)
         {
@@ -190,15 +186,13 @@
 
             var superUsers = await _userManager.GetUsersInRoleAsync("SuperUser");
 
-            var notificationUser = new NotificationUser
-            {
-                Notification = notification
-            };
-
             foreach (var superUser in superUsers)
             {
-                notificationUser.User = superUser;
-                await _context.NotificationsUsers.AddAsync(notificationUser);
+                await _context.NotificationsUsers.AddAsync(new NotificationUser
+                {
+                    Notification = notification,
+                    User = superUser
+                });
             }
             await _context.SaveChangesAsync();
         }
