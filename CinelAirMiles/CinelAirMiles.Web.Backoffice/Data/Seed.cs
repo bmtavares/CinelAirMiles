@@ -27,42 +27,45 @@
         {
             await _context.Database.EnsureCreatedAsync();
 
+            await CheckPartnerAsync();
+            await CheckBenefitsAsync();
+
             await _userHelper.CheckRoleAsync("Admin");
             await _userHelper.CheckRoleAsync("SuperUser");
             await _userHelper.CheckRoleAsync("User");
 
-            await CreateDefaultUsers();
+            await CreateDefaultUsersAsync();
 
             if (!await _context.MilesTypes.AnyAsync())
             {
-                await CreateMileType("Status");
-                await CreateMileType("Bonus");
+                await CreateMileTypeAsync("Status");
+                await CreateMileTypeAsync("Bonus");
 
                 await _context.SaveChangesAsync();
             }
 
             if (!await _context.ProgramTiers.AnyAsync())
             {
-                await CreateProgramTier("Basic");
-                await CreateProgramTier("Silver");
-                await CreateProgramTier("Gold");
+                await CreateProgramTierAsync("Basic");
+                await CreateProgramTierAsync("Silver");
+                await CreateProgramTierAsync("Gold");
 
                 await _context.SaveChangesAsync();
             }
 
             if (!await _context.NotificationsTypes.AnyAsync())
             {
-                await CreateNotificationType("TierChange");
-                await CreateNotificationType("Complaint");
-                await CreateNotificationType("SeatAvailability");
-                await CreateNotificationType("PartnerReference");
-                await CreateNotificationType("AdInsertion");
+                await CreateNotificationTypeAsync("TierChange");
+                await CreateNotificationTypeAsync("Complaint");
+                await CreateNotificationTypeAsync("SeatAvailability");
+                await CreateNotificationTypeAsync("PartnerReference");
+                await CreateNotificationTypeAsync("AdInsertion");
 
                 await _context.SaveChangesAsync();
             }
         }
 
-        async Task CreateNotificationType(string type)
+        async Task CreateNotificationTypeAsync(string type)
         {
             await _context.NotificationsTypes.AddAsync(new NotificationType
             {
@@ -70,7 +73,7 @@
             });
         }
 
-        async Task CreateMileType(string description)
+        async Task CreateMileTypeAsync(string description)
         {
             await _context.MilesTypes.AddAsync(new MilesType
             {
@@ -78,7 +81,7 @@
             });
         }
 
-        async Task CreateProgramTier(string description)
+        async Task CreateProgramTierAsync(string description)
         {
             await _context.ProgramTiers.AddAsync(new ProgramTier
             {
@@ -86,15 +89,15 @@
             });
         }
 
-        async Task CreateDefaultUsers()
+        async Task CreateDefaultUsersAsync()
         {
-            await CreateDefaultAdmin();
-            await CreateDefaultSuperUser();
-            await CreateDefaultUser();
+            await CreateDefaultAdminAsync();
+            await CreateDefaultSuperUserAsync();
+            await CreateDefaultUserAsync();
         }
 
         //TODO: Change to a valid e-mail address before publishing
-        async Task CreateDefaultAdmin()
+        async Task CreateDefaultAdminAsync()
         {
             var user = await _userHelper.GetUserByEmailAsync("admin@mail.com");
 
@@ -128,7 +131,7 @@
         }
 
         //TODO: Remove this method before publishing
-        async Task CreateDefaultSuperUser()
+        async Task CreateDefaultSuperUserAsync()
         {
             var user = await _userHelper.GetUserByEmailAsync("superuser@mail.com");
 
@@ -162,7 +165,7 @@
         }
 
         //TODO: Remove this method before publishing
-        async Task CreateDefaultUser()
+        async Task CreateDefaultUserAsync()
         {
             var user = await _userHelper.GetUserByEmailAsync("user@mail.com");
 
@@ -193,6 +196,40 @@
                     await _userHelper.AddUserToRoleAsync(user, "User");
                 }
             }
+        }
+
+        private async Task CheckPartnerAsync()
+        {
+            if (! await _context.Partners.AnyAsync())
+            {
+                await _context.Partners.AddAsync(new Partner { Name = "SweetDrop", Description= "Acumule e utilize milhas com a SweetDrop, uma grande superfície de retalho.", });
+                await _context.Partners.AddAsync(new Partner { Name = "Hoteis Pestanas", Description = "Acumule uma percentragem em estadias em hoteis selecionados." });
+                await _context.Partners.AddAsync(new Partner { Name = "Air Arctic", Description = "Acumule e utilize milhas ao voar com a  nossa empresa parceira." });
+                await _context.Partners.AddAsync(new Partner { Name = "Banco MeioNovo", Description = "Acumule todos os meses com o Banco MeioNovo." });
+                await _context.Partners.AddAsync(new Partner { Name = "Abis", Description = "Alugue um carro com a Abis e acumule milhas na sua conta CinelAirMiles." });
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task CheckBenefitsAsync()
+        {
+            if (! await _context.Benefits.AnyAsync())
+            {
+                var partner = await _context.Partners.FirstOrDefaultAsync();
+                AddBenefit("Desconto em compras mensal", 15 , partner);
+                AddBenefit("Desconto em cada 100€ em compras", 5, partner);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private void AddBenefit(string description, float reward, Partner partner)
+        {
+            _context.Benefits.AddAsync(new Benefit
+            {
+                Description = description,
+                Reward = reward,
+                Partner = partner
+            });
         }
     }
 }
