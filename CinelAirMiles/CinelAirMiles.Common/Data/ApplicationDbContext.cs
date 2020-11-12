@@ -35,6 +35,10 @@
 
         public DbSet<ChangeClientTierTemp> ChangeClientsTierTemp { get; set; }
 
+        public DbSet<Partner> Partners { get; set; }
+
+        public DbSet<Benefit> Benefits { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

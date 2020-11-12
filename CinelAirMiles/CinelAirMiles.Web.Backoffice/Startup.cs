@@ -80,7 +80,8 @@
             services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
-            services.AddScoped<IUserHelper, UserHelper>();
+            services.AddScoped<IPartnerRepository, PartnerRepository>();
+            services.AddScoped<IBenefitRepository, BenefitRepository>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddScoped<IImageHelper, ImageHelper>();
