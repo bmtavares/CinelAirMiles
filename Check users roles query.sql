@@ -12,6 +12,7 @@ select
 
 
 select
+	Clients.Id as 'ID',
 	Email as 'E-mail',
 	ProgramTiers.Description as 'Description',
 	AspNetUsers.PhoneNumber as 'Phone',
@@ -21,4 +22,4 @@ select
 	from AspNetUsers
 	right join Clients on Clients.UserId = AspNetUsers.Id
 	left join ProgramTiers on ProgramTiers.Id = Clients.ProgramTierId
-	order by 'E-mail'
+	order by 'ID'

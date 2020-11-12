@@ -1,4 +1,4 @@
-﻿@model CinelAirMiles.Common.Entities.Client
+﻿@model List<CinelAirMiles.Common.Models.MilesViewModel>
 
 @{
     Layout = "_LayoutMyAccount";
@@ -22,6 +22,8 @@
                             </a>
                         </div>
                     </article>
+                    <ejs-grid id="milesGrid" allowSorting="true" allowPaging="true" allowGrouping="true" allowSelection="false" dataSource="Model">
+                    </ejs-grid>
                 </div>
             </div>
         </div>

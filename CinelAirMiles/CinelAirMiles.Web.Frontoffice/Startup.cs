@@ -77,6 +77,7 @@
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<IMailHelper, MailHelper>();
             services.AddScoped<IXmlHelper, XmlHelper>();
+            services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddScoped<IContactFormRepository, ContactFormRepository>();
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 

@@ -32,7 +32,7 @@
                 .ThenInclude(m => m.MilesType)
                 .FirstOrDefaultAsync(c => c.Id == clientId);
 
-            return client.Miles;
+            return client.Miles.OrderByDescending(m => m.ExpiryDate);
         }
     }
 }

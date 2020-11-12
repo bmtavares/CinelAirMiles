@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CinelAirMiles.Common.Entities;
 using CinelAirMiles.Common.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,7 +40,7 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
                 return NotFound();
             }
 
-            return View(miles.ToList());
+            return View(miles);
         }
 
         public async Task<IActionResult> PurchaseMiles()

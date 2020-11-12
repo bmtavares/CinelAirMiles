@@ -12,12 +12,18 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
     public class ClientsController : Controller
     {
         readonly IClientRepository _clientRepository;
+        readonly IConverterHelper _converterHelper;
+        readonly IMileRepository _mileRepository;
         private readonly IUserHelper _userHelper;
 
         public ClientsController(
             IClientRepository clientRepository,
+            IMileRepository mileRepository,
+            IConverterHelper converterHelper,
             IUserHelper userHelper)
         {
+            _converterHelper = converterHelper;
+            _mileRepository = mileRepository;
             _clientRepository = clientRepository;
             _userHelper = userHelper;
         }
@@ -36,7 +42,23 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
 
         public async Task<IActionResult> MyBalance()
         {
-            return View();
+            var client = await _clientRepository.GetClientByEmailAsync(User.Identity.Name);
+
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            var miles = await _mileRepository.GetMilesAssociatedWithClientAsync(client.Id);
+
+            if (miles == null)
+            {
+                return NotFound();
+            }
+
+            var model = _converterHelper.FromMileToMilesViewModel(miles);
+
+            return View(model);
         }
 
         public async Task<IActionResult> ManageMiles()
