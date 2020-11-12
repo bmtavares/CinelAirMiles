@@ -79,7 +79,7 @@
 
             builder.Entity<Mile>()
                 .HasOne(m => m.MilesType)
-                .WithOne()
+                .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<NotificationUser>()
