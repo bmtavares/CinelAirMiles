@@ -3,6 +3,7 @@
     using CinelAirMiles.Common.Data;
     using CinelAirMiles.Common.Entities;
     using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -22,6 +23,16 @@
                 .Include(m => m.MilesType)
                 .Where(m => m.Id == id.Value)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Mile>> GetMilesAssociatedWithClientAsync(int clientId)
+        {
+            var client = await _context.Clients
+                .Include(c => c.Miles)
+                .ThenInclude(m => m.MilesType)
+                .FirstOrDefaultAsync(c => c.Id == clientId);
+
+            return client.Miles;
         }
     }
 }

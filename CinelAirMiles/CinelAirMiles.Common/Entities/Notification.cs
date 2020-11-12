@@ -11,6 +11,7 @@ namespace CinelAirMiles.Common.Entities
 
 
         [Required]
+        [Display(Name = "Message")]
         public string Text { get; set; }
 
 

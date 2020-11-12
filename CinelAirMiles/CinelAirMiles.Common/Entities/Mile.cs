@@ -14,7 +14,7 @@
         public int ClientId { get; set; }
 
 
-        [Display(Name = "Miles quantity")]
+        [Display(Name = "Quantity")]
         public int Miles { get; set; }
 
 

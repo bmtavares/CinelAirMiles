@@ -65,19 +65,9 @@
             await CreateAsync(client);
         }
 
-        /// <summary>
-        /// Returns a client from the context that matches the supplied ProgramNumber.
-        /// </summary>
-        /// <param name="number">MilesProgramNumber</param>
-        /// <returns>Client</returns>
         public async Task<Client> GetClientByNumberAsync(string number)
             => await _context.Clients.Where(c => c.MilesProgramNumber == number).FirstOrDefaultAsync();
 
-        /// <summary>
-        /// Returns a client from the context that matches the supplied user.
-        /// </summary>
-        /// <param name="user">User</param>
-        /// <returns>Client</returns>
         public async Task<Client> GetClientByUserAsync(User user)
             => await _context.Clients.Where(c => c.UserId == user.Id).FirstOrDefaultAsync();
 
@@ -100,7 +90,6 @@
             return programNumber;
         }
 
-        //TODO: Not allow various superusers to confirm or deny a request if another superuser has already confirmed or denied it
         public async Task RequestClientTierChangeAsync(Client clientWithNewTier, User user)
         {
             var tier = await _context.ProgramTiers.FirstOrDefaultAsync(pt => pt.Id == clientWithNewTier.ProgramTierId);
@@ -117,6 +106,7 @@
                 ClientId = clientWithNewTier.Id,
                 ProgramTierId = tier.Id
             });
+
             await _context.SaveChangesAsync();
 
             var tempTable = await _context.ChangeClientsTierTemp.FirstOrDefaultAsync(cc => cc.ClientId == clientWithNewTier.Id);
@@ -199,10 +189,14 @@
 
         public async Task<Client> GetClientByEmailAsync(string username)
         {
+            //return await _context.Clients
+            //    .Include(c => c.User)
+            //    .Join(_context.Users.Where(u => u.UserName == username),
+            //            c => c.UserId, u => u.Id, (c, u) => c).FirstOrDefaultAsync();
+
             return await _context.Clients
-                .Include(c => c.User)    
-                .Join(_context.Users.Where(u => u.UserName == username),
-                        c => c.UserId, u => u.Id, (c, u) => c).FirstOrDefaultAsync();
+                .Include(c => c.User)
+                .FirstOrDefaultAsync(c => c.User.UserName == username);
         }
     }
 }
