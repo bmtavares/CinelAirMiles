@@ -1,45 +1,34 @@
-const http = require('http'); //carregamos o módulo
-
+const http = require('http'); //carregamos o modulo
 const express = require('express'),
   app = express(),
   mysql = require('mysql2'), // import mysql module
-  //cors = require('cors'),
   bodyParser = require('body-parser');
 
+const hostname = '192.168.193.7';
+const port = 3000;
+
 db = mysql.createConnection({
-  host: '192.168.193.7',
-  user: 'andreia',
-  password: 'P@ssw0rd!',
+  host: '127.0.0.1',
+  user: 'ticketbridge',
+  password: '.0Lympüs',
   database: 'CinelAirTickets'
-})
+});
 
 let server = http.createServer((req, res) => {
 
   console.log('URL:', req.url);
-  console.log('METHOD:', req.method)
+  console.log('METHOD:', req.method);
 
   switch(req.url) {
 
-      case '/':
+      case '/status':
       res.statusCode = 200;
       res.setHeader('Content-Type', 'text/html');
-      res.end('<h1>Olá</h1>')
-      break;
-
-      case '/users':
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({
-          users: [{
-                  name: 'Andreia',
-                  email: 'andreia@example.org',
-                  id:1
-          }]
-      }));
+      res.end('Connection successful.');
       break;
 
       case'/list': 
-          let sql = `SELECT Tickets.MilesProgramNumber, Departure.Latitude AS 'DLat', Departure.Longitude AS 'DLong', Departure.RegionId AS 'DReg',
+          let sql = `SELECT Tickets.FirstName, Tickets.LastName, Tickets.MilesProgramNumber, Departure.Latitude AS 'DLat', Departure.Longitude AS 'DLong', Departure.RegionId AS 'DReg',
           Arrival.Latitude AS 'ALat', Arrival.Longitude AS 'ALong', Arrival.RegionId AS 'AReg', Tickets.SeatClassId
          FROM Tickets, Aeroports AS Departure, Aeroports AS Arrival
          WHERE Tickets.MilesProgramNumber IS NOT NULL
@@ -48,15 +37,16 @@ let server = http.createServer((req, res) => {
           res.statusCode = 200;
           res.setHeader('Content-Type', 'application/json');
           db.query(sql, function(err, results, fields) {
-            if (err) throw err;
+            if (err) {
+              console.log ('Error', err.message, err.stack);
+              res.status(503).send('Service Unavailable');
+              }
             res.end(JSON.stringify({results}));
           });
       break;
 
-
 }});
 
-server.listen(3000, '127.0.0.1', ()=>{
-
-    console.log('servidor a rodar!');
+server.listen(port, hostname, ()=>{
+    console.log(`Ticket Bridge Server running at http://${hostname}:${port}/`);
 });
