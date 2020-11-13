@@ -17,6 +17,7 @@
         [Display(Name = "Quantity")]
         public int Miles { get; set; }
 
+        public int Balance { get; set; }
 
         public MilesType MilesType { get; set; }
 
