@@ -33,13 +33,18 @@
 
         public DbSet<NotificationType> NotificationsTypes { get; set; }
 
-        public DbSet<ChangeClientTierTemp> ChangeClientsTierTemp { get; set; }
-
         public DbSet<Partner> Partners { get; set; }
 
         public DbSet<Benefit> Benefits { get; set; }
 
         public DbSet<MilesTransactionType> MilesTransactionTypes { get; set; }
+
+        #region SuperUser Temp Tables
+        public DbSet<ChangeClientTierTemp> ChangeClientsTierTemp { get; set; }
+
+        public DbSet<AddPartnerTemp> AddPartnersTemp { get; set; }
+        #endregion
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

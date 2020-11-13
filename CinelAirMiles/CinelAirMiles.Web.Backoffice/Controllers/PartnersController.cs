@@ -1,28 +1,26 @@
-﻿using CinelAirMiles.Common.Data;
-using CinelAirMiles.Common.Entities;
-using CinelAirMiles.Common.Repositories;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CinelAirMiles.Web.Backoffice.Controllers
+﻿namespace CinelAirMiles.Web.Backoffice.Controllers
 {
+    using System.Threading.Tasks;
+
+    using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Common.Repositories;
+    using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+
     [Authorize(Roles = "Admin, User")]
     public class PartnersController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IPartnerRepository _partnerRepository;
+        private readonly IUserHelper _userHelper;
 
         public PartnersController(
-            ApplicationDbContext context,
-            IPartnerRepository partnerRepository)
+            IPartnerRepository partnerRepository,
+            IUserHelper userHelper)
         {
-            _context = context;
             _partnerRepository = partnerRepository;
+            _userHelper = userHelper;
         }
 
         // GET: Partners
@@ -58,17 +56,19 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
         }
 
         // POST: Partners/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Partner partner)
         {
             if (ModelState.IsValid)
             {
-                await _partnerRepository.CreateAsync(partner);
+                var currentUser = await _userHelper.GetUserByEmailAsync(User.Identity.Name);
 
-                return RedirectToAction(nameof(Index));
+                var message = await _partnerRepository.CreatePartnerAsync(partner, currentUser);
+
+                ViewData["Message"] = message;
+
+                return View(partner);
             }
             return View(partner);
         }
@@ -94,8 +94,6 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
 
 
         // POST: Partners/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Partner partner)
@@ -109,11 +107,11 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
             {
                 try
                 {
-                   await _partnerRepository.UpdateAsync(partner);
+                    await _partnerRepository.UpdateAsync(partner);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await PartnersExistsAsync(partner.Id))
+                    if (!await _partnerRepository.ExistsAsync(partner.Id))
                     {
                         return NotFound();
                     }
@@ -154,11 +152,6 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
             await _partnerRepository.DeleteAsync(partner);
 
             return RedirectToAction(nameof(Index));
-        }
-
-        private async Task<bool> PartnersExistsAsync(int id)
-        {
-            return await _partnerRepository.ExistsAsync(id);
         }
     }
 }
