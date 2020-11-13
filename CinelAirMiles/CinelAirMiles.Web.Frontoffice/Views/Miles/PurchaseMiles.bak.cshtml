@@ -1,0 +1,79 @@
+﻿@*@model CinelAirMiles.Web.Frontoffice.Models.PurchaseMilesViewModel
+@{
+    ViewData["Title"] = "PurchaseMiles";
+}
+
+<h2>Purchase Miles</h2>
+
+<div>
+    <ejs-numerictextbox id="quantity" decimals="0" max="2000" min="1" placeholder="Miles to purchase" ejs-for="Quantity"></ejs-numerictextbox>
+
+    <ejs-textbox id="value" enabled="false" placeholder="Value to pay"></ejs-textbox>
+    <br />
+    <br />
+    <ejs-tab id="ej2tab" heightAdjustMode="Auto" overflowMode="Scrollable">
+        <e-tab-tabitems>
+            <e-tab-tabitem content="#existingCards" header="@Model.ExistingCardHeader"></e-tab-tabitem>
+
+            <e-tab-tabitem content="#newCard" header="@Model.NewCardHeader"></e-tab-tabitem>
+        </e-tab-tabitems>
+    </ejs-tab>
+
+    <form id="existingCards">
+        <br />
+        <div width="20%">
+            <label asp-for="CreditCardInfoId" class="control-label">Select a credit card</label>
+            <select asp-for="CreditCardInfoId" asp-items="Model.CreditCards" class="form-control"></select>
+            <span asp-validation-for="CreditCardInfoId" class="text-danger"></span>
+        </div>
+        <ejs-dropdownlist id="ej2dropDown" ejs-for="CreditCards" value="@Model.CreditCardInfoId" placeholder="Select a credit card..." width="20%" noRecordsTemplate="No credit card registered"></ejs-dropdownlist>
+
+        <input type="submit"/>
+    </form>
+
+    <form id="newCard" asp-action="PurchaseMiles">
+        <br />
+        <ejs-textbox id="ej2firstName" ejs-for="CreditCardInfo.FirstName" placeholder="First name" width="20%"></ejs-textbox>
+        <ejs-textbox id="ej2lastName" ejs-for="CreditCardInfo.LastName" placeholder="Last name" width="20%"></ejs-textbox>
+        <br />
+        <ejs-textbox id="ej2cardNumber" ejs-for="CreditCardInfo.Number" placeholder="Card number" width="15%"></ejs-textbox>
+        <ejs-textbox id="ej2cvc" ejs-for="CreditCardInfo.CVC" placeholder="CVC" width="5%"></ejs-textbox>
+        <ejs-numerictextbox id="ej2month" max="12" min="1" ejs-for="CreditCardInfo.Month" placeholder="Month" width="5%" showSpinButton="false"></ejs-numerictextbox>
+        <ejs-numerictextbox id="ej2year" max="DateTime.UtcNow.Year+10" min="DateTime.UtcNow.Year" ejs-for="CreditCardInfo.Year" placeholder="Year" width="5%" showSpinButton="false"></ejs-numerictextbox>
+    
+        <input type="submit" class="btn btn-success"/>
+    </form>
+    
+    
+    
+    <div>
+            <label asp-for="CreditCardInfo.FirstName" class="control-label"></label>
+            <input asp-for="CreditCardInfo.FirstName" class="form-control" />
+            <span asp-validation-for="CreditCardInfo.FirstName" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="CreditCardInfo.LastName" class="control-label"></label>
+            <input asp-for="CreditCardInfo.LastName" class="form-control" />
+            <span asp-validation-for="CreditCardInfo.LastName" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="CreditCardInfo.Number" class="control-label"></label>
+            <input asp-for="CreditCardInfo.Number" class="form-control" />
+            <span asp-validation-for="CreditCardInfo.Number" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="CreditCardInfo.CVC" class="control-label"></label>
+            <input asp-for="CreditCardInfo.CVC" class="form-control" />
+            <span asp-validation-for="CreditCardInfo.CVC" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="CreditCardInfo.Month" class="control-label"></label>
+            <input asp-for="CreditCardInfo.Month" class="form-control" />
+            <span asp-validation-for="CreditCardInfo.Month" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="CreditCardInfo.Year" class="control-label"></label>
+            <input asp-for="CreditCardInfo.Year" class="form-control" />
+            <span asp-validation-for="CreditCardInfo.Year" class="text-danger"></span>
+        </div>
+</div>*@

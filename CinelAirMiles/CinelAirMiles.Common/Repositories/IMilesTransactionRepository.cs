@@ -5,6 +5,6 @@
 
     public interface IMilesTransactionRepository : IGenericRepository<MilesTransaction>
     {
-
+        Task PurchaseMilesAsync(int quantity, Client client, CreditCardInfo cardInfo);
     }
 }

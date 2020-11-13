@@ -39,6 +39,8 @@
 
         public DbSet<Benefit> Benefits { get; set; }
 
+        public DbSet<MilesTransactionType> MilesTransactionTypes { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

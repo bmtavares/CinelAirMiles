@@ -80,6 +80,7 @@
             services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddScoped<IContactFormRepository, ContactFormRepository>();
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            services.AddScoped<ICombosHelper, CombosHelper>();
 
 
             services.Configure<CookiePolicyOptions>(options =>
