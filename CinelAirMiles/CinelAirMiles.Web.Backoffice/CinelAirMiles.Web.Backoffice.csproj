@@ -16,6 +16,8 @@
     <Compile Remove="Data\Migrations\20201111001004_test.Designer.cs" />
     <Compile Remove="Data\Migrations\20201111001228_test.cs" />
     <Compile Remove="Data\Migrations\20201111001228_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20201112204156_AddedMilesTransactionTypes.cs" />
+    <Compile Remove="Data\Migrations\20201112204156_AddedMilesTransactionTypes.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

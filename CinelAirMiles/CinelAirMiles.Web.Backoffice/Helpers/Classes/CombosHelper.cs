@@ -4,6 +4,7 @@
     using System.Linq;
 
     using CinelAirMiles.Common.Data;
+    using CinelAirMiles.Common.Entities;
     using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
 
     using Microsoft.AspNetCore.Mvc.Rendering;

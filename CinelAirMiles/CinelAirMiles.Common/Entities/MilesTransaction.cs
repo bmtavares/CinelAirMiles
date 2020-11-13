@@ -14,5 +14,8 @@
         
 
         public Client Client { get; set; }
+
+
+        public MilesTransactionType MilesTransactionType { get; set; }
     }
 }

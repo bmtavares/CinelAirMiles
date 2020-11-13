@@ -27,7 +27,7 @@
         {
             await _context.Database.EnsureCreatedAsync();
 
-            await CheckPartnerAsync();
+            await CheckPartnersAsync();
             await CheckBenefitsAsync();
 
             await _userHelper.CheckRoleAsync("Admin");
@@ -35,6 +35,16 @@
             await _userHelper.CheckRoleAsync("User");
 
             await CreateDefaultUsersAsync();
+
+
+            if(!await _context.MilesTransactionTypes.AnyAsync())
+            {
+                await CreateMilesTransactionTypeAsync("Purchase");
+                await CreateMilesTransactionTypeAsync("Extension");
+                await CreateMilesTransactionTypeAsync("Transfer");
+                await CreateMilesTransactionTypeAsync("Conversion");
+            }
+
 
             if (!await _context.MilesTypes.AnyAsync())
             {
@@ -44,6 +54,7 @@
                 await _context.SaveChangesAsync();
             }
 
+
             if (!await _context.ProgramTiers.AnyAsync())
             {
                 await CreateProgramTierAsync("Basic");
@@ -52,6 +63,7 @@
 
                 await _context.SaveChangesAsync();
             }
+
 
             if (!await _context.NotificationsTypes.AnyAsync())
             {
@@ -64,6 +76,16 @@
                 await _context.SaveChangesAsync();
             }
         }
+
+
+        async Task CreateMilesTransactionTypeAsync(string description)
+        {
+            await _context.MilesTransactionTypes.AddAsync(new MilesTransactionType
+            {
+                Description = description
+            });
+        }
+
 
         async Task CreateNotificationTypeAsync(string type)
         {
@@ -198,7 +220,7 @@
             }
         }
 
-        private async Task CheckPartnerAsync()
+        private async Task CheckPartnersAsync()
         {
             if (! await _context.Partners.AnyAsync())
             {
@@ -216,15 +238,15 @@
             if (! await _context.Benefits.AnyAsync())
             {
                 var partner = await _context.Partners.FirstOrDefaultAsync();
-                AddBenefit("Desconto em compras mensal", 15 , partner);
-                AddBenefit("Desconto em cada 100€ em compras", 5, partner);
+                await AddBenefitAsync("Desconto em compras mensal", 15 , partner);
+                await AddBenefitAsync("Desconto em cada 100€ em compras", 5, partner);
                 await _context.SaveChangesAsync();
             }
         }
 
-        private void AddBenefit(string description, float reward, Partner partner)
+        private async Task AddBenefitAsync(string description, float reward, Partner partner)
         {
-            _context.Benefits.AddAsync(new Benefit
+            await _context.Benefits.AddAsync(new Benefit
             {
                 Description = description,
                 Reward = reward,
