@@ -1,0 +1,9 @@
+{
+  "solution": {
+    "path": "CinelAirMiles.sln",
+    "projects": [
+      "CinelAirMiles.Common\\CinelAirMiles.Common.csproj",
+      "CinelAirMiles.Web.InternalAPI\\CinelAirMiles.Web.InternalAPI.csproj"
+    ]
+  }
+}
