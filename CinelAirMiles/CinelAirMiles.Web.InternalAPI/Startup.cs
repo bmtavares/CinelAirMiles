@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-
-namespace CinelAirMiles.Web.InternalAPI
+﻿namespace CinelAirMiles.Web.InternalAPI
 {
+    using System;
+
+    using CinelAirMiles.Common.Data;
+    using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Common.Repositories;
+    using CinelAirMiles.Common.Repositories.Classes;
+    using CinelAirMiles.Common.Services;
+    using CinelAirMiles.Web.InternalAPI.Helpers;
+
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -26,6 +29,33 @@ namespace CinelAirMiles.Web.InternalAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<User, IdentityRole>(cfg =>
+            {
+                cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+                cfg.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 30, 0);
+                cfg.SignIn.RequireConfirmedEmail = true;
+                cfg.User.RequireUniqueEmail = true;
+                cfg.Password.RequireDigit = true;
+                cfg.Password.RequiredUniqueChars = 0;
+                cfg.Password.RequireLowercase = true;
+                cfg.Password.RequireNonAlphanumeric = true;
+                cfg.Password.RequireUppercase = true;
+                cfg.Password.RequiredLength = 8;
+            })
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddDbContext<ApplicationDbContext>(cfg =>
+            {
+                cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"));
+            });
+
+            services.AddScoped<IMathHelper, MathHelper>();
+            services.AddScoped<IMilesHelper, MilesHelper>();
+            services.AddScoped<IApiService, ApiService>();
+            services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IMileRepository, MileRepository>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

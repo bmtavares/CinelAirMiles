@@ -1,46 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Mvc;
-
-namespace CinelAirMiles.Web.InternalAPI.Controllers
+﻿namespace CinelAirMiles.Web.InternalAPI.Controllers
 {
-    [Route("api/[controller]")]
+    using System.Threading.Tasks;
+
+    using CinelAirMiles.Common.Services;
+    using CinelAirMiles.Web.InternalAPI.Helpers;
+    using CinelAirMiles.Web.InternalAPI.Responses;
+
+    using Microsoft.AspNetCore.Mvc;
+
+    [Route("api/")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
+        const string TicketsUrl = "http://192.168.193.7:3000";
+        const string Prefix = "";
+        const string Controller = "/list";
+        private readonly IApiService _apiService;
+        private readonly IMilesHelper _milesHelper;
+
+        public ValuesController(
+            IApiService apiService,
+            IMilesHelper milesHelper
+            )
+        {
+            _apiService = apiService;
+            _milesHelper = milesHelper;
+        }
+
+        // GET api/
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
-        }
+            var response = await _apiService.GetItemAsync<TicketList>
+                                    (TicketsUrl, Prefix, Controller);
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
+            if (response.IsSuccess)
+            {
+                var ticketList = (TicketList)response.Result;
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+                var readTickets = await _milesHelper.TicketCheckerAsync(ticketList);
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+                return Ok(readTickets);
+            }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return StatusCode(503);
         }
     }
 }
