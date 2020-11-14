@@ -117,6 +117,7 @@
                 ClientId = client.Id,
                 MilesTypeId = 2,
                 Miles = miles,
+                Balance = miles,
                 CreditDate = DateTime.UtcNow,
                 ExpiryDate = DateTime.UtcNow.AddYears(3),
                 Description = $"Miles from flight that landed on {DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd")}"
@@ -127,6 +128,7 @@
                 ClientId = client.Id,
                 MilesTypeId = 1,
                 Miles = miles,
+                Balance = miles,
                 CreditDate = DateTime.UtcNow,
                 ExpiryDate = DateTime.UtcNow.AddYears(3),
                 Description = $"Status from flight that landed on {DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd")}"

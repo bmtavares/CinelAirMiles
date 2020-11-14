@@ -71,19 +71,25 @@
             });
 
             services.AddTransient<Seed>();
+
+
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<ICreditCardRepository, CreditCardRepository>();
             services.AddScoped<IMileRepository, MileRepository>();
+
             services.AddScoped<IMilesTransactionRepository, MilesTransactionRepository>();
             services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
+
             services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
+
             services.AddScoped<IPartnerRepository, PartnerRepository>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();
+
             services.AddScoped<IImageHelper, ImageHelper>();
             services.AddScoped<IMailHelper, MailHelper>();
 

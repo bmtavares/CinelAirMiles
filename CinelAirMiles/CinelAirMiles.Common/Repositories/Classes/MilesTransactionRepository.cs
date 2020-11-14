@@ -28,6 +28,7 @@
             var mile = new Mile
             {
                 Miles = quantity,
+                Balance = quantity,
                 Client = client,
                 CreditDate = DateTime.UtcNow,
                 MilesType = type,

@@ -51,7 +51,7 @@ namespace CinelAirMiles.Common.Repositories.Classes
                     _context.ChangeClientsTierTemp.Remove(tempTable);
                     await _context.SaveChangesAsync();
 
-                    return "Client tier changed succefully";
+                    return "Client tier changed successfully";
 
                 case "Complaint":
                     //TODO Pending
@@ -62,8 +62,25 @@ namespace CinelAirMiles.Common.Repositories.Classes
                     break;
 
                 case "PartnerReference":
-                    //TODO Pending
-                    break;
+                    var tempPartner = await _context.AddPartnersTemp
+                        .FirstOrDefaultAsync(pt => pt.Id == notification.TempTableId);
+
+                    if(tempPartner == null)
+                    {
+                        return "Partner was not created because its creation has already been confirmed or denied.";
+                    }
+
+                    var newPartner = new Partner
+                    {
+                        Name = tempPartner.Name,
+                        Description = tempPartner.Description
+                    };
+
+                    _context.Partners.Add(newPartner);
+                    _context.AddPartnersTemp.Remove(tempPartner);
+                    await _context.SaveChangesAsync();
+
+                    return "Partner added successfully.";
 
                 case "AdInsertion":
                     //TODO Pending

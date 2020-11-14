@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CinelAirMiles.Common.Repositories
-{
     public interface IPartnerRepository : IGenericRepository<Partner>
     {
+        Task<string> CreatePartnerAsync(Partner newPartner, User user);
 
         Task<Partner> GetParnerWithBenefitsAsync(int id);
 

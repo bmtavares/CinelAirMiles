@@ -11,20 +11,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CinelAirMiles.Web.Backoffice.Controllers
-{
     [Authorize(Roles = "Admin, User")]
     public class PartnersController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IPartnerRepository _partnerRepository;
+        private readonly IUserHelper _userHelper;
 
         public PartnersController(
-            ApplicationDbContext context,
-            IPartnerRepository partnerRepository)
+            IPartnerRepository partnerRepository,
+            IUserHelper userHelper)
         {
-            _context = context;
             _partnerRepository = partnerRepository;
+            _userHelper = userHelper;
         }
 
         // GET: Partners
@@ -60,36 +58,20 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
         }
 
         // POST: Partners/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Partner partner)
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    await _partnerRepository.CreateAsync(partner);
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateException dbUpdateException)
-                {
-                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
-                    {
-                        ModelState.AddModelError(string.Empty, "There are a record with the same name.");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
-                    }
-                }
-                catch (Exception exception)
-                {
-                    ModelState.AddModelError(string.Empty, exception.Message);
-                }
+                var currentUser = await _userHelper.GetUserByEmailAsync(User.Identity.Name);
+
+                var message = await _partnerRepository.CreatePartnerAsync(partner, currentUser);
+
+                ViewData["Message"] = message;
+
+                return View(partner);
             }
-            
             return View(partner);
         }
 
@@ -114,8 +96,6 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
 
 
         // POST: Partners/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Partner partner)
@@ -129,11 +109,11 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
             {
                 try
                 {
-                   await _partnerRepository.UpdateAsync(partner);
+                    await _partnerRepository.UpdateAsync(partner);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await PartnersExistsAsync(partner.Id))
+                    if (!await _partnerRepository.ExistsAsync(partner.Id))
                     {
                         return NotFound();
                     }
