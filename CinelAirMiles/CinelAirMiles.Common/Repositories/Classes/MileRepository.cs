@@ -29,7 +29,7 @@
         public async Task<IEnumerable<Mile>> GetMilesAssociatedWithClientAsync(int clientId)
         {
             var client = await _context.Clients
-                .Include(c => c.Miles)
+                .Include(c => c.Miles.Where(m => m.ExpiryDate >= DateTime.UtcNow))
                 .ThenInclude(m => m.MilesType)
                 .FirstOrDefaultAsync(c => c.Id == clientId);
 
