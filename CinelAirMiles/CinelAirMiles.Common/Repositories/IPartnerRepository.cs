@@ -1,9 +1,10 @@
-﻿using CinelAirMiles.Common.Entities;
-using CinelAirMiles.Common.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CinelAirMiles.Common.Repositories
+{
+
+    using System.Threading.Tasks;
+
+    using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Common.Models;
 
     public interface IPartnerRepository : IGenericRepository<Partner>
     {

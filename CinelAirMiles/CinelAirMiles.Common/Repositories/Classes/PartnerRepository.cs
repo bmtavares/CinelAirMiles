@@ -1,12 +1,11 @@
-﻿using CinelAirMiles.Common.Data;
-using CinelAirMiles.Common.Entities;
-using CinelAirMiles.Common.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CinelAirMiles.Common.Repositories.Classes
+{
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using CinelAirMiles.Common.Data;
+    using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Common.Models;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -99,7 +98,7 @@ using System.Threading.Tasks;
             await _context.SaveChangesAsync();
         }
 
-       
+
         public async Task AddBenefitAsync(CreateBenefitViewModel model)
         {
             var partner = await this.GetParnerWithBenefitsAsync(model.PartnerId);
@@ -113,7 +112,7 @@ using System.Threading.Tasks;
             await _context.SaveChangesAsync();
         }
 
-        
+
         public async Task<int> DeleteBenefitAsync(Benefit benefit)
         {
             var partner = await _context.Partners.Where(b => b.Benefits.Any(be => be.Id == benefit.Id)).FirstOrDefaultAsync();

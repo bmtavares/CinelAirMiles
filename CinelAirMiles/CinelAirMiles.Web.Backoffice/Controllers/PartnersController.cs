@@ -1,15 +1,16 @@
-﻿using CinelAirMiles.Common.Data;
-using CinelAirMiles.Common.Entities;
-using CinelAirMiles.Common.Models;
-using CinelAirMiles.Common.Repositories;
-using CinelAirMiles.Web.Backoffice.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿namespace CinelAirMiles.Web.Backoffice.Controllers
+{
+    using System;
+    using System.Threading.Tasks;
+
+    using CinelAirMiles.Common.Entities;
+    using CinelAirMiles.Common.Models;
+    using CinelAirMiles.Common.Repositories;
+    using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
+
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
 
     [Authorize(Roles = "Admin, User")]
     public class PartnersController : Controller
