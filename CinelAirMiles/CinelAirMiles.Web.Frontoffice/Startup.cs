@@ -74,6 +74,7 @@
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
             services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
+            services.AddScoped<IPartnerRepository, PartnerRepository>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<IMailHelper, MailHelper>();
             services.AddScoped<IXmlHelper, XmlHelper>();

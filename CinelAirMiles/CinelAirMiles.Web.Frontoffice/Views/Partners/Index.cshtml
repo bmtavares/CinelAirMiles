@@ -1,0 +1,41 @@
+﻿@model IEnumerable<CinelAirMiles.Common.Entities.Partner>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<!-- Latest Posts Area -->
+<div class="latest-posts pt-80 pb-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-tittle mb-35">
+                    <h2>Partners</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-baner-nw2 mb-30">
+                        <div class="banner-img-cap2">
+                            <div class="banner-img">
+                                <img src="~/frontoffice/img/gallery/trend1.png" alt="">
+                            </div>
+                            <div class="banner-cap2">
+
+                                <strong>@Html.DisplayFor(modelItem => item.Name)</strong>
+                                <br />
+                                @Html.DisplayFor(modelItem => item.Description)
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+        </div>
+    </div>
+</div>
+<!-- Latest Posts End-->
+

@@ -102,7 +102,16 @@
                                             <li><a asp-area="" asp-controller="Clients" asp-action="MyStatus">Miles Status</a></li>
                                             <li><a asp-area="" asp-controller="Clients" asp-action="ManageMiles">Manage Miles</a></li>
                                             <li><a asp-area="" asp-controller="Clients" asp-action="MyBalance">Miles Balance</a></li>
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Miles Store<b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a asp-area="" asp-controller="Miles" asp-action="ConvertMiles">Convert Miles</a></li>
+                                                    <li><a asp-area="" asp-controller="Miles" asp-action="PurchaseMiles">Purchase Miles</a></li>
+                                                    <li><a asp-area="" asp-controller="Miles" asp-action="TransferMiles">Transfer Miles</a></li>
+                                                </ul>
+                                            </li>
                                         </ul>
+                                        
                                     </nav>
                                 </div>
                             </div>
