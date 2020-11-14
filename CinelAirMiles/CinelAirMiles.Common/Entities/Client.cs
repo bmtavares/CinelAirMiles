@@ -23,6 +23,7 @@
 
         public bool Active { get; set; }
 
+        public bool IsDeceased { get; set; }
 
         [Display(Name = "Client number")]
         public string MilesProgramNumber { get; set; }

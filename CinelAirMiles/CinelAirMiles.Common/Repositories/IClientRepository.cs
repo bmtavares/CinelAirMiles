@@ -18,6 +18,12 @@
         List<Client> GetClientsWithUsers();
 
         /// <summary>
+        /// Returns a count of all active users
+        /// </summary>
+        /// <returns>Active users</returns>
+        Task<int> GetClientsCountAsync()
+
+        /// <summary>
         /// Returns a client from its ID, with all associated details included from context
         /// </summary>
         /// <param name="id"></param>

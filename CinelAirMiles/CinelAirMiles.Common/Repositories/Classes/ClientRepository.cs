@@ -29,7 +29,14 @@
         {
             return _context.Clients
                     .Include(c => c.User)
+                    .Where(c => !c.IsDeceased)
                     .ToList();
+        }
+
+        public async Task<int> GetClientsCountAsync()
+        {
+            return await _context.Clients
+                .Where(c => c.Active).CountAsync();
         }
 
         public async Task<Client> GetClientWithDetailsAsync(int? id)
@@ -197,6 +204,7 @@
 
             return await _context.Clients
                 .Include(c => c.User)
+                .Include(c => c.ProgramTier)
                 .FirstOrDefaultAsync(c => c.User.UserName == username);
         }
     }

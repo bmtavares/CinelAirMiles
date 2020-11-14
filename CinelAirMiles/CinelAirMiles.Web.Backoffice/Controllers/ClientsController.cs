@@ -25,19 +25,25 @@
         private readonly ICombosHelper _combosHelper;
         private readonly IUserHelper _userHelper;
         private readonly IConverterHelper _converterHelper;
+        private readonly IMileRepository _mileRepository;
+        private readonly IMilesTransactionRepository _milesTransactionRepository;
 
         public ClientsController(
             ApplicationDbContext context,
             IClientRepository clientRepository,
             ICombosHelper combosHelper,
             IUserHelper userHelper,
-            IConverterHelper converterHelper)
+            IConverterHelper converterHelper,
+            IMileRepository mileRepository,
+            IMilesTransactionRepository milesTransactionRepository)
         {
             _context = context;
             _clientRepository = clientRepository;
             _combosHelper = combosHelper;
             _userHelper = userHelper;
             _converterHelper = converterHelper;
+            _mileRepository = mileRepository;
+            _milesTransactionRepository = milesTransactionRepository;
         }
 
         // GET: Clients
@@ -216,6 +222,169 @@
             }
 
             model.ProgramTiers = _combosHelper.GetProgramTiers();
+            return View(model);
+        }
+
+        public async Task<ActionResult> Activate(int? clientId)
+        {
+            if (clientId == null)
+            {
+                return NotFound();
+            }
+
+            var client = await _clientRepository.GetClientWithDetailsAsync(clientId.Value);
+
+            if (client != null)
+            {
+                if (!client.Active && !client.IsDeceased)
+                {
+                    return View(client);
+                }
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost, ActionName("Activate")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ActivateConfirm(int id)
+        {
+            var client = await _clientRepository.GetByIdAsync(id);
+
+
+            if (client != null)
+            {
+                if (!client.IsDeceased)
+                {
+                    client.Active = true;
+                    await _clientRepository.UpdateAsync(client);
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<ActionResult> Deactivate(int? clientId)
+        {
+            if (clientId == null)
+            {
+                return NotFound();
+            }
+
+            var client = await _clientRepository.GetClientWithDetailsAsync(clientId.Value);
+
+            if (client != null)
+            {
+                if(client.Active)
+                {
+                    return View(client);
+                }
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost, ActionName("Deactivate")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeactivateConfirm(int id)
+        {
+            var client = await _clientRepository.GetByIdAsync(id);
+
+            if(client != null)
+            {
+                if(client.IsInReferrerProgram)
+                {
+                    //TODO: Remove from referral
+                }
+
+                client.Active = false;
+                await _clientRepository.UpdateAsync(client);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Inherit(int? clientId)
+        {
+            if (clientId == null)
+            {
+                return NotFound();
+            }
+
+            var client = await _clientRepository.GetByIdAsync(clientId.Value);
+            if (client != null)
+            {
+                if(!client.Active && !client.IsDeceased)
+                {
+                    var model = new ClientInheritViewModel
+                    {
+                        ClientId = client.Id
+                    };
+
+                    return View(model);
+                }
+            }
+            
+            return NotFound();
+            
+        }
+
+        // POST: Clients/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Inherit(ClientInheritViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var client = await _clientRepository.GetByIdAsync(model.ClientId);
+                if (client != null)
+                {
+                    //if (model.HeirIds.Count() > 0)
+                    //{
+                        if(!client.Active && !client.IsDeceased)
+                        {
+                            //foreach (var heirProgramNum in model.HeirIds)
+                            //{
+                                var heir = await _clientRepository.GetClientByNumberAsync(model.HeirProgramNum);
+                                
+                                if(heir != null)
+                                {
+                                    var bonusBalance = await _mileRepository.GetCurrentMilesBalanceByClientIdAsync(client.Id, "Bonus");
+                                    var statusBalance = await _mileRepository.GetCurrentMilesBalanceByClientIdAsync(client.Id, "Status");
+                                    
+                                    if(bonusBalance != 0 || statusBalance != 0)
+                                        await _milesTransactionRepository.InheritMilesAsync(heir, bonusBalance, statusBalance);
+
+
+                                    client = await _clientRepository.GetByIdAsync(model.ClientId);
+                                    client.IsDeceased = true;
+                                    await _clientRepository.UpdateAsync(client);
+
+                                    return RedirectToAction(nameof(Index));
+                                }
+                                else
+                                {
+                                //model.HeirIds.Remove(heirProgramNum);
+                                ModelState.AddModelError(string.Empty, "Entered heir is not a valid user.");
+                                }
+                        //}
+                        }
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, "Current client has either been processed for inheritance or is active. Please attempt to start this process from the clients list if you believe this to be an error.");
+                        }
+                    //}
+                    //else
+                    //{
+                    //    ModelState.AddModelError(string.Empty, "Received heirs list was empty.");
+                    //}
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "User account not found.");
+                }
+            }
+
             return View(model);
         }
 

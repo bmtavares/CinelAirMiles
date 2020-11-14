@@ -62,6 +62,17 @@
             return await ExecuteTransactionAsync(quantity, receivingClient, "Transfer", 1, $"Miles transfered from client {Transferringclient.MilesProgramNumber}", "Bonus");
         }
 
+        public async Task<string> InheritMilesAsync(Client heirClient, int bonusBalance, int statusBalance)
+        {
+            var res = "";
+
+            res = await ExecuteTransactionAsync(bonusBalance, heirClient, "Transfer", 3, "Memorial Miles", "Bonus");
+
+            res += await ExecuteTransactionAsync(statusBalance, heirClient, "Transfer", 1, "Memorial Miles", "Bonus");
+
+            return res;
+        }
+
         public async Task<string> ConvertMilesAsync(int quantity, Client client)
         {
             var mileType = await _context.MilesTypes.FirstOrDefaultAsync(mt => mt.Description == "Bonus");
