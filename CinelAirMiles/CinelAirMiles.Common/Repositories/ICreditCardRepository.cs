@@ -8,7 +8,7 @@
 
     public interface ICreditCardRepository : IGenericRepository<CreditCardInfo>
     {
-        Task<CreditCardInfo> CheckExistingCreditCardByNumberAsync(CreditCardInfo creditCard);
+        Task CheckExistingCreditCardByNumberAsync(CreditCardInfo creditCard);
 
         IEnumerable<CreditCardInfo> GetCreditCardsAssociatedWithClient(Client client);
     }

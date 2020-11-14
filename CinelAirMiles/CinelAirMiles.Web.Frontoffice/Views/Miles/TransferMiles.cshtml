@@ -1,7 +1,75 @@
-﻿
+﻿@model CinelAirMiles.Web.Frontoffice.Models.TransferMilesViewModel
+
 @{
     ViewData["Title"] = "TransferMiles";
 }
 
 <h2>Transfer Miles</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="TransferMiles">
+            @ViewData["Message"]
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <label asp-for="Quantity"></label>
+            <ejs-numerictextbox id="quantity" enabled="false" decimals="0" max="2000" min="2000" format="n0" placeholder="Miles to convert" ejs-for="Quantity" showSpinButton="false"></ejs-numerictextbox>
+
+            <br />
+            <br />
+            <label asp-for="ValueToPay"></label>
+            <ejs-numerictextbox id="ej2value" enabled="false" placeholder="Value to pay" ejs-for="ValueToPay" format="c2" currency="EUR" showSpinButton="false"></ejs-numerictextbox>
+
+            <br />
+            <br />
+            <ejs-maskedtextbox id="ej2maskedTextBox" ejs-for="ClientToTransferToNumber" mask="000000000" placeholder="Receiving client's number"></ejs-maskedtextbox>
+
+            <br />
+            <br />
+            <h2>Credit card info</h2>
+
+            <div class="form-group">
+                @*<label asp-for="CreditCardInfo.FirstName" class="control-label"></label>*@
+                @*<input asp-for="CreditCardInfo.FirstName" class="form-control" />*@
+                <ejs-textbox id="ej2firstName" ejs-for="CreditCardInfo.FirstName" placeholder="First name" width="60%"></ejs-textbox>
+                <span asp-validation-for="CreditCardInfo.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*<label asp-for="CreditCardInfo.LastName" class="control-label"></label>*@
+                @*<input asp-for="CreditCardInfo.LastName" class="form-control" />*@
+                <ejs-textbox id="ej2lastName" ejs-for="CreditCardInfo.LastName" placeholder="Last name" width="60%"></ejs-textbox>
+                <span asp-validation-for="CreditCardInfo.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*<label asp-for="CreditCardInfo.Number" class="control-label"></label>*@
+                @*<input asp-for="CreditCardInfo.Number" class="form-control" />*@
+                <ejs-maskedtextbox id="ej2number" ejs-for="CreditCardInfo.Number" placeholder="Card number" width="50%" mask="000000000000"></ejs-maskedtextbox>
+                <span asp-validation-for="CreditCardInfo.Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*<label asp-for="CreditCardInfo.CVC" class="control-label"></label>*@
+                @*<input asp-for="CreditCardInfo.CVC" class="form-control" />*@
+                <ejs-maskedtextbox id="ej2cvc" ejs-for="CreditCardInfo.CVC" placeholder="CVC" width="30%" mask="000"></ejs-maskedtextbox>
+                <span asp-validation-for="CreditCardInfo.CVC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*<label asp-for="CreditCardInfo.Month" class="control-label"></label>*@
+                @*<input asp-for="CreditCardInfo.Month" class="form-control" />*@
+                <ejs-numerictextbox id="ej2month" ejs-for="CreditCardInfo.Month" placeholder="Month" width="20%" format="n0" decimals="0" min="1" max="12" showSpinButton="false"></ejs-numerictextbox>
+                <span asp-validation-for="CreditCardInfo.Month" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @*<label asp-for="CreditCardInfo.Year" class="control-label"></label>*@
+                @*<input asp-for="CreditCardInfo.Year" class="form-control" />*@
+                <ejs-numerictextbox id="ej2year" ejs-for="CreditCardInfo.Year" placeholder="Year" width="20%" decimals="0" format="n0" min="DateTime.UtcNow.Year" max="DateTime.UtcNow.Year+3" showSpinButton="false"></ejs-numerictextbox>
+                <span asp-validation-for="CreditCardInfo.Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Confirm" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
 

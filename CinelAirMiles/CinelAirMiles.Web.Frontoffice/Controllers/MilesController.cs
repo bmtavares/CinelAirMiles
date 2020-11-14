@@ -9,6 +9,7 @@ using CinelAirMiles.Web.Frontoffice.Helpers.Interfaces;
 using CinelAirMiles.Web.Frontoffice.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
+using Syncfusion.EJ2.Navigations;
 
 namespace CinelAirMiles.Web.Frontoffice.Controllers
 {
@@ -34,18 +35,14 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
             _combosHelper = combosHelper;
         }
 
-        public async Task<IActionResult> PurchaseMiles()
+        public IActionResult PurchaseMiles()
         {
-            //var client = await _clientRepository.GetClientByEmailAsync(User.Identity.Name);
+            var model = new PurchaseMilesViewModel
+            {
+                Quantity = 2000
+            };
 
-            //var creditCards = _creditCardRepository.GetCreditCardsAssociatedWithClient(client);
-
-            //var model = new PurchaseMilesViewModel
-            //{
-            //    CreditCards = _combosHelper.GetCreditCards(creditCards)
-            //};
-
-            var model = new PurchaseMilesViewModel();
+            model.ValueToPay = Math.Round(model.Quantity * 0.035m, 0);
 
             return View(model);
         }
@@ -53,65 +50,181 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
         [HttpPost]
         public async Task<IActionResult> PurchaseMiles(PurchaseMilesViewModel model)
         {
-            if(model.Quantity > 2000)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Can only purchase up to 2000 miles per transaction");
+                if (model.Quantity != 2000)
+                {
+                    ModelState.AddModelError(string.Empty, "Can only purchase 2000 miles per transaction");
+                }
+
+                var client = await _clientRepository.GetClientByEmailAsync(User.Identity.Name);
+
+                if (client == null)
+                {
+                    return NotFound();
+                }
+
+                model.CreditCardInfo.Client = client;
+
+                await _creditCardRepository.CheckExistingCreditCardByNumberAsync(model.CreditCardInfo);
+
+                ViewData["Message"] = await _milesTransactionRepository.PurchaseMilesAsync(model.Quantity, client);
+
+                return View();
             }
 
-            var client = await _clientRepository.GetClientByEmailAsync(User.Identity.Name);
-
-            if(client == null)
-            {
-                return NotFound();
-            }
-
-            var creditCard = await _creditCardRepository.CheckExistingCreditCardByNumberAsync(model.CreditCardInfo);
-
-            await _milesTransactionRepository.PurchaseMilesAsync(model.Quantity, client, creditCard);
-
-            return View();
+            return View(model);
         }
 
-        public async Task<IActionResult> ExtendMiles()
-        {
-            return View();
-        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> ExtendMiles(int? id)
+        // -------------------------------------------TEMPORARY-------------------------------------------
+        //public async Task<IActionResult> PurchaseMiles2()
         //{
+        //    var client = await _clientRepository.GetClientByEmailAsync(User.Identity.Name);
 
+        //    var creditCards = _creditCardRepository.GetCreditCardsAssociatedWithClient(client);
+
+        //    var model = new PurchaseMilesViewModel
+        //    {
+        //        CreditCards = _combosHelper.GetCreditCards(creditCards)
+        //    };
+
+        //    ViewBag.NewCardHeader = new TabHeader { Text = "Register a new credit card" };
+        //    ViewBag.ExistingCardsHeader = new TabHeader { Text = "Use an existing credit card" };
+
+        //    return View(model);
         //}
 
-        public async Task<IActionResult> TransferMiles()
-        {
+        //[HttpPost]
+        //public async Task<IActionResult> PurchaseMiles2(PurchaseMilesViewModel model)
+        //{
+        //    if (model.Quantity > 2000)
+        //    {
+        //        ModelState.AddModelError(string.Empty, "Can only purchase up to 2000 miles per transaction");
+        //    }
 
-            return View();
+        //    var client = await _clientRepository.GetClientByEmailAsync(User.Identity.Name);
+
+        //    if (client == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+
+
+        //    if (model.CreditCardInfoId == 0)
+        //    {
+        //        model.CreditCardInfo = await _creditCardRepository.CheckExistingCreditCardByNumberAsync(model.CreditCardInfo);
+        //    }
+        //    else
+        //    {
+        //        var creditCard = await _creditCardRepository.GetByIdAsync(model.CreditCardInfoId);
+        //    }
+
+        //    await _milesTransactionRepository.PurchaseMilesAsync(model.Quantity, client, creditCard);
+
+        //    return View();
+        //}
+        // -------------------------------------------TEMPORARY-------------------------------------------
+
+
+        public IActionResult TransferMiles()
+        {
+            var model = new TransferMilesViewModel
+            {
+                Quantity = 2000
+            };
+
+            model.ValueToPay = Math.Round(model.Quantity * 0.035m, 0);
+
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> TransferMiles(int? clientId)
+        public async Task<IActionResult> TransferMiles(TransferMilesViewModel model)
         {
-            var client = await _clientRepository.GetClientByEmailAsync(User.Identity.Name);
-
-            if (client == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                if (model.Quantity != 2000)
+                {
+                    ModelState.AddModelError(string.Empty, "Can only transfer 2000 miles per transaction");
+                }
+
+                var client = await _clientRepository.GetClientByEmailAsync(User.Identity.Name);
+
+                if (client == null)
+                {
+                    return NotFound();
+                }
+
+                var receivingClient = await _clientRepository.GetClientByNumberAsync(model.ClientToTransferToNumber);
+
+                if (receivingClient == null)
+                {
+                    ModelState.AddModelError(model.ClientToTransferToNumber, "Client number does not exist");
+                }
+
+                model.CreditCardInfo.Client = client;
+
+                await _creditCardRepository.CheckExistingCreditCardByNumberAsync(model.CreditCardInfo);
+
+                ViewData["Message"] = await _milesTransactionRepository.TransferMilesAsync(model.Quantity, receivingClient, client);
+
+                return View();
             }
 
-            //await _milesTransactionRepository.TransferMilesToAnotherClientAsync(client, clientId.Value);
-
-            //Placeholder
-            return Ok();
+            return View(model);
         }
 
-        public async Task<IActionResult> ConvertMiles()
+        public IActionResult ConvertMiles()
         {
-            return View();
+            var model = new ConvertMilesViewModel
+            {
+                Quantity = 2000
+            };
+
+            model.ValueToPay = Math.Round(model.Quantity * 0.035m, 0);
+            model.StatusMilesToReceive = model.Quantity / 2;
+
+            return View(model);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ConvertMiles(ConvertMilesViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.Quantity != 2000)
+                {
+                    ModelState.AddModelError(string.Empty, "Can only convert 2000 miles per transaction");
+                }
+
+                var client = await _clientRepository.GetClientByEmailAsync(User.Identity.Name);
+
+                if (client == null)
+                {
+                    return NotFound();
+                }
+
+                model.CreditCardInfo.Client = client;
+
+                await _creditCardRepository.CheckExistingCreditCardByNumberAsync(model.CreditCardInfo);
+
+                ViewData["Message"] = await _milesTransactionRepository.ConvertMilesAsync(model.Quantity, client);
+
+                return View();
+            }
+
+            return View(model);
+        }
+
+        //public async Task<IActionResult> ExtendMiles()
+        //{
+        //    return View();
+        //}
 
         //[HttpPost]
-        //public async Task<IActionResult> ConvertMiles(int? id)
+        //public async Task<IActionResult> ExtendMiles(int? id)
         //{
 
         //}

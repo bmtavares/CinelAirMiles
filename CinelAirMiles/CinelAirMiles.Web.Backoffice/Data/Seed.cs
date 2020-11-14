@@ -43,6 +43,8 @@
                 await CreateMilesTransactionTypeAsync("Extension");
                 await CreateMilesTransactionTypeAsync("Transfer");
                 await CreateMilesTransactionTypeAsync("Conversion");
+
+                await _context.SaveChangesAsync();
             }
 
 

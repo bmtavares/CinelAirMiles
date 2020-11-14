@@ -16,7 +16,7 @@
             _context = context;
         }
 
-        public async Task<CreditCardInfo> CheckExistingCreditCardByNumberAsync(CreditCardInfo creditCard)
+        public async Task CheckExistingCreditCardByNumberAsync(CreditCardInfo creditCard)
         {
             var existingCard = await _context.CreditCardsInfo.FirstOrDefaultAsync(cc => cc.Number == creditCard.Number);
 
@@ -25,11 +25,7 @@
                 await CreateAsync(creditCard);
 
                 var creditCardWithId = await _context.CreditCardsInfo.FirstOrDefaultAsync(cc => cc.Number == creditCard.Number);
-
-                return creditCardWithId;
             }
-
-            return existingCard;
         }
 
         public IEnumerable<CreditCardInfo> GetCreditCardsAssociatedWithClient(Client client)
