@@ -129,6 +129,7 @@
                 <div class="col-sm-5">
                     
                     <div class="user-area dropdown float-right">
+
                         <!--ADDED-LINE-->
                         <a class="fa fa-bell" style="position: absolute; margin: 11px -25px;" asp-controller="Notifications" asp-action="Index"></a>
                         <a class="e-badge e-badge-danger" id="notificationCount" asp-controller="Notifications" asp-action="Index" data-show="popover" title="Notifications" style="position: absolute; margin: 3px -16px; font-size: x-small;"></a>
@@ -141,11 +142,24 @@
         <!-- Header-->
 
         <div class="container body-content">
+            <a class="nav-link"><i style="margin-left:-13px;"></i> Welcome, @this.User.Identity.Name</a>
+            @if (this.User.IsInRole("Admin"))
+            {
+                <p class="menu-title">Admin</p>
+            }
+            @if (this.User.IsInRole("SuperUser"))
+            {
+                <p class="menu-title">SuperUser</p>
+            }
+            @if (this.User.IsInRole("User"))
+            {
+                <p class="menu-title">User</p>
+            }
             @RenderBody()
             @*<hr />
-            <footer>
-                <p>&copy; 2020 - CinelAirMiles - Backoffice</p>
-            </footer>*@
+        <footer>
+            <p>&copy; 2020 - CinelAirMiles - Backoffice</p>
+        </footer>*@
         </div>
 
         <environment include="Development">

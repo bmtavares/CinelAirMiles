@@ -1,6 +1,8 @@
 ﻿namespace CinelAirMiles.Web.Backoffice.Controllers
 {
     using System.Diagnostics;
+    using System.Threading.Tasks;
+    using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
     using CinelAirMiles.Web.Backoffice.Models;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -9,9 +11,18 @@
     [Authorize]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IUserHelper _userHelper;
+
+        public HomeController(IUserHelper userHelper)
         {
-            return View();
+            _userHelper = userHelper;
+        }
+        
+        
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userHelper.GetUserByEmailAsync(this.User.Identity.Name);
+            return View(user);
         }
 
         public IActionResult About()

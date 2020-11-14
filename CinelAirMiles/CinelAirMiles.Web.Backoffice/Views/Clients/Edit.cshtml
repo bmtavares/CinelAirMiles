@@ -52,15 +52,14 @@
             <br />
             <a>@ViewData["Message"]</a>
             <div class="form-group">
-                <input type="submit" value="Update" class="btn btn-success" />
-                <a asp-action="Index" class="btn btn-primary">Back to List</a>
+                <input type="submit" value="Update" class="btn btn-outline-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-outline-info"><i class="fa fa-arrow-left"></i> Back</a>
 </div>
 
 @section Scripts {
