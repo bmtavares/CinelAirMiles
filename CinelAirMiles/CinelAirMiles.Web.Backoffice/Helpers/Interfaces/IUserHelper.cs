@@ -21,6 +21,8 @@
 
         Task<List<User>> GetEmployeesListAsync();
 
+        Task<int> GetEmployeesCountAsync();
+
         Task<User> GetUserByEmailAsync(string email);
 
         Task<IdentityResult> AddUserAsync(User user, string password);

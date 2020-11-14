@@ -1,0 +1,29 @@
+﻿@model CinelAirMiles.Web.Backoffice.Models.ClientInheritViewModel
+
+@{
+    ViewData["Title"] = "Inherit Miles";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<div class="alert alert-warning" role="alert">
+    This utility should only be used after a death certificate has been sent and validated.
+</div>
+<div class="alert alert-info" role="alert">
+    Please add the Program Number of the heir for this account.
+</div>
+<div>
+    <form asp-action="Inherit">
+        <div asp-validation-summary="ModelOnly" class="alert alert-error"></div>
+        <input type="hidden" asp-for="ClientId" />
+        <div class="form-group">
+            <label asp-for="HeirProgramNum">Heir Program Number</label>
+            <input asp-for="HeirProgramNum" class="form-control" />
+            <span asp-validation-for="HeirProgramNum" class="text-warning"></span>
+        </div>
+        <div>
+            <a asp-action="Index" class="btn btn-primary">Cancel</a>
+        </div>
+        <input type="submit" value="Process" class="btn btn-warning" />
+    </form>
+</div>

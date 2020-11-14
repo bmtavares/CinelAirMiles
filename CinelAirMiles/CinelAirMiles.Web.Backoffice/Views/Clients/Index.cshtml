@@ -50,11 +50,20 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ProgramTier.Description)
                 </td>*@
-                <td>
-                    <a asp-action="Edit" asp-route-clientId="@item.Id" class="btn btn-outline-warning"><i class="fa fa-pencil"></i></a>
-                    <a asp-action="Details" asp-route-clientId="@item.Id" class="btn btn-outline-info"><i class="fa fa-list-ol"></i></a>
-                    @*<a asp-action="Delete" asp-route-clientId="@item.Id" class="btn btn-primary">Delete</a>*@
-                </td>
+            <td>
+                <a asp-action="Edit" asp-route-clientId="@item.Id" class="btn btn-primary">Edit</a>
+                <a asp-action="Details" asp-route-clientId="@item.Id" class="btn btn-primary">Details</a>
+                @if (item.Active)
+                {
+                    <a asp-action="Deactivate" asp-route-clientId="@item.Id" class="btn btn-danger">Deactivate</a>
+                }
+                else
+                {
+                    <a asp-action="Activate" asp-route-clientId="@item.Id" class="btn btn-warning">Activate</a>
+                    <a asp-action="Inherit" asp-route-clientId="@item.Id" class="btn btn-warning">Inherit</a>
+                }
+                @*<a asp-action="Delete" asp-route-clientId="@item.Id" class="btn btn-primary">Delete</a>*@
+            </td>
             </tr>
         }
     </tbody>

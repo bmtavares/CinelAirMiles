@@ -1,0 +1,47 @@
+﻿@model CinelAirMiles.Common.Entities.Client
+
+@{
+    ViewData["Title"] = "Deactivate Client";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<div class="alert alert-info" role="alert">
+    <b>Do you wish to deactivate the following client?</b>
+    Doing so will enable the transfer function and unlink the client from the Gold Referral system.
+</div>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MilesProgramNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MilesProgramNumber)
+        </dd>
+    </dl>
+    <div>
+        <a asp-action="Index" class="btn btn-primary">Cancel</a>
+    </div>
+    <form asp-action="Deactivate">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Deactivate" class="btn btn-warning" />
+    </form>
+</div>

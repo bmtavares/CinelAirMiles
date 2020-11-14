@@ -23,6 +23,16 @@
             _userManager = userManager;
         }
 
+        public async Task<int> GetPartnerCountAsync()
+        {
+            return await _context.Partners.CountAsync();
+        }
+
+        public async Task<int> GetBenefitsCountAsync()
+        {
+            return await _context.Benefits.CountAsync();
+        }
+
         public async Task<string> CreatePartnerAsync(Partner newPartner, User user)
         {
             var pendingPartnerAddition = _context.AddPartnersTemp.Any(pt => pt.Name == newPartner.Name);

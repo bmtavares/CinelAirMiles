@@ -53,37 +53,42 @@
 
                 if(client != null)
                 {
-                    var user = await _userHelper.GetUserByIdAsync(client.UserId);
-
-                    if(user != null)
+                    if (client.Active)
                     {
-                        var loginModel = new LoginViewModel
+                        var user = await _userHelper.GetUserByIdAsync(client.UserId);
+
+                        if (user != null)
                         {
-                            Username = user.UserName,
-                            Password = model.Password,
-                            RememberMe = model.RememberMe
-                        };
-
-                        var result = await _userHelper.LoginAsync(loginModel);
-
-                        if (result.Succeeded)
-                        {
-                            if (user.RequirePasswordChange)
+                            var loginModel = new LoginViewModel
                             {
-                                await _userHelper.LogoutAsync();
+                                Username = user.UserName,
+                                Password = model.Password,
+                                RememberMe = model.RememberMe
+                            };
 
-                                var gennedToken = await _userHelper.GeneratePasswordResetTokenAsync(user);
+                            var result = await _userHelper.LoginAsync(loginModel);
 
-                                return RedirectToAction("ForcedChange", new { token = gennedToken, username = user.UserName });
-                            }
-
-                            if (Request.Query.Keys.Contains("ReturnUrl"))
+                            if (result.Succeeded)
                             {
-                                return Redirect(Request.Query["ReturnUrl"].First());
+                                if (user.RequirePasswordChange)
+                                {
+                                    await _userHelper.LogoutAsync();
+
+                                    var gennedToken = await _userHelper.GeneratePasswordResetTokenAsync(user);
+
+                                    return RedirectToAction("ForcedChange", new { token = gennedToken, username = user.UserName });
+                                }
+
+                                if (Request.Query.Keys.Contains("ReturnUrl"))
+                                {
+                                    return Redirect(Request.Query["ReturnUrl"].First());
+                                }
+                                return RedirectToAction("Index", "Home");
                             }
-                            return RedirectToAction("Index", "Home");
                         }
                     }
+                    ModelState.AddModelError(string.Empty, "User is deactivated. Please contact support.");
+                    return View();
                 }
             }
 

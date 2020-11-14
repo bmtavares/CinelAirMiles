@@ -1,12 +1,15 @@
-﻿using CinelAirMiles.Common.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CinelAirMiles.Common.Repositories
+﻿namespace CinelAirMiles.Common.Repositories
 {
+    using CinelAirMiles.Common.Entities;
+
+    using System.Threading.Tasks;
+
     public interface ISubscriptionRepository : IGenericRepository<Subscription>
     {
-
+        /// <summary>
+        /// Returns subscriptions count.
+        /// </summary>
+        /// <returns>Subscriptions count</returns>
+        Task<int> GetCountAsync();
     }
 }
