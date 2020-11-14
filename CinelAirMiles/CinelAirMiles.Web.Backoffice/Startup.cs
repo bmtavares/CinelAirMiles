@@ -81,7 +81,6 @@
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<IPartnerRepository, PartnerRepository>();
-            services.AddScoped<IBenefitRepository, BenefitRepository>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();

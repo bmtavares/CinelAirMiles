@@ -9,5 +9,7 @@
         IEnumerable<SelectListItem> GetProgramTiers();
 
         IEnumerable<SelectListItem> GetComboMilesTypes();
+
+        IEnumerable<SelectListItem> GetComboPartners();
     }
 }

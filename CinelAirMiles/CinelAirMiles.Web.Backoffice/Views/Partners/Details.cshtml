@@ -4,10 +4,10 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>Partner</h2>
 
 <div>
-    <h4>Partner</h4>
+    <h4>Details</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -31,6 +31,48 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-warning"><i class="fa fa-pencil"></i>Edit</a>
+
+    <a asp-action="Index" class="btn btn-outline-success"><i class="fa fa-arrow-left"></i> Back</a>
+    <br />
+    <br />
+    <a asp-action="AddBenefit" asp-route-id="@Model.Id" class="btn btn-outline-info"><i class="fa fa-plus"></i> Benefit</a>
 </div>
+
+<br />
+
+<h4>Benefits</h4>
+@if (Model.Benefits == null || Model.Benefits.Count == 0)
+{
+<h5>No Benefits added yet</h5>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Benefits.FirstOrDefault().Description)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Benefits.OrderBy(c => c.Description))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td id="@item.Id">
+                        <a asp-action="EditBenefit" asp-route-id="@item.Id" class="btn btn-outline-warning"><i class="fa fa-pencil"></i></a>
+                        <a asp-action="DeleteBenefit" asp-route-id="@item.Id" class="btn btn-outline-danger" id="btnDelete"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+    </div>

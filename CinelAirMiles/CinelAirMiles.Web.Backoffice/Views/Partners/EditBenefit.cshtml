@@ -1,0 +1,49 @@
+﻿@model CinelAirMiles.Common.Entities.Benefit
+<section>
+    <div style="margin:auto; width:800px; height:300px">
+        <br />
+        <br />
+        <br />
+
+        <h4>Edit</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="EditBenefit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Reward" class="control-label"></label>
+                        <input asp-for="Reward" class="form-control"/>
+                        <span asp-validation-for="Reward" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="IsPercentage" class="control-label"></label>
+                        <label class="switch switch-3d switch-info mr-3"><input type="checkbox" asp-for="IsPercentage" class="switch-input" checked="true"> <span class="switch-label"></span> <span class="switch-handle"></span></label>
+                        <span asp-validation-for="IsPercentage" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <br />
+                        <input type="submit" value="Save" class="btn btn-outline-success" />
+                    </div>
+                    <div class="form-group">
+                        <a asp-action="Index" class="btn btn-outline-info"><i class="fa fa-arrow-left"></i> Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

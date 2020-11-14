@@ -16,5 +16,6 @@
         List<UserViewModel> UsersToUserViewModels(List<User> users);
 
         EditClientViewModel ClientToEditClientViewModel(User user, Client client);
+        
     }
 }

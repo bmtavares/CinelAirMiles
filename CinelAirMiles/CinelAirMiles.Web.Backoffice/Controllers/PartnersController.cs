@@ -1,6 +1,8 @@
 ﻿using CinelAirMiles.Common.Data;
 using CinelAirMiles.Common.Entities;
+using CinelAirMiles.Common.Models;
 using CinelAirMiles.Common.Repositories;
+using CinelAirMiles.Web.Backoffice.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -40,14 +42,14 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
                 return NotFound();
             }
 
-            var mile = await _partnerRepository.GetByIdAsync(id.Value);
+            var partner = await _partnerRepository.GetParnerWithBenefitsAsync(id.Value);
 
-            if (mile == null)
+            if (partner == null)
             {
                 return NotFound();
             }
 
-            return View(mile);
+            return View(partner);
         }
 
 
@@ -66,10 +68,28 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _partnerRepository.CreateAsync(partner);
-
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _partnerRepository.CreateAsync(partner);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "There are a record with the same name.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
             }
+            
             return View(partner);
         }
 
@@ -159,6 +179,122 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
         private async Task<bool> PartnersExistsAsync(int id)
         {
             return await _partnerRepository.ExistsAsync(id);
+        }
+
+        public async Task<IActionResult> AddBenefit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var partner = await _partnerRepository.GetByIdAsync(id.Value);
+            if (partner == null)
+            {
+                return NotFound();
+            }
+
+            var model = new CreateBenefitViewModel { PartnerId = partner.Id };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddBenefit(CreateBenefitViewModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+
+                try
+                {
+                    await _partnerRepository.AddBenefitAsync(model);
+                    return this.RedirectToAction($"Details/{model.PartnerId}");
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "There are a record with the same name.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+
+            return this.View(model);
+        }
+
+        public async Task<IActionResult> DeleteBenefit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var benefit = await _partnerRepository.GetBenefitAsync(id.Value);
+            if (benefit == null)
+            {
+                return NotFound();
+            }
+
+            var partnerId = await _partnerRepository.DeleteBenefitAsync(benefit);
+            return this.RedirectToAction($"Details/{partnerId}");
+        }
+
+
+        public async Task<IActionResult> EditBenefit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var benefit = await _partnerRepository.GetBenefitAsync(id.Value);
+            if (benefit == null)
+            {
+                return NotFound();
+            }
+
+            return View(benefit);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditBenefit(Benefit benefit)
+        {
+            if (this.ModelState.IsValid)
+            {
+                try
+                {
+                    var partnerId = await _partnerRepository.UpdateBenefitAsync(benefit);
+                    if (partnerId != 0)
+                    {
+                        return this.RedirectToAction($"Details/{partnerId}");
+                    }
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "There are a record with the same name.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+
+            }
+
+            return this.View(benefit);
         }
     }
 }

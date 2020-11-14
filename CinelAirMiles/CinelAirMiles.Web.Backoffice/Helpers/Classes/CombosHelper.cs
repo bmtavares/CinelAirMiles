@@ -53,5 +53,23 @@
 
             return list;
         }
+
+        public IEnumerable<SelectListItem> GetComboPartners()
+        {
+            var list = _context.Partners.Select(
+                mt => new SelectListItem
+                {
+                    Text = mt.Description,
+                    Value = mt.Id.ToString()
+                }).ToList();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "Select a partner type...",
+                Value = "0"
+            });
+
+            return list;
+        }
     }
 }
