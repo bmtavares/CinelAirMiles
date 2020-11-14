@@ -1,0 +1,59 @@
+﻿@model CinelAirMiles.Common.Entities.Partner
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1><strong>@Html.DisplayFor(model => model.Name)</strong></h1>
+<br />
+<p>@Html.DisplayFor(model => model.Description)</p>
+
+<br />
+
+<div class="section-tittle mb-35">
+    <h2>Benefits</h2>
+</div>
+@if (Model.Benefits == null || Model.Benefits.Count == 0)
+{
+    <br />
+    <h5>No Benefits added yet</h5>
+}
+else
+{
+    <!-- Latest Posts Area -->
+    <div class="latest-posts pt-80 pb-80">
+        <div class="container">
+            <div class="row">
+            </div>
+            <div class="row">
+                @foreach (var item in Model.Benefits.OrderBy(c => c.Description))
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-baner-nw2 mb-30">
+                            <div class="banner-img-cap2" style="border:1px dashed grey;">
+                                <div class="banner-img">
+                                    @*<img src="~/frontoffice/img/gallery/trend1.png" alt="">*@
+                                    <br />
+                                    <a asp-action="Benefits" asp-route-id="@item.Id"><h1 style="text-align:center"><strong>
+                                    @Html.DisplayFor(modelItem => item.Reward)
+                                    @if (item.IsPercentage == true)
+                                    {<div>%</div>}
+                                    else
+                                    {<div>Miles</div>}
+                                </strong></h1></a>
+                                </div>
+                                <div class="banner-cap2" style="text-align:center">
+                                    <br />
+                                    @Html.DisplayFor(modelItem => item.Description)
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+    <!-- Latest Posts End-->
+}

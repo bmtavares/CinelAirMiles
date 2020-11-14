@@ -23,5 +23,23 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
         {
             return View(await _partnerRepository.GetAll().ToListAsync());
         }
+
+        public async Task<IActionResult> Benefits(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var partner = await _partnerRepository.GetParnerWithBenefitsAsync(id.Value);
+
+            if (partner == null)
+            {
+                return NotFound();
+            }
+
+            return View(partner);
+        }
+
     }
 }

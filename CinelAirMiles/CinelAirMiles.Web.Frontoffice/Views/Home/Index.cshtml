@@ -1,120 +1,122 @@
 ﻿@model CinelAirMiles.Common.Entities.Subscription
-<main>
-    <!-- Banner News Area Start -->
-    <div class="banner-news">
-        <div class="container-fluid p-0">
-            <div class="banner-slider-active no-gutters ">
-                <div class="single-sliders">
-                    <div class="single-baner-nw mb-30 text-center">
-                        <div class="banner-img-cap">
-                            <div class="banner-img">
-                                <img src="~/frontoffice/img/gallery/foto1.jpg" alt="">
-                                <!--video iocn -->
-                                <div class="video-icon">
-                                    <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0" data-animation="bounceIn" data-delay=".4s"><i class="fas fa-play"></i></a>
-                                </div>
-                            </div>
-                            <div class="banner-cap">
-                                <p>Trending</p>
-                                <h3><a href="#">Calling time on irresponsible junk food advertising to children</a></h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-sliders">
-                    <div class="single-baner-nw mb-30 text-center">
-                        <div class="banner-img-cap">
-                            <div class="banner-img">
-                                <img src="~/frontoffice/img/gallery/foto2.jpg" alt="">
-                            </div>
-                            <div class="banner-cap">
-                                <p>Trending</p>
-                                <h3><a href="post_details.html">The pomelo case: scope of plant variety rights in China</a></h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-sliders">
-                    <div class="single-baner-nw mb-30 text-center">
-                        <div class="banner-img-cap">
-                            <div class="banner-img">
-                                <img src="~/frontoffice/img/gallery/foto3.jpg" alt="">
-                                <!--video iocn -->
-                                <div class="video-icon">
-                                    <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0" data-animation="bounceIn" data-delay=".4s"><i class="fas fa-play"></i></a>
-                                </div>
-                            </div>
-                            <div class="banner-cap">
-                                <p>Trending</p>
-                                <h3><a href="#">Valuable lessons to take away from COVID-19</a></h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-sliders">
-                    <div class="single-baner-nw mb-30 text-center">
-                        <div class="banner-img-cap">
-                            <div class="banner-img">
-                                <img src="~/frontoffice/img/gallery/foto4.jpg" alt="">
-                            </div>
-                            <div class="banner-cap">
-                                <p>Trending</p>
-                                <h3><a href="#">Building on consumer preferences shaped by the pandemic</a></h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-sliders">
-                    <div class="single-baner-nw mb-30 text-center">
-                        <div class="banner-img-cap">
-                            <div class="banner-img">
-                                <img src="~/frontoffice/img/gallery/foto5.jpg" alt="">
-                                <!--video iocn -->
-                                <div class="video-icon">
-                                    <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0" data-animation="bounceIn" data-delay=".4s"><i class="fas fa-play"></i></a>
-                                </div>
-                            </div>
-                            <div class="banner-cap">
-                                <p>Trending</p>
-                                <h3><a href="#">Building on consumer preferences shaped by the pandemic</a></h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Banner News Area End -->
-    <!-- Want To work -->
-    <section class="wantToWork-area gray-bg ">
-        <div class="container">
-            <div class="wants-wrapper w-padding2">
-                <div class="row align-items-center justify-content-between">
-                    <div class="col-xl-6 col-lg-7 col-md-10">
-                        <div class="wantToWork-caption wantToWork-caption2">
-                            <h2>Subscribe for latest updates</h2>
-                            <p>Indie folks start out by making something they want to read, that tell stories they want told..</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-5 col-lg-5 col-md-12">
-                        <form class="search-box" asp-controller="Home" asp-action="AddSubscriptionAsync">
-               
-                            <div class="input-form">
-                                <input name="email" asp-for="Email" type="email" placeholder="Enter your email.." />
-                            </div>
-                            <div class="search-form">
-                                <input type="submit" value="Subscribe" class="submit-btn3" />
-                            </div>
-                            <span asp-validation-for="Email"></span>
-                            <span style="color:black;">
-                                @ViewBag.Subscription
-                            </span>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Want To work End -->
 
-</main>
+        <main>
+            <!-- Banner News Area Start -->
+            <div class="banner-news">
+                <div class="container-fluid p-0">
+                    <div class="banner-slider-active no-gutters ">
+                        <div class="single-sliders">
+                            <div class="single-baner-nw mb-30 text-center">
+                                <div class="banner-img-cap">
+                                    <div class="banner-img">
+                                        <img src="~/frontoffice/img/gallery/foto1.jpg" alt="">
+                                        <!--video iocn -->
+                                        <div class="video-icon">
+                                            <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0" data-animation="bounceIn" data-delay=".4s"><i class="fas fa-play"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="banner-cap">
+                                        <p>Trending</p>
+                                        <h3><a href="#">Calling time on irresponsible junk food advertising to children</a></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-sliders">
+                            <div class="single-baner-nw mb-30 text-center">
+                                <div class="banner-img-cap">
+                                    <div class="banner-img">
+                                        <img src="~/frontoffice/img/gallery/foto2.jpg" alt="">
+                                    </div>
+                                    <div class="banner-cap">
+                                        <p>Trending</p>
+                                        <h3><a href="post_details.html">The pomelo case: scope of plant variety rights in China</a></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-sliders">
+                            <div class="single-baner-nw mb-30 text-center">
+                                <div class="banner-img-cap">
+                                    <div class="banner-img">
+                                        <img src="~/frontoffice/img/gallery/foto3.jpg" alt="">
+                                        <!--video iocn -->
+                                        <div class="video-icon">
+                                            <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0" data-animation="bounceIn" data-delay=".4s"><i class="fas fa-play"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="banner-cap">
+                                        <p>Trending</p>
+                                        <h3><a href="#">Valuable lessons to take away from COVID-19</a></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-sliders">
+                            <div class="single-baner-nw mb-30 text-center">
+                                <div class="banner-img-cap">
+                                    <div class="banner-img">
+                                        <img src="~/frontoffice/img/gallery/foto4.jpg" alt="">
+                                    </div>
+                                    <div class="banner-cap">
+                                        <p>Trending</p>
+                                        <h3><a href="#">Building on consumer preferences shaped by the pandemic</a></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-sliders">
+                            <div class="single-baner-nw mb-30 text-center">
+                                <div class="banner-img-cap">
+                                    <div class="banner-img">
+                                        <img src="~/frontoffice/img/gallery/foto5.jpg" alt="">
+                                        <!--video iocn -->
+                                        <div class="video-icon">
+                                            <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0" data-animation="bounceIn" data-delay=".4s"><i class="fas fa-play"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="banner-cap">
+                                        <p>Trending</p>
+                                        <h3><a href="#">Building on consumer preferences shaped by the pandemic</a></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Banner News Area End -->
+            <!-- Want To work -->
+            <section class="wantToWork-area gray-bg ">
+                <div class="container">
+                    <div class="wants-wrapper w-padding2">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-xl-6 col-lg-7 col-md-10">
+                                <div class="wantToWork-caption wantToWork-caption2">
+                                    <h2>Subscribe for latest updates</h2>
+                                    <p>Indie folks start out by making something they want to read, that tell stories they want told..</p>
+                                </div>
+                            </div>
+                            <div class="col-xl-5 col-lg-5 col-md-12">
+                                <form class="search-box" asp-controller="Home" asp-action="AddSubscriptionAsync">
+
+                                    <div class="input-form">
+                                        <input name="email" asp-for="Email" type="email" placeholder="Enter your email.." />
+                                    </div>
+                                    <div class="search-form">
+                                        <input type="submit" value="Subscribe" class="submit-btn3" id="myBtn" />
+                                    </div>
+                                    <span asp-validation-for="Email"></span>
+                                    <span style="color:orange;">
+                                        @*<p id="subscriptionSucessfull" >Subscription sucessfull!</p>*@
+                                        @ViewBag.Subscription
+                                    </span>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Want To work End -->
+
+        </main>

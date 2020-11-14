@@ -20,11 +20,12 @@
                     <div class="single-baner-nw2 mb-30">
                         <div class="banner-img-cap2">
                             <div class="banner-img">
-                                <img src="~/frontoffice/img/gallery/trend1.png" alt="">
+                                @*<img src="~/frontoffice/img/gallery/trend1.png" alt="">*@
+                                <a asp-action="Benefits" asp-route-id="@item.Id"><h1 style="text-align:center"><strong>@Html.DisplayFor(modelItem => item.Name)</strong></h1></a>
                             </div>
                             <div class="banner-cap2">
-
-                                <strong>@Html.DisplayFor(modelItem => item.Name)</strong>
+                                
+                                
                                 <br />
                                 @Html.DisplayFor(modelItem => item.Description)
 

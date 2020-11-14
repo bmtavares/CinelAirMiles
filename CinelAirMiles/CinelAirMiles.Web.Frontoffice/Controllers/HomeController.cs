@@ -68,8 +68,7 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
             if (ModelState.IsValid)
             {
                 await _subscriptionRepository.CreateAsync(subscription);
-
-                ViewBag.Subscription = "Subscription succesfully";
+                this.ViewBag.Subscription = "Subscription succesfully";                
             }
 
             return RedirectToAction(nameof(Index));
@@ -88,10 +87,9 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
             if (ModelState.IsValid)
             {
                 await _contactFormRepository.CreateAsync(model);
+                ViewBag.ContactForm = "Subscription succesfully";
             }
-
-            ModelState.AddModelError(string.Empty, "Contact form inserted succesfully");
-
+                       
             return RedirectToAction(nameof(Contact));
         }
 
