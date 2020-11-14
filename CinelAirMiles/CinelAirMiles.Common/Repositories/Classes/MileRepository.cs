@@ -3,6 +3,7 @@
     using CinelAirMiles.Common.Data;
     using CinelAirMiles.Common.Entities;
     using Microsoft.EntityFrameworkCore;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -28,7 +29,7 @@
         public async Task<IEnumerable<Mile>> GetMilesAssociatedWithClientAsync(int clientId)
         {
             var client = await _context.Clients
-                .Include(c => c.Miles)
+                .Include(c => c.Miles.Where(m => m.ExpiryDate >= DateTime.UtcNow))
                 .ThenInclude(m => m.MilesType)
                 .FirstOrDefaultAsync(c => c.Id == clientId);
 

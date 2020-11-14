@@ -59,6 +59,8 @@
                 }
             }
 
+            await CheckClientBalanceAndTierAsync(Transferringclient);
+
             return await ExecuteTransactionAsync(quantity, receivingClient, "Transfer", 1, $"Miles transfered from client {Transferringclient.MilesProgramNumber}", "Bonus");
         }
 
@@ -159,7 +161,51 @@
             await _context.Miles.AddAsync(mile);
             await CreateAsync(transaction);
 
+            await CheckClientBalanceAndTierAsync(client);
+
             return "Operation executed successfully";
+        }
+
+        async Task CheckClientBalanceAndTierAsync(Client client)
+        {
+            var balance = await GetClientTotalStatusBalanceAsync(client);
+
+            if (balance >= 0 && balance < 25000)
+            {
+                await ChangeClientTierAsync(client, "Basic");
+            }
+            else if (balance >= 25000 && balance < 60000)
+            {
+                await ChangeClientTierAsync(client, "Silver");
+            }
+            else if (balance > 60000)
+            {
+                await ChangeClientTierAsync(client, "Gold");
+            }
+        }
+
+        async Task<int> GetClientTotalStatusBalanceAsync(Client client)
+        {
+            var balance = await _context.Miles
+                .Where(m => m.Client == client && m.ExpiryDate >= DateTime.UtcNow && m.MilesType.Description == "Status")
+                .SumAsync(m => m.Balance);
+
+            return balance;
+        }
+
+        async Task ChangeClientTierAsync(Client client, string tierDescription)
+        {
+            var tier = await _context.ProgramTiers.FirstOrDefaultAsync(t => t.Description == tierDescription);
+
+            if (tier == null)
+            {
+                return;
+            }
+
+            client.ProgramTier = tier;
+
+            _context.Clients.Update(client);
+            await _context.SaveChangesAsync();
         }
     }
 }

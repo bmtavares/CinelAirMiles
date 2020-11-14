@@ -70,7 +70,9 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
 
                 ViewData["Message"] = await _milesTransactionRepository.PurchaseMilesAsync(model.Quantity, client);
 
-                return View();
+                ResetModel(model);
+
+                return View(model);
             }
 
             return View(model);
@@ -170,7 +172,9 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
 
                 ViewData["Message"] = await _milesTransactionRepository.TransferMilesAsync(model.Quantity, receivingClient, client);
 
-                return View();
+                ResetModel(model);
+
+                return View(model);
             }
 
             return View(model);
@@ -212,7 +216,9 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
 
                 ViewData["Message"] = await _milesTransactionRepository.ConvertMilesAsync(model.Quantity, client);
 
-                return View();
+                ResetModel(model);
+
+                return View(model);
             }
 
             return View(model);
@@ -228,5 +234,17 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
         //{
 
         //}
+
+        void ResetModel(PurchaseMilesViewModel model)
+        {
+            model.Quantity = 2000;
+            model.ValueToPay = Math.Round(model.Quantity * 0.035m, 0);
+            model.CreditCardInfo.FirstName = string.Empty;
+            model.CreditCardInfo.LastName = string.Empty;
+            model.CreditCardInfo.Number = string.Empty;
+            model.CreditCardInfo.CVC = string.Empty;
+            model.CreditCardInfo.Month = null;
+            model.CreditCardInfo.Year = null;
+        }
     }
 }
