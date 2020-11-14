@@ -11,17 +11,9 @@
     {
         public static void Main(string[] args)
         {
-            try
-            {
-                IWebHost host = CreateWebHostBuilder(args).Build();
-                RunSeeding(host);
-                host.Run();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            
+            IWebHost host = CreateWebHostBuilder(args).Build();
+            RunSeeding(host);
+            host.Run();
         }
 
         private static void RunSeeding(IWebHost host)

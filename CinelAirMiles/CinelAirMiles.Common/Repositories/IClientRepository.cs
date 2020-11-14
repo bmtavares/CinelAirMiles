@@ -9,10 +9,27 @@
 
     public interface IClientRepository : IGenericRepository<Client>
     {
+        //Task ChangeClientTierAutomatically(Client client, ProgramTier tier);
+
+        /// <summary>
+        /// Returns all clients and their respective users from context
+        /// </summary>
+        /// <returns></returns>
         List<Client> GetClientsWithUsers();
 
+        /// <summary>
+        /// Returns a client from its ID, with all associated details included from context
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<Client> GetClientWithDetailsAsync(int? id);
 
+        /// <summary>
+        /// Creates a new client with a randomly generated client number, associated with the received user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="birthDate"></param>
+        /// <returns></returns>
         Task CreateClientWithUserAsync(User user, DateTime birthDate);
 
         /// <summary>
@@ -29,6 +46,11 @@
         /// <returns></returns>
         Task<Client> GetClientByUserAsync(User user);
 
+        /// <summary>
+        /// Returns a clients with the matching e-mail from the context
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         Task<Client> GetClientByEmailAsync(string username);
 
         /// <summary>

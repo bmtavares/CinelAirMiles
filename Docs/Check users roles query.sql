@@ -13,13 +13,17 @@ select
 
 select
 	Clients.Id as 'ID',
+	Clients.MilesProgramNumber as 'Program number',
 	Email as 'E-mail',
 	ProgramTiers.Description as 'Description',
 	AspNetUsers.PhoneNumber as 'Phone',
 	AspNetUsers.FirstName as 'First name',
 	AspNetUsers.LastName as 'Last name',
-	Clients.FlownSegments as 'Flown segments'
+	Clients.FlownSegments as 'Flown segments',
+	sum(Miles.Balance) as 'Total miles balance'
 	from AspNetUsers
 	right join Clients on Clients.UserId = AspNetUsers.Id
 	left join ProgramTiers on ProgramTiers.Id = Clients.ProgramTierId
+	left join Miles on Miles.ClientId = Clients.Id
+	group by Clients.Id, Clients.MilesProgramNumber, Email, ProgramTiers.Description, AspNetUsers.PhoneNumber, AspNetUsers.FirstName, AspNetUsers.LastName, Clients.FlownSegments
 	order by 'ID'

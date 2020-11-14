@@ -20,6 +20,7 @@
 
         [MaxLength(20, ErrorMessage = "The field {0} only can contain {1} characters.")]
         [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
 
 
@@ -34,6 +35,7 @@
 
         [Required]
         [Compare("Password")]
+        [Display(Name = "Confirm password")]
         public string Confirm { get; set; }
     }
 }

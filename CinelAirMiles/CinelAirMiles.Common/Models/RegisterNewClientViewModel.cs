@@ -9,6 +9,7 @@ namespace CinelAirMiles.Common.Models
     {
         [Required]
         [DataType(DataType.Date)]
+        [Display(Name = "Birth date")]
         public DateTime? BirthDate { get; set; }
     }
 }

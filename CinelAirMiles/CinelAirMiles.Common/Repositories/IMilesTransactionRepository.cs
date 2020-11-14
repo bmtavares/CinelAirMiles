@@ -23,7 +23,7 @@
         Task<string> TransferMilesAsync(int quantity, Client receivingClient, Client Transferringclient);
 
         /// <summary>
-        /// Receives the amount of Bonus Miles to convert to Status, and its respective client
+        /// Receives the amount of Bonus Miles to convert to Status, the client to receive them, and checks if the client has enough Bonus Miles balance, if it does, creates a new Mile entity with Status type and and relates it to the received client, while removing the same amount from the relate client's Bonus Miles closest to expiring
         /// </summary>
         /// <param name="quantity"></param>
         /// <param name="client"></param>

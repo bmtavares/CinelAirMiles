@@ -11,6 +11,7 @@ namespace CinelAirMiles.Common.Models
         public int Miles { get; set; }
 
 
+        [Display(Name = "Miles type")]
         public string Type { get; set; }
 
 

@@ -1,6 +1,5 @@
 ﻿using CinelAirMiles.Common.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
-//using Syncfusion.EJ2.Navigations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -90,7 +90,7 @@
             return programNumber;
         }
 
-        public async Task RequestClientTierChangeAsync(Client clientWithNewTier, User user)
+        async Task RequestClientTierChangeAsync(Client clientWithNewTier, User user)
         {
             var tier = await _context.ProgramTiers.FirstOrDefaultAsync(pt => pt.Id == clientWithNewTier.ProgramTierId);
 
@@ -148,6 +148,7 @@
                 }
             }
         }
+
 
 
         async Task CreateNotificationWithUserAndTypeAsync(Notification notification, string userId, int tempTableId, string notificationType)

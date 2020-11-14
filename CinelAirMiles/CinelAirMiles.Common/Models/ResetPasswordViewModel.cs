@@ -14,6 +14,7 @@
         [Required]
         [DataType(DataType.Password)]
         [Compare("Password")]
+        [Display(Name = "Confirm password")]
         public string ConfirmPassword { get; set; }
 
         [Required]
