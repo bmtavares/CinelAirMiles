@@ -1,4 +1,4 @@
-﻿@model CinelAirMiles.Common.Entities.User
+﻿@model CinelAirMiles.Web.Backoffice.Models.CountDataViewModel
 
 <div class="content mt-3">
     <div class="animated fadeIn">
@@ -28,7 +28,7 @@
 
                         <div class="media">
                             <div class="media-body">
-                                <h2 class="text-white display-6">@Html.DisplayFor(model => model.FirstName), @Html.DisplayFor(model => model.LastName)</h2>
+                                <h2 class="text-white display-6">@Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h2>
                                 <p class="text-light">@Html.DisplayFor(model => model.Email)</p>
                             </div>
                         </div>
@@ -51,11 +51,10 @@
                             <div class="h1 text-muted text-right mb-4">
                                 <i class="fa fa-users text-light"></i>
                             </div>
-
                             <div class="h4 mb-0 text-light">
-                                <span class="count">@Html.DisplayFor(model => model.Id)</span>
+                                <span class="count">@Html.DisplayFor(model => model.EmployeesCount)</span>
                             </div>
-                            <small class="text-uppercase font-weight-bold text-light">Users</small>
+                            <small class="text-uppercase font-weight-bold text-light">Employees</small>
                             <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
                         </div>
                     </div>
@@ -65,7 +64,7 @@
                                 <i class="fa fa-user-plus text-light"></i>
                             </div>
                             <div class="h4 mb-0 text-light">
-                                <span class="count">385</span>
+                                <span class="count">@Html.DisplayFor(model => model.ClientCount)</span>
                             </div>
                             <small class="text-uppercase font-weight-bold text-light">Clients</small>
                             <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
@@ -77,9 +76,9 @@
                                 <i class="fa fa-cart-plus text-light"></i>
                             </div>
                             <div class="h4 mb-0 text-light">
-                                <span class="count">1238</span>
+                                <span class="count">@Html.DisplayFor(model => model.PartnerCount)</span>
                             </div>
-                            <small class="text-light text-uppercase font-weight-bold">Products sold</small>
+                            <small class="text-light text-uppercase font-weight-bold">Partners</small>
                             <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
                         </div>
                     </div>
@@ -89,9 +88,9 @@
                                 <i class="fa fa-pie-chart"></i>
                             </div>
                             <div class="h4 mb-0 text-light">
-                                <span class="count">28</span>%
+                                <span class="count">@Html.DisplayFor(model => model.BenefitsCount)</span>
                             </div>
-                            <small class="text-uppercase font-weight-bold text-light">Returning Visitors</small>
+                            <small class="text-uppercase font-weight-bold text-light">Benefits</small>
                             <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
                         </div>
                     </div>
@@ -100,8 +99,8 @@
                             <div class="h1 text-light text-right mb-4">
                                 <i class="fa fa-clock-o"></i>
                             </div>
-                            <div class="h4 mb-0 text-light">5:34:11</div>
-                            <small class="text-light text-uppercase font-weight-bold">Avg. Time</small>
+                            <div class="h4 mb-0 text-light">@Html.DisplayFor(model => model.SubscriptionsCount)</div>
+                            <small class="text-light text-uppercase font-weight-bold">Subscriptions</small>
                             <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
                         </div>
                     </div>
@@ -111,9 +110,9 @@
                                 <i class="fa fa-comments-o"></i>
                             </div>
                             <div class="h4 mb-0 text-light">
-                                <span class="count">972</span>
+                                <span class="count">@Html.DisplayFor(model => model.ContactFormCount)</span>
                             </div>
-                            <small class="text-light text-uppercase font-weight-bold">COMMENTS</small>
+                            <small class="text-light text-uppercase font-weight-bold">Contact Forms</small>
                             <div class="progress progress-xs mt-3 mb-0 bg-light" style="width: 40%; height: 5px;"></div>
                         </div>
                     </div>

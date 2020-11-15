@@ -12,7 +12,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
-    [Authorize(Roles = "Admin, User")]
+    [Authorize(Roles = "User")]
     public class PartnersController : Controller
     {
         private readonly IPartnerRepository _partnerRepository;

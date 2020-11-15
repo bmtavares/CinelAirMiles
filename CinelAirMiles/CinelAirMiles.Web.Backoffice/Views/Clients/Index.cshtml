@@ -7,7 +7,6 @@
 <h2>@ViewData["Title"]</h2>
 <br />
 <p>
-
     <a asp-action="Create" class="btn btn-outline-info"><i class="fa fa-plus"></i> Client</a>
 </p>
 <table class="table">
@@ -51,16 +50,16 @@
                     @Html.DisplayFor(modelItem => item.ProgramTier.Description)
                 </td>*@
             <td>
-                <a asp-action="Edit" asp-route-clientId="@item.Id" class="btn btn-primary">Edit</a>
-                <a asp-action="Details" asp-route-clientId="@item.Id" class="btn btn-primary">Details</a>
+                <a asp-action="Edit" asp-route-clientId="@item.Id" class="btn btn-outline-warning"><i class="fa fa-pencil"></i></a>
+                <a asp-action="Details" asp-route-clientId="@item.Id" class="btn btn-outline-primary"><i class="fa fa-list-ol"></i></a>
                 @if (item.Active)
                 {
-                    <a asp-action="Deactivate" asp-route-clientId="@item.Id" class="btn btn-danger">Deactivate</a>
+                    <a asp-action="Deactivate" asp-route-clientId="@item.Id" class="btn btn-outline-danger">Deactivate</a>
                 }
                 else
                 {
-                    <a asp-action="Activate" asp-route-clientId="@item.Id" class="btn btn-warning">Activate</a>
-                    <a asp-action="Inherit" asp-route-clientId="@item.Id" class="btn btn-warning">Inherit</a>
+                    <a asp-action="Activate" asp-route-clientId="@item.Id" class="btn btn-outline-success">Activate</a>
+                    <a asp-action="Inherit" asp-route-clientId="@item.Id" class="btn btn-outline-warning">Inherit</a>
                 }
                 @*<a asp-action="Delete" asp-route-clientId="@item.Id" class="btn btn-primary">Delete</a>*@
             </td>
