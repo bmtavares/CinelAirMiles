@@ -5,27 +5,85 @@
 }
 
 <!--? My Account Area Start-->
-    <section class="blog_area section-padding">
+    <section class="blog_area section-padding" style="margin-top:-100px;">
         <h1>My Account Area</h1>
         <div class="container">
             <p>Welcome to your Personal Area!</p>
             <div class="row">
                 <div class="col-lg-8 mb-5 mb-lg-0">
-                    <div class="blog_left_sidebar" >
-                        <article class="blog_item" style="background-color: #E0E0E0;">
+                    <div class="blog_left_sidebar">
+                        <article class="blog_item" style="background-color: #E1F5FE;">
                             <div class="blog_details">
                                 <div href="blog_details.html">
                                     <h2 class="blog-head" style="color: #2d2d2d;"><i class="fa fa-binoculars"></i> Book your trip</h2>
                                     <br />
                                     <a class="submit-btn3" asp-action="Edit" style="color:white;">Book</a>
                                     <a class="submit-btn3" asp-action="Edit" style="color:white; align-items:flex-end">Book with miles</a>
-                                    
+
                                 </div>
                             </div>
-                            <div>
-                                
-                            </div>
                         </article>
+                                               
+
+                        @if (Model.ProgramTierId.Equals(1))
+                        {
+                            <article class="blog_item" style="background-color: #BBDEFB; width: 550px;">
+                                <div class="blog_details">
+                                    <div href="blog_details.html">
+                                        
+                                        <ejs-qrcodegenerator id="ej2qrCode" width="200" height="150" value="@string.Concat("CINEL AIR MILES CLIENT", "\n", "First name: ", Model.User.FirstName, "\n", "Last name: ", Model.User.LastName, "\n", "Program number: ", Model.MilesProgramNumber)">
+                                            <e-qrcodegenerator-displaytext text="Client info"></e-qrcodegenerator-displaytext>
+                                        </ejs-qrcodegenerator><a><img src="~/frontoffice/img/flyt_preview_rev_1.png" alt="" style="width:155px; margin-left:300px;"></a>
+                                        <br />
+                                        <h2 style="margin-left: 387px;">BASIC</h2>
+                                        <h6 style="color: #2d2d2d;">@Html.DisplayFor(model => model.User.FirstName) @Html.DisplayFor(model => model.User.LastName)</h6>
+                                    </div>
+                                </div>
+                                <div>
+
+                                </div>
+                            </article>
+                        }
+                        @if (Model.ProgramTierId.Equals(2))
+                        {
+                    <article class="blog_item" style="background-color: #E0E0E0;width: 550px;">
+                        <div class="blog_details">
+                            <div href="blog_details.html">
+
+                                <ejs-qrcodegenerator id="ej2qrCode" width="200" height="150" value="@string.Concat("CINEL AIR MILES CLIENT", "\n", "First name: ", Model.User.FirstName, "\n", "Last name: ", Model.User.LastName, "\n", "Program number: ", Model.MilesProgramNumber)">
+                                    <e-qrcodegenerator-displaytext text="Client info"></e-qrcodegenerator-displaytext>
+                                </ejs-qrcodegenerator><a><img src="~/frontoffice/img/flyt_preview_rev_1.png" alt="" style="width:155px; margin-left:300px;"></a>
+                                <br />
+                                <h2 style="margin-left: 387px;">SILVER</h2>
+                                <h6 style="color: #2d2d2d;">@Html.DisplayFor(model => model.User.FirstName) @Html.DisplayFor(model => model.User.LastName)</h6>
+                            </div>
+                        </div>
+                        <div>
+
+                        </div>
+                    </article>
+                        }
+                        @if (Model.ProgramTierId.Equals(3))
+                        {
+                    <article class="blog_item" style="        background-color: #FFE57F;
+        width: 550px;">
+                        <div class="blog_details">
+                            <div href="blog_details.html">
+
+                                <ejs-qrcodegenerator id="ej2qrCode" width="200" height="150" value="@string.Concat("CINEL AIR MILES CLIENT", "\n", "First name: ", Model.User.FirstName, "\n", "Last name: ", Model.User.LastName, "\n", "Program number: ", Model.MilesProgramNumber)">
+                                    <e-qrcodegenerator-displaytext text="Client info"></e-qrcodegenerator-displaytext>
+                                </ejs-qrcodegenerator><a><img src="~/frontoffice/img/flyt_preview_rev_1.png" alt="" style="width:155px; margin-left:300px;"></a>
+                                <br />
+                                <h2 style="margin-left: 387px;">GOLD</h2>
+                                <h6 style="color: #2d2d2d;">@Html.DisplayFor(model => model.User.FirstName) @Html.DisplayFor(model => model.User.LastName)</h6>
+                            </div>
+                        </div>
+                        <div>
+
+                        </div>
+                    </article>
+                        }
+
 
                         <ejs-qrcodegenerator id="ej2qrCode" width="200" height="150" value="@string.Concat("CINEL AIR MILES CLIENT", "\n", "First name: ", Model.User.FirstName, "\n", "Last name: ", Model.User.LastName, "\n", "Program number: ", Model.MilesProgramNumber)">
                             <e-qrcodegenerator-displaytext text="Client info"></e-qrcodegenerator-displaytext>
