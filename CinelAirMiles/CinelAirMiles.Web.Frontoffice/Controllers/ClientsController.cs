@@ -1,4 +1,5 @@
-﻿using CinelAirMiles.Common.Models;
+﻿using CinelAirMiles.Common.Entities;
+using CinelAirMiles.Common.Models;
 using CinelAirMiles.Common.Repositories;
 using CinelAirMiles.Web.Frontoffice.Helpers.Interfaces;
 using CinelAirMiles.Web.Frontoffice.Models;
@@ -17,19 +18,22 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
         readonly IMileRepository _mileRepository;
         private readonly IUserHelper _userHelper;
         readonly IProgramTierRepository _programTierRepository;
+        private readonly IComplaintRepository _complaintRepository;
 
         public ClientsController(
             IClientRepository clientRepository,
             IMileRepository mileRepository,
             IConverterHelper converterHelper,
             IUserHelper userHelper,
-            IProgramTierRepository programTierRepository)
+            IProgramTierRepository programTierRepository,
+            IComplaintRepository complaintRepository)
         {
             _converterHelper = converterHelper;
             _mileRepository = mileRepository;
             _clientRepository = clientRepository;
             _userHelper = userHelper;
             _programTierRepository = programTierRepository;
+            _complaintRepository = complaintRepository;
         }
 
         public async Task<IActionResult> MyAccount()
@@ -39,9 +43,40 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
             return View(client);
         }
 
-        public async Task<IActionResult> MyStatus()
+        //public async Task<IActionResult> MyStatus()
+        //{
+        //    return View();
+        //}
+
+        public IActionResult Complaints()
         {
-            return View();
+            var model = new Complaint();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Complaints(Complaint model)
+        {
+            if (ModelState.IsValid)
+            {
+                var client = await _clientRepository.GetClientByEmailAsync(User.Identity.Name);
+
+                if (client == null)
+                {
+                    return NotFound();
+                }
+
+                DateTime today = DateTime.Today;
+
+                model.MilesProgramNumber = client.MilesProgramNumber;
+                model.ComplaintDate = today;
+              
+                await _complaintRepository.CreateComplaintAsync(model, client.User);
+                ViewData["Message"] = "Complain submitted succesfully!";
+                return View();
+            }
+
+            return RedirectToAction(nameof(Complaints));
         }
 
         public async Task<IActionResult> MyBalance()
@@ -126,7 +161,7 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ManageMiles()
+        public IActionResult ManageMiles()
         {
             return View();
         }

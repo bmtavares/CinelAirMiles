@@ -16,6 +16,6 @@ namespace CinelAirMiles.Common.Repositories
 
         Task<string> AcceptAlertAsync(int id);
 
-        Task DenyTierChangeAsync(int id);
+        Task DenyAlertAsync(int id);
     }
 }

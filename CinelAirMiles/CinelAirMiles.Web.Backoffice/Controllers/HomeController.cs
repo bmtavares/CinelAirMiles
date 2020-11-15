@@ -17,19 +17,22 @@
         private readonly IPartnerRepository _partnerRepository;
         private readonly ISubscriptionRepository _subscriptionRepository;
         private readonly IContactFormRepository _contactFormRepository;
+        private readonly IComplaintRepository _complaintRepository;
 
         public HomeController(
             IUserHelper userHelper,
             IClientRepository clientRepository,
             IPartnerRepository partnerRepository,
             ISubscriptionRepository subscriptionRepository,
-            IContactFormRepository contactFormRepository)
+            IContactFormRepository contactFormRepository,
+            IComplaintRepository complaintRepository)
         {
             _userHelper = userHelper;
             _clientRepository = clientRepository;
             _partnerRepository = partnerRepository;
             _subscriptionRepository = subscriptionRepository;
             _contactFormRepository = contactFormRepository;
+            _complaintRepository = complaintRepository;
         }
         
         
@@ -45,6 +48,7 @@
                 BenefitsCount = await _partnerRepository.GetBenefitsCountAsync(),
                 SubscriptionsCount = await _subscriptionRepository.GetCountAsync(),
                 ContactFormCount = await _contactFormRepository.GetCountAsync(),
+                ComplaintsCount = await _complaintRepository.GetComplaintsCountAsync(),
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,

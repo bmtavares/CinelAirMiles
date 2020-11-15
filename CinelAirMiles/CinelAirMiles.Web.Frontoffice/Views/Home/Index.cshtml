@@ -107,9 +107,8 @@
                                         <input type="submit" value="Subscribe" class="submit-btn3" id="myBtn" />
                                     </div>
                                     <span asp-validation-for="Email"></span>
-                                    <span style="color:orange;">
-                                        @*<p id="subscriptionSucessfull" >Subscription sucessfull!</p>*@
-                                        @ViewBag.Subscription
+                                    <span class="text-success">
+                                        @ViewData["Message"]
                                     </span>
                                 </form>
                             </div>

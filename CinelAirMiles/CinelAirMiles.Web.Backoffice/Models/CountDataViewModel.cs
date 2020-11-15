@@ -20,5 +20,7 @@ namespace CinelAirMiles.Web.Backoffice.Models
 
         public int ContactFormCount { get; set; }
 
+        public int ComplaintsCount { get; set; }
+
     }
 }
