@@ -1,0 +1,63 @@
+﻿@model CinelAirMiles.Common.Entities.Complaint
+
+@{
+    Layout = "_LayoutMyAccount";
+}
+
+<!--? My Account Area Start-->
+<section class="blog_area section-padding" style="margin-top:-100px;">
+    <h1>Complaints</h1>
+    <div class="container">
+        <p>We will reply as soon as possible!</p>
+        <div class="container">
+            <br />
+            <div class="row">
+                <div class="col-lg-12 mb-8 mb-lg-0">
+                    <div class="blog_left_sidebar">
+                        <article class="blog_item" style="        background-color: #ECEFF1;
+        border-radius: 10px;">
+                            <div class="blog_details">
+
+                                <form class="form-contact contact_form" id="contactForm" asp-action="Complaints">
+                                    <div asp-validation-summary="ModelOnly"></div>
+                                    <div class="row">
+                                        <div class="col-12">
+
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <input style="background-color:white" class="form-control valid" asp-for="Subject" name="subject" id="subject" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter subject..'" placeholder="Enter subject..">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <br />
+                                                    <br />
+                                                    <textarea style="background-color:white" class="form-control w-100" asp-for="Description" cols="30" rows="9" name="description" id="description" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Describe your complaint..'" placeholder="Describe your complaint.."></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-success">@ViewData["Message"]</div>
+                                    <div class="form-group mt-3">
+                                        <input type="submit" class="button button-contactForm boxed-btn" value="Submit Complaint" />
+
+                                    </div>
+
+
+                                    <br />
+                                </form>
+
+                            </div>
+                            
+                        </article>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+    </section>
+

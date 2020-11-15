@@ -29,9 +29,7 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Message"] = "Index";
-            return View();
-            
+           return View();
         }
 
         public IActionResult News()
@@ -63,12 +61,13 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddSubscriptionAsync(Subscription subscription)
+        public async Task<IActionResult> Index(Subscription subscription)
         {
             if (ModelState.IsValid)
             {
                 await _subscriptionRepository.CreateAsync(subscription);
-                this.ViewBag.Subscription = "Subscription succesfully";                
+                ViewData["Message"] = "Subscription successfully submitted!";
+                return View();
             }
 
             return RedirectToAction(nameof(Index));
@@ -76,7 +75,6 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
             var model = new ContactForm();
             return View(model);
         }
@@ -87,7 +85,8 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
             if (ModelState.IsValid)
             {
                 await _contactFormRepository.CreateAsync(model);
-                ViewBag.ContactForm = "Subscription succesfully";
+                ViewData["Message"] = "Contact form successfully submitted!";
+                return View();
             }
                        
             return RedirectToAction(nameof(Contact));

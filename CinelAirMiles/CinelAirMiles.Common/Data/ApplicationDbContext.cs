@@ -41,6 +41,10 @@
 
         public DbSet<MilesTransactionType> MilesTransactionTypes { get; set; }
 
+        public DbSet<Complaint> Complaints { get; set; }
+
+        public DbSet<ComplaintTemp> ComplaintTemps { get; set; }
+
         #region SuperUser Temp Tables
         public DbSet<ChangeClientTierTemp> ChangeClientsTierTemp { get; set; }
 

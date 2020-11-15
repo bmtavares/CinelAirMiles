@@ -4,14 +4,16 @@ using CinelAirMiles.Common.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CinelAirMiles.Web.Backoffice.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201115143847_AddComplaint")]
+    partial class AddComplaint
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,25 +126,6 @@ namespace CinelAirMiles.Web.Backoffice.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Complaints");
-                });
-
-            modelBuilder.Entity("CinelAirMiles.Common.Entities.ComplaintTemp", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("ComplaintDate");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("MilesProgramNumber");
-
-                    b.Property<string>("Subject");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ComplaintTemps");
                 });
 
             modelBuilder.Entity("CinelAirMiles.Common.Entities.ContactForm", b =>

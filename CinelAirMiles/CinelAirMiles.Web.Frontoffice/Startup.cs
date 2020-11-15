@@ -82,6 +82,7 @@
             services.AddScoped<IContactFormRepository, ContactFormRepository>();
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
             services.AddScoped<ICombosHelper, CombosHelper>();
+            services.AddScoped<IComplaintRepository, ComplaintRepository>();
 
 
             services.Configure<CookiePolicyOptions>(options =>
