@@ -207,5 +207,26 @@
                 .Include(c => c.ProgramTier)
                 .FirstOrDefaultAsync(c => c.User.UserName == username);
         }
+
+        public async Task<bool> CheckIfClientIsAlreadyReferredAsync(Client client)
+        {
+            var check = await _context.ReferrersProgram.AnyAsync(rp => rp.ReferredClient == client);
+
+            return check;
+        }
+
+        public async Task<string> GetReferrerClientNumber(Client referredClient)
+        {
+            var referrerProgram = await _context.ReferrersProgram.FirstOrDefaultAsync(rp => rp.ReferredClient == referredClient);
+
+            return referrerProgram.ReferrerClient.MilesProgramNumber;
+        }
+
+        public async Task<string> GetReferredClientNumber(Client referrerClient)
+        {
+            var referrerProgram = await _context.ReferrersProgram.FirstOrDefaultAsync(rp => rp.ReferrerClient == referrerClient);
+
+            return referrerProgram.ReferredClient.MilesProgramNumber;
+        }
     }
 }

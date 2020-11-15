@@ -1,6 +1,7 @@
 ﻿using CinelAirMiles.Common.Models;
 using CinelAirMiles.Common.Repositories;
 using CinelAirMiles.Web.Frontoffice.Helpers.Interfaces;
+using CinelAirMiles.Web.Frontoffice.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,17 +16,20 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
         readonly IConverterHelper _converterHelper;
         readonly IMileRepository _mileRepository;
         private readonly IUserHelper _userHelper;
+        readonly IProgramTierRepository _programTierRepository;
 
         public ClientsController(
             IClientRepository clientRepository,
             IMileRepository mileRepository,
             IConverterHelper converterHelper,
-            IUserHelper userHelper)
+            IUserHelper userHelper,
+            IProgramTierRepository programTierRepository)
         {
             _converterHelper = converterHelper;
             _mileRepository = mileRepository;
             _clientRepository = clientRepository;
             _userHelper = userHelper;
+            _programTierRepository = programTierRepository;
         }
 
         public async Task<IActionResult> MyAccount()
@@ -62,6 +66,64 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
             var model = _converterHelper.FromMileToMilesViewModel(miles);
 
             return View(model);
+        }
+
+        public async Task<IActionResult> ManageGoldReference()
+        {
+            var client = await _clientRepository.GetClientByEmailAsync(User.Identity.Name);
+
+            if(client == null)
+            {
+                return NotFound();
+            }
+
+            var tier = await _programTierRepository.GetByDescriptionAsync("Gold");
+
+            if (tier == null)
+            {
+                return NotFound();
+            }
+
+            if (client.ProgramTier != tier)
+            {
+                return RedirectToAction(nameof(MyAccount));
+            }
+
+            var model = new GoldReferenceViewModel();
+
+            if (client.IsInReferrerProgram)
+            {
+                var userIsAlreadyReferred = await _clientRepository.CheckIfClientIsAlreadyReferredAsync(client);
+
+                if (userIsAlreadyReferred)
+                {
+                    model.ReferrerClientNumber = await _clientRepository.GetReferrerClientNumber(client);
+                    model.ReferredClientNumber = client.MilesProgramNumber;
+                    model.ViewState = 0;
+                    model.Info = $"The client with number {model.ReferrerClientNumber} is sharing their Gold tier with you";
+
+                    return View(model);
+                }
+
+                model.ReferrerClientNumber = client.MilesProgramNumber;
+                model.ReferredClientNumber = await _clientRepository.GetReferredClientNumber(client);
+                model.ViewState = 1;
+                model.Info = $"You are sharing your Gold status with the client number {model.ReferredClientNumber}";
+            }
+
+            model.ReferrerClientNumber = client.MilesProgramNumber;
+            model.ViewState = 2;
+            model.Info = "Insert the client number with which you wish to share your Gold tier with";
+
+            return View(model);
+        }
+
+        //TODO Finish the post
+        //TODO If in the razor to hide the Manage gold button in the layout
+        [HttpPost]
+        public async Task<IActionResult> ManageGoldReference(GoldReferenceViewModel model)
+        {
+            return View();
         }
 
         public async Task<IActionResult> ManageMiles()

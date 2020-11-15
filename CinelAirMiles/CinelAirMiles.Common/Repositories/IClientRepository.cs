@@ -66,5 +66,11 @@
         /// <param name="user"></param>
         /// <returns></returns>
         Task<string> EditClientAsync(Client client, User user);
+
+        Task<bool> CheckIfClientIsAlreadyReferredAsync(Client client);
+
+        Task<string> GetReferrerClientNumber(Client referredClient);
+
+        Task<string> GetReferredClientNumber(Client referrerClient);
     }
 }
