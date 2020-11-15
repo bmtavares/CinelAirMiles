@@ -1,4 +1,4 @@
-﻿namespace CinelAirMiles.Common.Repositories.Classes
+﻿ namespace CinelAirMiles.Common.Repositories.Classes
 {
     using System.Linq;
     using System.Threading.Tasks;
