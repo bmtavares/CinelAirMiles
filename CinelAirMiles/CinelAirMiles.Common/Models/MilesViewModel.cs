@@ -7,7 +7,7 @@ namespace CinelAirMiles.Common.Models
 {
     public class MilesViewModel
     {
-        [Display(Name = "Quantity")]
+        [Display(Name = "Available miles")]
         public int Miles { get; set; }
 
 

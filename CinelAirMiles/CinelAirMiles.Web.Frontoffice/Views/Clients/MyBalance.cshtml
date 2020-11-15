@@ -22,6 +22,11 @@
                             </a>
                         </div>
                     </article>
+
+                    <h3> Total Available Status Miles: @ViewData["StatusBalance"]</h3>
+
+                    <h3> Total Available Bonus Miles: @ViewData["BonusBalance"]</h3>
+                    <br />
                     <ejs-grid id="milesGrid" allowSorting="true" allowPaging="true" allowGrouping="true" allowSelection="false" dataSource="Model">
                     </ejs-grid>
                 </div>

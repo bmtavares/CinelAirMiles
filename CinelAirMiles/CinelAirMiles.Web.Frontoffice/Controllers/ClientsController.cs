@@ -56,6 +56,9 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
                 return NotFound();
             }
 
+            ViewData["StatusBalance"] = miles.Where(m => m.MilesType.Description == "Status").Sum(m => m.Balance);
+            ViewData["BonusBalance"] = miles.Where(m => m.MilesType.Description == "Bonus").Sum(m => m.Balance);
+
             var model = _converterHelper.FromMileToMilesViewModel(miles);
 
             return View(model);

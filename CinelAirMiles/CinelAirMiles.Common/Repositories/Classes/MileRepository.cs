@@ -29,11 +29,14 @@
         public async Task<IEnumerable<Mile>> GetMilesAssociatedWithClientAsync(int clientId)
         {
             var client = await _context.Clients
-                .Include(c => c.Miles.Where(m => m.ExpiryDate >= DateTime.UtcNow))
+                .Include(c => c.Miles)
                 .ThenInclude(m => m.MilesType)
                 .FirstOrDefaultAsync(c => c.Id == clientId);
 
-            return client.Miles.OrderByDescending(m => m.ExpiryDate);
+            return client.Miles
+                .Where(m => m.ExpiryDate >= DateTime.UtcNow)
+                .Where(m => m.Balance > 0)
+                .OrderByDescending(m => m.ExpiryDate);
         }
 
         public async Task<int> GetCurrentMilesBalanceByClientIdAsync(int clientId, string mileType)
