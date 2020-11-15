@@ -17,7 +17,7 @@ namespace CinelAirMiles.Web.Frontoffice.Helpers.Classes
             foreach (var mile in miles) {
                 model.Add(new MilesViewModel
                 {
-                    Miles = mile.Miles,
+                    Miles = mile.Balance,
                     CreditDate = mile.CreditDate,
                     ExpiryDate = mile.ExpiryDate,
                     Description = mile.Description,
