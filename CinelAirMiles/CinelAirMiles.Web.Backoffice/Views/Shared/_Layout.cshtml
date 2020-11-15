@@ -90,11 +90,11 @@
 
                         <h3 class="menu-title">DEBUG</h3><!-- /.menu-title -->
                         @*<a asp-area="" asp-controller="Miles" asp-action="Index"><i class="menu-icon fa fa-spinner"></i>Miles</a>
-                        <a asp-area="" asp-controller="MilesTypes" asp-action="Index"><i class="menu-icon fa fa-bars"></i>MilesTypes</a>
-                        <a asp-area="" asp-controller="ProgramTiers" asp-action="Index"><i class="menu-icon fa fa-glass"></i>ProgramTiers</a>*@
-
-                        <a asp-area="" asp-controller="Account" asp-action="Logout"><i class="menu-icon fa fa-power-off"></i>Logout</a>
+        <a asp-area="" asp-controller="MilesTypes" asp-action="Index"><i class="menu-icon fa fa-bars"></i>MilesTypes</a>
+        <a asp-area="" asp-controller="ProgramTiers" asp-action="Index"><i class="menu-icon fa fa-glass"></i>ProgramTiers</a>*@
                         <a asp-area="" asp-controller="Account" asp-action="ChangePassword"><i class="menu-icon fa fa-user-secret"></i>Change Password</a>
+                        <a asp-area="" asp-controller="Account" asp-action="Logout"><i class="menu-icon fa fa-power-off"></i>Logout</a>
+
                     </li>
                     <li class="active">
                         <br />
@@ -149,17 +149,20 @@
                 <div class="col-sm-5">
                     
                     <div class="user-area dropdown float-right">
+                        @if (this.User.IsInRole("SuperUser"))
+                        {
+                            <!--ADDED-LINE-->
+                            <a class="fa fa-bell" style="position: absolute; margin: 11px -25px;" asp-controller="Notifications" asp-action="Index"></a>
+                            <a class="e-badge e-badge-danger" id="notificationCount" asp-controller="Notifications" asp-action="Index" data-show="popover" title="Notifications" style="position: absolute; margin: 3px -16px; font-size: x-small;"></a>
+                            <!-------------->
+                        }
 
-                        <!--ADDED-LINE-->
-                        <a class="fa fa-bell" style="position: absolute; margin: 11px -25px;" asp-controller="Notifications" asp-action="Index"></a>
-                        <a class="e-badge e-badge-danger" id="notificationCount" asp-controller="Notifications" asp-action="Index" data-show="popover" title="Notifications" style="position: absolute; margin: 3px -16px; font-size: x-small;"></a>
-                        <!-------------->
-                       
+
                         <div class="container body-content">
                             <a class="nav-link"><i style="margin-left:-13px;"></i> Welcome, @this.User.Identity.Name</a>
 
                         </div>
-                 </div>
+                    </div>
                     
             </div>
                 </div>
