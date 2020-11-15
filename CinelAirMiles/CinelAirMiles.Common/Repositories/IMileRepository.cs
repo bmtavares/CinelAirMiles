@@ -27,5 +27,7 @@
         /// <param name="mileType">slug for MileType</param>
         /// <returns>Current balance</returns>
         Task<int> GetCurrentMilesBalanceByClientIdAsync(int clientId, string mileType);
+
+        
     }
 }

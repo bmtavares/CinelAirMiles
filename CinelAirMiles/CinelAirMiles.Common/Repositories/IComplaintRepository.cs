@@ -11,5 +11,8 @@ namespace CinelAirMiles.Common.Repositories
         Task<string> CreateComplaintAsync(Complaint newComplaint, User user);
 
         Task<int> GetComplaintsCountAsync();
+
+        Task<List<Complaint>> GetComplaintAssociatedWithUserAsync(string milesProgramNumber);
+   
     }
 }

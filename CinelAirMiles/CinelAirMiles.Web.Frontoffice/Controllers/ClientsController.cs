@@ -54,6 +54,20 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> ComplaintsList()
+        {
+            var client = await _clientRepository.GetClientByEmailAsync(User.Identity.Name);
+
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            var list = await _complaintRepository.GetComplaintAssociatedWithUserAsync(client.MilesProgramNumber);
+
+            return View(list);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Complaints(Complaint model)
         {

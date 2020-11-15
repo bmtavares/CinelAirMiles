@@ -106,5 +106,15 @@ namespace CinelAirMiles.Common.Repositories.Classes
             return await _context.Complaints
                 .CountAsync();
         }
+
+
+        public async Task<List<Complaint>> GetComplaintAssociatedWithUserAsync(string milesProgramNumber)
+        {
+
+            var list = await _context.Complaints.Where(c => c.MilesProgramNumber == milesProgramNumber).ToListAsync();
+
+            return list;
+                
+        }
     }
 }
