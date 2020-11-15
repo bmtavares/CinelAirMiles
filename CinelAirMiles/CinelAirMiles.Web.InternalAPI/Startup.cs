@@ -19,9 +19,12 @@
 
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IHostingEnvironment _env;
+
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -47,15 +50,24 @@
 
             services.AddDbContext<ApplicationDbContext>(cfg =>
             {
-                cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"));
+                if (_env.IsDevelopment())
+                {
+                    cfg.UseSqlServer(Configuration.GetConnectionString("DevConnection"), b => b.MigrationsAssembly("CinelAirMiles.Web.Backoffice"));
+                }
+                else
+                {
+                    cfg.UseSqlServer(Configuration.GetConnectionString("ProdConnection"));
+                }
             });
 
             services.AddScoped<IMathHelper, MathHelper>();
             services.AddScoped<IMilesHelper, MilesHelper>();
             services.AddScoped<IApiService, ApiService>();
+
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IMileRepository, MileRepository>();
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
+
             services.AddScoped<ISeatClassRepository, SeatClassRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

@@ -24,9 +24,12 @@
 
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IHostingEnvironment _env;
+
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -67,7 +70,14 @@
 
             services.AddDbContext<ApplicationDbContext>(cfg =>
             {
-                cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"), b => b.MigrationsAssembly("CinelAirMiles.Web.Backoffice"));
+                if (_env.IsDevelopment())
+                {
+                    cfg.UseSqlServer(Configuration.GetConnectionString("DevConnection"), b => b.MigrationsAssembly("CinelAirMiles.Web.Backoffice"));
+                }
+                else
+                {
+                    cfg.UseSqlServer(Configuration.GetConnectionString("ProdConnection"));
+                }
             });
 
             services.AddTransient<Seed>();
@@ -89,7 +99,6 @@
             services.AddScoped<IPartnerRepository, PartnerRepository>();
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
             services.AddScoped<IContactFormRepository, ContactFormRepository>();
-            
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();

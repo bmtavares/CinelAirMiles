@@ -21,9 +21,12 @@
 
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IHostingEnvironment _env;
+
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -63,24 +66,36 @@
 
             services.AddDbContext<ApplicationDbContext>(cfg =>
             {
-                cfg.UseSqlServer(Configuration.GetConnectionString("PublishConnection"));
+                if (_env.IsDevelopment())
+                {
+                    cfg.UseSqlServer(Configuration.GetConnectionString("DevConnection"), b => b.MigrationsAssembly("CinelAirMiles.Web.Backoffice"));
+                }
+                else
+                {
+                    cfg.UseSqlServer(Configuration.GetConnectionString("ProdConnection"));
+                }
             });
 
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<ICreditCardRepository, CreditCardRepository>();
             services.AddScoped<IMileRepository, MileRepository>();
+
             services.AddScoped<IMilesTransactionRepository, MilesTransactionRepository>();
             services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
+
             services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
             services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
             services.AddScoped<IPartnerRepository, PartnerRepository>();
+
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<IMailHelper, MailHelper>();
             services.AddScoped<IXmlHelper, XmlHelper>();
+
             services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddScoped<IContactFormRepository, ContactFormRepository>();
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IComplaintRepository, ComplaintRepository>();
 
