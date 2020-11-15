@@ -54,8 +54,26 @@ namespace CinelAirMiles.Common.Repositories.Classes
                     return "Client tier changed successfully";
 
                 case "Complaint":
-                    //TODO Pending
-                    break;
+                    var tempTableComplaint = await _context.ComplaintTemps
+                       .FirstOrDefaultAsync(cm => cm.Id == notification.TempTableId);
+
+                    if (tempTableComplaint == null)
+                    {
+                        return "Complaint not changed because the change has already been confirmed or denied";
+                    }
+
+                    var complaint = new Complaint { 
+                        Subject = tempTableComplaint.Subject, 
+                        Description = tempTableComplaint.Description,
+                        MilesProgramNumber = tempTableComplaint.MilesProgramNumber,
+                        ComplaintDate = tempTableComplaint.ComplaintDate
+                    };               
+
+                    _context.Complaints.Add(complaint);
+                    _context.ComplaintTemps.Remove(tempTableComplaint);
+                    await _context.SaveChangesAsync();
+
+                    return "Complaint filed successfully";
 
                 case "SeatAvailability":
                     //TODO Pending
@@ -90,7 +108,7 @@ namespace CinelAirMiles.Common.Repositories.Classes
             return "An unknown error occurred";
         }
 
-        public async Task DenyTierChangeAsync(int id)
+        public async Task DenyAlertAsync(int id)
         {
             var notification = await _context.Notifications
                 .Include(n => n.NotificationType)
@@ -115,7 +133,17 @@ namespace CinelAirMiles.Common.Repositories.Classes
                     return;
 
                 case "Complaint":
-                    //TODO Pending
+                    var tempTableComplaint = await _context.ComplaintTemps
+                        .FirstOrDefaultAsync(cc => cc.Id == notification.TempTableId);
+
+                    if (tempTableComplaint == null)
+                    {
+                        return;
+                    }
+
+                    _context.ComplaintTemps.Remove(tempTableComplaint);
+                    await _context.SaveChangesAsync();
+
                     return;
 
                 case "SeatAvailability":

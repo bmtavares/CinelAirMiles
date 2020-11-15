@@ -9,5 +9,7 @@ namespace CinelAirMiles.Common.Repositories
     public interface IComplaintRepository : IGenericRepository<Complaint>
     {
         Task<string> CreateComplaintAsync(Complaint newComplaint, User user);
+
+        Task<int> GetComplaintsCountAsync();
     }
 }

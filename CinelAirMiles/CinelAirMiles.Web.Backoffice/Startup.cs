@@ -76,6 +76,7 @@
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<ICreditCardRepository, CreditCardRepository>();
             services.AddScoped<IMileRepository, MileRepository>();
+            services.AddScoped<IComplaintRepository, ComplaintRepository>();
 
             services.AddScoped<IMilesTransactionRepository, MilesTransactionRepository>();
             services.AddScoped<IMilesTypeRepository, MilesTypeRepository>();
@@ -88,6 +89,7 @@
             services.AddScoped<IPartnerRepository, PartnerRepository>();
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
             services.AddScoped<IContactFormRepository, ContactFormRepository>();
+            
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();

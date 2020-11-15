@@ -57,7 +57,7 @@ namespace CinelAirMiles.Web.Backoffice.Controllers
 
             await ReadNotification(id.Value);
 
-            await _notificationRepository.DenyTierChangeAsync(id.Value);
+            await _notificationRepository.DenyAlertAsync(id.Value);
 
             return RedirectToAction(nameof(Index));
         }

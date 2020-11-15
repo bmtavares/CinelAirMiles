@@ -101,10 +101,10 @@ namespace CinelAirMiles.Common.Repositories.Classes
         }
 
 
-        //public async Task<int> GetComplaintsCountAsync()
-        //{
-        //    return await _context.Complaints
-        //        .Where(c => c.Id > 0).CountAsync();
-        //}
+        public async Task<int> GetComplaintsCountAsync()
+        {
+            return await _context.Complaints
+                .CountAsync();
+        }
     }
 }
