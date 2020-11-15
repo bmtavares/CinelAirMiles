@@ -2,6 +2,7 @@
 {
     using System.Diagnostics;
     using System.Threading.Tasks;
+    using CinelAirMiles.Common.Repositories;
     using CinelAirMiles.Web.Backoffice.Helpers.Interfaces;
     using CinelAirMiles.Web.Backoffice.Models;
     using Microsoft.AspNetCore.Authorization;
@@ -12,17 +13,45 @@
     public class HomeController : Controller
     {
         private readonly IUserHelper _userHelper;
+        private readonly IClientRepository _clientRepository;
+        private readonly IPartnerRepository _partnerRepository;
+        private readonly ISubscriptionRepository _subscriptionRepository;
+        private readonly IContactFormRepository _contactFormRepository;
 
-        public HomeController(IUserHelper userHelper)
+        public HomeController(
+            IUserHelper userHelper,
+            IClientRepository clientRepository,
+            IPartnerRepository partnerRepository,
+            ISubscriptionRepository subscriptionRepository,
+            IContactFormRepository contactFormRepository)
         {
             _userHelper = userHelper;
+            _clientRepository = clientRepository;
+            _partnerRepository = partnerRepository;
+            _subscriptionRepository = subscriptionRepository;
+            _contactFormRepository = contactFormRepository;
         }
         
         
         public async Task<IActionResult> Index()
         {
             var user = await _userHelper.GetUserByEmailAsync(this.User.Identity.Name);
-            return View(user);
+
+            var model = new CountDataViewModel
+            {
+                EmployeesCount = await _userHelper.GetEmployeesCountAsync(),
+                ClientCount = await _clientRepository.GetClientsCountAsync(),
+                PartnerCount = await _partnerRepository.GetPartnerCountAsync(),
+                BenefitsCount = await _partnerRepository.GetBenefitsCountAsync(),
+                SubscriptionsCount = await _subscriptionRepository.GetCountAsync(),
+                ContactFormCount = await _contactFormRepository.GetCountAsync(),
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber
+            };
+
+            return View(model);
         }
 
         public IActionResult About()

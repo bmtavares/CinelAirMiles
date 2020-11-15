@@ -1,0 +1,32 @@
+﻿@model CinelAirMiles.Web.Frontoffice.Models.GoldReferenceViewModel
+
+@{
+    ViewData["Title"] = "ManageGoldReference";
+}
+
+<h2>@Model.Info</h2>
+<br />
+
+@if (Model.ViewState == 1)
+{
+    <form asp-action="ManageGoldReference">
+
+        <div class="form-group">
+            <input type="submit" value="Confirm" class="btn btn-default" />
+        </div>
+    </form>
+}
+else if (Model.ViewState == 2)
+{
+    <form asp-action="ManageGoldReference">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <ejs-maskedtextbox id="ej2masked" mask="000000000" ejs-for="ReferredClientNumber"></ejs-maskedtextbox>
+
+        <div class="form-group">
+            <input type="submit" value="Confirm" class="btn btn-default" />
+        </div>
+    </form>
+}
+
+<button asp-action="ManageAccount" value="Go back"></button>

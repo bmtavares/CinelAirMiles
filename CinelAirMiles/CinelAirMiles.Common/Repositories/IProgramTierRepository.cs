@@ -1,8 +1,7 @@
 ﻿namespace CinelAirMiles.Common.Repositories
 {
-    using System.Threading.Tasks;
-
     using CinelAirMiles.Common.Entities;
+    using System.Threading.Tasks;
 
     public interface IProgramTierRepository : IGenericRepository<ProgramTier>
     {
@@ -12,5 +11,6 @@
         /// <param name="id">ProgramTier Id</param>
         /// <returns>Double multiplier</returns>
         Task<double> GetMultiplierByIdAsync(int id);
+        Task<ProgramTier> GetByDescriptionAsync(string description);
     }
 }

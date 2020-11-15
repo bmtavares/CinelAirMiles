@@ -17,7 +17,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-    [Authorize(Roles = "Admin, User")]
+    [Authorize(Roles = "Admin")]
     public class ClientsController : Controller
     {
         private readonly ApplicationDbContext _context;

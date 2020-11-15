@@ -86,6 +86,8 @@
             services.AddScoped<INotificationRepository, NotificationRepository>();
 
             services.AddScoped<IPartnerRepository, PartnerRepository>();
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            services.AddScoped<IContactFormRepository, ContactFormRepository>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICombosHelper, CombosHelper>();
             services.AddScoped<IConverterHelper, ConverterHelper>();

@@ -5,8 +5,8 @@
 
     using CinelAirMiles.Common.Data;
     using CinelAirMiles.Common.Entities;
-
     using Microsoft.EntityFrameworkCore;
+
 
     public class ProgramTierRepository : GenericRepository<ProgramTier>, IProgramTierRepository
     {
@@ -24,5 +24,8 @@
                 .Select(pt => pt.MilesMultiplier)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<ProgramTier> GetByDescriptionAsync(string description) =>
+            await _context.ProgramTiers.FirstOrDefaultAsync(pt => pt.Description == description);
     }
 }

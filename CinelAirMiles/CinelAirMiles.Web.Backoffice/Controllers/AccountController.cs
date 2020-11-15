@@ -381,37 +381,37 @@
 
 
 
-        //public IActionResult ChangePassword()
-        //{
-        //    return View();
-        //}
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var user = await _userHelper.GetUserByEmailAsync(User.Identity.Name);
-        //        if (user != null)
-        //        {
-        //            var result = await _userHelper.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-        //            if (result.Succeeded)
-        //            {
-        //                return RedirectToAction("ChangeUser");
-        //            }
-        //            else
-        //            {
-        //                ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError(string.Empty, "User not found.");
-        //        }
-        //    }
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userHelper.GetUserByEmailAsync(User.Identity.Name);
+                if (user != null)
+                {
+                    var result = await _userHelper.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ChangeUser");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, result.Errors.FirstOrDefault().Description);
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "User not found.");
+                }
+            }
 
-        //    return View(model);
-        //}
+            return View(model);
+        }
 
         [Route("NotAuthorized")]
         public IActionResult NotAuthorized()
