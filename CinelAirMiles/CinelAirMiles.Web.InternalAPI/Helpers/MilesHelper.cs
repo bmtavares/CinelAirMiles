@@ -14,16 +14,23 @@
         private readonly IMathHelper _mathHelper;
         private readonly IClientRepository _clientRepository;
         private readonly IMileRepository _mileRepository;
+        private readonly IProgramTierRepository _programTierRepository;
+        private readonly ISeatClassRepository _seatClassRepository;
+        private readonly int _goldTierId = 3;
 
         public MilesHelper(
             IMathHelper mathHelper,
             IClientRepository clientRepository,
-            IMileRepository mileRepository
+            IMileRepository mileRepository,
+            IProgramTierRepository programTierRepository,
+            ISeatClassRepository seatClassRepository
             )
         {
             _mathHelper = mathHelper;
             _clientRepository = clientRepository;
             _mileRepository = mileRepository;
+            _programTierRepository = programTierRepository;
+            _seatClassRepository = seatClassRepository;
         }
 
         public double CalculateMiles(decimal depLat, decimal depLong, decimal arvLat, decimal arvLong)
@@ -42,68 +49,49 @@
 
             var flownNumbers = flownTickets.Select(t => t.MilesProgramNumber).Distinct();
 
-            if (flownNumbers.Count() > 0)
+            foreach (string num in flownNumbers)
             {
-                var goldTierId = 3;
+                var client = await _clientRepository.GetClientByNumberAsync(num);
 
-                foreach (string num in flownNumbers)
+                if (client != null)
                 {
-                    var client = await _clientRepository.GetClientByNumberAsync(num);
+                    var firstNameNormalized = client.User.FirstName.ToUpper();
+                    var lastNameNormalized = client.User.LastName.ToUpper();
 
-                    if (client != null)
+                    var programTierMultiplier = await _programTierRepository.GetMultiplierByIdAsync(client.IsInReferrerProgram ? _goldTierId : client.ProgramTierId);
+
+                    var clientTickets = flownTickets.Where(t => t.MilesProgramNumber == num);
+
+                    foreach (var ticket in clientTickets)
                     {
-                        client = await _clientRepository.GetClientWithDetailsAsync(client.Id);
+                        var ticketFirstNameNormalized = ticket.FirstName.ToUpper();
+                        var ticketLastNameNormalized = ticket.LastName.ToUpper();
 
-                        var firstNameNormalized = client.User.FirstName.ToUpper();
-                        var lastNameNormalized = client.User.LastName.ToUpper();
-
-                        var programTierMultiplier = GetProgramTierMultiplier(client.IsInReferrerProgram ? goldTierId : client.ProgramTierId);
-
-                        var clientTickets = flownTickets.Where(t => t.MilesProgramNumber == num);
-
-                        foreach (var ticket in clientTickets)
+                        if (ticketFirstNameNormalized == firstNameNormalized && ticketLastNameNormalized == lastNameNormalized)
                         {
-                            var ticketFirstNameNormalized = ticket.FirstName.ToUpper();
-                            var ticketLastNameNormalized = ticket.LastName.ToUpper();
+                            var baseMiles = CalculateMiles(ticket.DepartureLatitude, ticket.DepartureLongitude, ticket.ArrivalLatitude, ticket.ArrivalLongitude);
+                            double classMultiplier = 0.10;
 
-                            if (ticketFirstNameNormalized == firstNameNormalized && ticketLastNameNormalized == lastNameNormalized)
+                            if (IsIntercontinentalFlight(ticket.ArrivalRegion, ticket.DepartureRegion))
                             {
-                                var baseMiles = CalculateMiles(ticket.DepartureLatitude, ticket.DepartureLongitude, ticket.ArrivalLatitude, ticket.ArrivalLongitude);
-                                double classMultiplier = 0.10;
-
-                                if (ticket.SeatClassId != 1)
-                                {
-                                    switch(ticket.SeatClassId)
-                                    {
-                                        case 2:
-                                        case 3:
-                                        case 4:
-                                            classMultiplier = CalculateEconomicMultiplier(ticket.ArrivalRegion, ticket.DepartureRegion, ticket.SeatClassId);
-                                            break;
-                                        case 5:
-                                            classMultiplier = 1.50;
-                                            break;
-                                        case 6:
-                                            classMultiplier = 2;
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }
-
-                                int finalMiles = (int)Math.Floor(baseMiles * (1 + classMultiplier + programTierMultiplier)); //TODO: Check if the house always wins
-
-                                await CreditMilesToClient(client, finalMiles, ticket);
-
-                                client.FlownSegments++;
-
-                                await _clientRepository.UpdateAsync(client);
-
-                                res++;
+                                classMultiplier = await _seatClassRepository.GetRegularMultiplierByIdAsync(ticket.SeatClassId);
                             }
+                            else
+                            {
+                                classMultiplier = await _seatClassRepository.GetInternationalMultiplierByIdAsync(ticket.SeatClassId);
+                            }
+
+                            int finalMiles = (int)Math.Floor(baseMiles * (1 + classMultiplier + programTierMultiplier)); //TODO: Check if the house always wins
+
+                            await CreditMilesToClient(client, finalMiles, ticket);
+
+                            client.FlownSegments++;
+
+                            await _clientRepository.UpdateAsync(client);
+
+                            res++;
                         }
                     }
-
                 }
             }
 
@@ -120,7 +108,7 @@
                 Balance = miles,
                 CreditDate = DateTime.UtcNow,
                 ExpiryDate = DateTime.UtcNow.AddYears(3),
-                Description = $"Miles from flight that landed on {DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd")}"
+                Description = $"Miles from flight that landed on {DateTime.UtcNow.AddDays(-1):yyyy-MM-dd}"
             };
 
             var statusMiles = new Mile
@@ -131,51 +119,11 @@
                 Balance = miles,
                 CreditDate = DateTime.UtcNow,
                 ExpiryDate = DateTime.UtcNow.AddYears(3),
-                Description = $"Status from flight that landed on {DateTime.UtcNow.AddDays(-1).ToString("yyyy-MM-dd")}"
+                Description = $"Status from flight that landed on {DateTime.UtcNow.AddDays(-1):yyyy-MM-dd}"
             };
 
             await _mileRepository.CreateAsync(bonusMiles);
             await _mileRepository.CreateAsync(statusMiles);
-        }
-
-        double GetProgramTierMultiplier(int programTierId)
-        {
-            switch(programTierId)
-            {
-                case 2:
-                    return 0.25;
-                case 3:
-                    return 0.5;
-                default:
-                    return 0;
-            }
-        }
-
-        double CalculateEconomicMultiplier(int regionAId, int regionBId, int seatClassId)
-        {
-            if (IsIntercontinentalFlight(regionAId, regionBId))
-            {
-                switch (seatClassId)
-                {
-                    case 2:
-                        return 0.5;
-                    case 3:
-                        return 1;
-                    case 4:
-                        return 1.5;
-                }
-            }
-            switch (seatClassId)
-            {
-                case 2:
-                    return 0.4;
-                case 3:
-                    return 0.7;
-                case 4:
-                    return 1;
-            }
-
-            return 0.10;
         }
 
         bool IsIntercontinentalFlight (int regionAId, int regionBId)

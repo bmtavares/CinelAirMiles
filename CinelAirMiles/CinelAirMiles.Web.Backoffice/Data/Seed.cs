@@ -59,9 +59,23 @@
 
             if (!await _context.ProgramTiers.AnyAsync())
             {
-                await CreateProgramTierAsync("Basic");
-                await CreateProgramTierAsync("Silver");
-                await CreateProgramTierAsync("Gold");
+                await CreateProgramTierAsync("Basic", 0);
+                await CreateProgramTierAsync("Silver", 0.25);
+                await CreateProgramTierAsync("Gold", 0.5);
+
+                await _context.SaveChangesAsync();
+            }
+
+
+            if (!await _context.SeatClasses.AnyAsync())
+            {
+                await CreateSeatClassAsync("Discount", 0.10, 0.10);
+                await CreateSeatClassAsync("Basic", 0.40, 0.50);
+                await CreateSeatClassAsync("Classic", 0.70, 1);
+                await CreateSeatClassAsync("Plus", 1, 1.5);
+                await CreateSeatClassAsync("Executive", 1.5, 1.5);
+                await CreateSeatClassAsync("Top Executive", 2, 2);
+
 
                 await _context.SaveChangesAsync();
             }
@@ -105,11 +119,22 @@
             });
         }
 
-        async Task CreateProgramTierAsync(string description)
+        async Task CreateProgramTierAsync(string description, double multiplier)
         {
             await _context.ProgramTiers.AddAsync(new ProgramTier
             {
-                Description = description
+                Description = description,
+                MilesMultiplier = multiplier
+            });
+        }
+
+        async Task CreateSeatClassAsync(string name, double regularMultiplier, double internationalMultiplier)
+        {
+            await _context.SeatClasses.AddAsync(new SeatClass
+            {
+                Name = name,
+                RegularMultiplier = regularMultiplier,
+                InternationalMultiplier = internationalMultiplier
             });
         }
 

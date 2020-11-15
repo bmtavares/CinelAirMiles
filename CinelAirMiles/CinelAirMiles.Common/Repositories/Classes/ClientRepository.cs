@@ -73,7 +73,10 @@
         }
 
         public async Task<Client> GetClientByNumberAsync(string number)
-            => await _context.Clients.Where(c => c.MilesProgramNumber == number).FirstOrDefaultAsync();
+            => await _context.Clients
+                .Include(c => c.User)
+                .Include(c => c.ProgramTier)
+                .FirstOrDefaultAsync(c => c.MilesProgramNumber == number);
 
         public async Task<Client> GetClientByUserAsync(User user)
             => await _context.Clients.Where(c => c.UserId == user.Id).FirstOrDefaultAsync();

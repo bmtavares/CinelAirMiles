@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CinelAirMiles.Common.Entities
+﻿namespace CinelAirMiles.Common.Entities
 {
+    using System.ComponentModel.DataAnnotations;
+    
     public class ProgramTier : IEntity
     {
         public int Id { get; set; }
@@ -9,5 +9,8 @@ namespace CinelAirMiles.Common.Entities
 
         [Display(Name = "Tier description")]
         public string Description { get; set; }
+
+
+        public double MilesMultiplier { get; set; }
     }
 }

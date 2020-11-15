@@ -55,6 +55,8 @@
             services.AddScoped<IApiService, ApiService>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IMileRepository, MileRepository>();
+            services.AddScoped<IProgramTierRepository, ProgramTierRepository>();
+            services.AddScoped<ISeatClassRepository, SeatClassRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

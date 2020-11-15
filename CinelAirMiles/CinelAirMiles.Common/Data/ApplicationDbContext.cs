@@ -37,6 +37,8 @@
 
         public DbSet<Benefit> Benefits { get; set; }
 
+        public DbSet<SeatClass> SeatClasses { get; set; }
+
         public DbSet<MilesTransactionType> MilesTransactionTypes { get; set; }
 
         #region SuperUser Temp Tables
