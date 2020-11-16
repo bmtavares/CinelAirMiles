@@ -72,7 +72,7 @@
                     <li class="menu-item-has-children dropdown">
                         @if (this.User.IsInRole("Admin"))
                         {
-                            <h3 class="menu-title">USERS</h3><!-- /.menu-title -->
+                            <h3 class="menu-title">ADMIN MENU</h3><!-- /.menu-title -->
                             <a asp-area="" asp-controller="Clients" asp-action="Index"><i class="menu-icon fa fa-user"></i>Clients</a>
                             <a asp-area="" asp-controller="Account" asp-action="Index"><i class="menu-icon fa fa-group"></i>Employees</a>
                         }
@@ -84,32 +84,16 @@
                         @if (this.User.IsInRole("User"))
                         {
                             <h3 class="menu-title">USER MENU</h3><!-- /.menu-title -->
-                            @*<a asp-area="" asp-controller="Clients" asp-action="Index"><i class="menu-icon fa fa-user"></i>Clients</a>*@
                             <a asp-area="" asp-controller="Partners" asp-action="Index"><i class="menu-icon fa fa-user-circle"></i>Partners</a>
                         }
-
-                        <h3 class="menu-title">DEBUG</h3><!-- /.menu-title -->
-                        @*<a asp-area="" asp-controller="Miles" asp-action="Index"><i class="menu-icon fa fa-spinner"></i>Miles</a>
-        <a asp-area="" asp-controller="MilesTypes" asp-action="Index"><i class="menu-icon fa fa-bars"></i>MilesTypes</a>
-        <a asp-area="" asp-controller="ProgramTiers" asp-action="Index"><i class="menu-icon fa fa-glass"></i>ProgramTiers</a>*@
-                        <a asp-area="" asp-controller="Account" asp-action="ChangePassword"><i class="menu-icon fa fa-user-secret"></i>Change Password</a>
-                        <a asp-area="" asp-controller="Account" asp-action="Logout"><i class="menu-icon fa fa-power-off"></i>Logout</a>
+                        
 
                     </li>
                     <li class="active">
                         <br />
-                        @if (this.User.IsInRole("Admin"))
-                        {
-                            <p class="menu-title">Admin</p>
-                        }
-                        @if (this.User.IsInRole("SuperUser"))
-                        {
-                            <a class="menu-title">SuperUser</a>
-                        }
-                        @if (this.User.IsInRole("User"))
-                        {
-                            <a class="menu-title">User</a>
-                        }
+                        <a class="menu-title">SESSION</a>
+                        <a asp-area="" asp-controller="Account" asp-action="ChangePassword"><i class="menu-icon fa fa-user-secret"></i>Change Password</a>
+                        <a asp-area="" asp-controller="Account" asp-action="Logout"><i class="menu-icon fa fa-power-off"></i>Logout</a>
                     </li>
                        
                 </ul>
