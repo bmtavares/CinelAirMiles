@@ -18,11 +18,11 @@
                             </div>
                             <!-- Single Input Fields -->
                             <div class="input-box">
-                                @*<div class="text-success">
-            <p>
-                @ViewBag.Message
-            </p>
-        </div>*@
+                                <div class="text-success" style="color:green;">
+                                    <p>
+                                        @ViewBag.Message
+                                    </p>
+                                </div>
                                 <div class="single-input-fields">
                                     <label asp-for="FirstName">First Name</label>
                                     <input asp-for="FirstName" class="form-control" type="text" placeholder="Enter first name.." />
@@ -41,7 +41,7 @@
 
                                 <div class="form-group">
                                     <label asp-for="BirthDate" style="width:100%; text-align:left">Date of birth</label>
-                                    <ejs-datepicker id="datePicker" start="Decade" ejs-for="BirthDate" strictMode="true" max="DateTime.UtcNow" firstDayOfWeek="1" placeholder="Enter birth date" format="dd/MM/yyyy"></ejs-datepicker>
+                                    <ejs-datetimepicker id="datePicker" start="Decade" ejs-for="BirthDate" strictMode="true" max="DateTime.UtcNow" firstDayOfWeek="1" placeholder="Enter birth date" format="dd/MM/yyyy"></ejs-datetimepicker>
                                     <span asp-validation-for="BirthDate" class="text-warning"></span>
                                 </div>
 

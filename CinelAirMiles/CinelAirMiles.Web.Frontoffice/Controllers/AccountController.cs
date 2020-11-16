@@ -274,7 +274,7 @@
                     "Account",
                     new { token = myToken }, protocol: HttpContext.Request.Scheme);
 
-                _mailHelper.SendMail(model.Email, "Shop Password Reset", $"<h1>Shop Password Reset</h1>" + //TODO change shop
+                _mailHelper.SendMail(model.Email, "Cinel Air Miles - Password Reset", $"<h1>Cinel Air Miles - Password Reset</h1>" + //TODO change shop
                 $"To reset the password click in this link:</br></br>" +
                 $"<a href = \"{link}\">Reset Password</a>");
                 this.ViewBag.Message = "The instructions to recover your password has been sent to email.";

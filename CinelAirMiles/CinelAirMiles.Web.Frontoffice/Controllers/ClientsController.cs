@@ -174,6 +174,7 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
         [HttpPost]
         public async Task<IActionResult> ManageGoldReference(GoldReferenceViewModel model)
         {
+            
             if (ModelState.IsValid)
             {
                 string message;
@@ -187,7 +188,7 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
                     message = await _clientRepository.RemoveReferenceClientsAsync(model.ReferrerClientNumber, model.ReferredClientNumber);
 
                     model.ViewState = 2;
-                    model.Info = message;
+                    ViewData["Message"] = message;
                     return View(model);
                 }
 
@@ -195,14 +196,14 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
 
                 if(clientNumberToBeReferred == null)
                 {
-                    model.Info = "A client with this number was not found";
+                    ViewData["Message"] = "A client with this number was not found";
                     return View(model);
                 }
 
                 message = await _clientRepository.AddClientsToReferenceProgramAsync(model.ReferrerClientNumber, model.ReferredClientNumber);
 
                 model.ViewState = 1;
-                model.Info = message;
+                ViewData["Message"] = message;
                 return View(model);
             }
 

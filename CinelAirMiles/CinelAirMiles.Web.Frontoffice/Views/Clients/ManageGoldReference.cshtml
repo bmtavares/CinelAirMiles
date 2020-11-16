@@ -16,30 +16,37 @@
         <div class="row">
             <div class="col-lg-12 mb-8 mb-lg-0">
                 <div class="blog_left_sidebar">
-                    <article class="blog_item" style="background-color: #ECEFF1;
-        border-radius: 10px;">
+                    <article class="blog_item" style="background-color: #ECEFF1; border-radius: 10px;">
                         <div class="blog_details">
                             @if (Model.ViewState == 1)
                             {
-                                <form asp-action="ManageGoldReference">
-
-                                    <div class="form-group">
-                                        <input type="submit" class="button button-contactForm boxed-btn" value="Confirm" />
-                                    </div>
-                                </form>
+                            <form asp-action="ManageGoldReference">
+                                <input type="hidden" asp-for="Info" />
+                                <input type="hidden" asp-for="ReferrerClientNumber" />
+                                <input type="hidden" asp-for="ReferredClientNumber" />
+                                <input type="hidden" asp-for="ViewState" />
+                                <div class="form-group">
+                                    <input type="submit" class="button button-contactForm boxed-btn" value="Confirm" />
+                                </div>
+                            </form>
                             }
                             else if (Model.ViewState == 2)
                             {
-                                <form asp-action="ManageGoldReference">
-                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                    <label>Client Number</label>
-                                    <ejs-maskedtextbox id="ej2masked" mask="000000000" ejs-for="ReferredClientNumber"></ejs-maskedtextbox>
-
-                                    <div class="form-group">
-                                        <br />
-                                        <input type="submit" class="button button-contactForm boxed-btn" value="Confirm" />
-                                    </div>
-                                </form>
+                        <form asp-action="ManageGoldReference">
+                            <input type="hidden" asp-for="Info" />
+                            <input type="hidden" asp-for="ReferrerClientNumber" />
+                            <input type="hidden" asp-for="ViewState" />
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <label>Client Number</label>
+                            <ejs-maskedtextbox id="ej2masked" mask="000000000" ejs-for="ReferredClientNumber"></ejs-maskedtextbox>
+                            <br />
+                            <div style="color:orange;">@ViewData["Message"]</div>
+                            
+                            <div class="form-group">
+                                <br />
+                                <input type="submit" class="button button-contactForm boxed-btn" value="Confirm" />
+                            </div>
+                        </form>
                             }
                         </div>
                     </article>
