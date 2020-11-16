@@ -123,7 +123,7 @@
         {
             if (ModelState.IsValid)
             {
-                var today = DateTime.Today;
+                var today = DateTime.UtcNow;
 
                 var age = today.Year - model.BirthDate.Value.Year;
 
@@ -148,8 +148,6 @@
                         };
 
                         var result = await _userHelper.AddUserAsync(user, model.Password);
-
-
 
                         if (result != IdentityResult.Success)
                         {
@@ -176,16 +174,24 @@
                             $"After that is done, you may login using your personal, newly issued, Program Number: <b>{client.MilesProgramNumber}</b>");
                         ViewBag.Message = "The instructions to allow your user has been sent to email.";
 
-                        return View(model);
+                        return RedirectToAction("SuccessfulRegistration");
                     }
-
-                    ModelState.AddModelError(string.Empty, "This username already exists");
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "This username already exists");
+                    }
                 }
-
-                ModelState.AddModelError("BirthDate", "The client must be older than 2 years old");
+                else
+                {
+                    ModelState.AddModelError("BirthDate", $"The client must be older than 2 years old.");
+                }
             }
-
             return View(model);
+        }
+
+        public IActionResult SuccessfulRegistration()
+        {
+            return View();
         }
 
         public async Task<IActionResult> ConfirmEmail(string userId, string token)

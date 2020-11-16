@@ -9,12 +9,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
+using System.Globalization;
+
 namespace CinelAirMiles.Web.Frontoffice
 {
     public class Program
     {
         public static void Main(string[] args)
         {
+            CultureInfo.CurrentCulture = new CultureInfo("pt-PT");
             CreateWebHostBuilder(args).Build().Run();
         }
 
