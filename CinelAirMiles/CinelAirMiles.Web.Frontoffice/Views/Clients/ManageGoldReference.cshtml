@@ -2,31 +2,80 @@
 
 @{
     ViewData["Title"] = "ManageGoldReference";
+    Layout = "_LayoutMyAccount";
 }
 
-<h2>@Model.Info</h2>
-<br />
+<!--? My Account Manage Gold Reference Start-->
+<section class="blog_area section-padding">
+    <h2 style="margin-top:-100px;">Gold Reference Program</h2>
+    <div class="container">
+        <br />
+        <h5>@Model.Info</h5>
+        <br />
+        <br />
+        <div class="row">
+            <div class="col-lg-12 mb-8 mb-lg-0">
+                <div class="blog_left_sidebar">
+                    <article class="blog_item" style="background-color: #ECEFF1;
+        border-radius: 10px;">
+                        <div class="blog_details">
+                            @if (Model.ViewState == 1)
+                            {
+                                <form asp-action="ManageGoldReference">
 
-@if (Model.ViewState == 1)
-{
-    <form asp-action="ManageGoldReference">
+                                    <div class="form-group">
+                                        <input type="submit" class="button button-contactForm boxed-btn" value="Confirm" />
+                                    </div>
+                                </form>
+                            }
+                            else if (Model.ViewState == 2)
+                            {
+                                <form asp-action="ManageGoldReference">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <label>Client Number</label>
+                                    <ejs-maskedtextbox id="ej2masked" mask="000000000" ejs-for="ReferredClientNumber"></ejs-maskedtextbox>
 
-        <div class="form-group">
-            <input type="submit" value="Confirm" class="btn btn-default" />
+                                    <div class="form-group">
+                                        <br />
+                                        <input type="submit" class="button button-contactForm boxed-btn" value="Confirm" />
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    </article>
+                </div>
+            </div>
         </div>
-    </form>
-}
-else if (Model.ViewState == 2)
-{
-    <form asp-action="ManageGoldReference">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </div>
+</section>
+<!-- My Account Manage Gold Reference End -->
 
-        <ejs-maskedtextbox id="ej2masked" mask="000000000" ejs-for="ReferredClientNumber"></ejs-maskedtextbox>
 
-        <div class="form-group">
-            <input type="submit" value="Confirm" class="btn btn-default" />
-        </div>
-    </form>
-}
 
-<button asp-action="ManageAccount" value="Go back"></button>
+
+@*<h2>@Model.Info</h2>
+    <br />
+
+    @if (Model.ViewState == 1)
+    {
+        <form asp-action="ManageGoldReference">
+
+            <div class="form-group">
+                <input type="submit" value="Confirm" class="btn btn-default" />
+            </div>
+        </form>
+    }
+    else if (Model.ViewState == 2)
+    {
+        <form asp-action="ManageGoldReference">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <ejs-maskedtextbox id="ej2masked" mask="000000000" ejs-for="ReferredClientNumber"></ejs-maskedtextbox>
+
+            <div class="form-group">
+                <input type="submit" value="Confirm" class="btn btn-default" />
+            </div>
+        </form>
+    }
+
+    <button asp-action="ManageAccount" value="Go back"></button>*@
