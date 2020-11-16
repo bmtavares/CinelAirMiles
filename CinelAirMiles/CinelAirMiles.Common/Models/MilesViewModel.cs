@@ -11,16 +11,12 @@ namespace CinelAirMiles.Common.Models
         public int Miles { get; set; }
 
 
-        [Display(Name = "Miles type")]
-        public string Type { get; set; }
-
-
         [Display(Name = "Credit date")]
-        public DateTime CreditDate { get; set; }
+        public string CreditDate { get; set; }
 
 
         [Display(Name = "Expiry date")]
-        public DateTime ExpiryDate { get; set; }
+        public string ExpiryDate { get; set; }
 
 
         public string Description { get; set; }

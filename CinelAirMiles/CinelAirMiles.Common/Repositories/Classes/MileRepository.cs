@@ -33,9 +33,13 @@
                 .ThenInclude(m => m.MilesType)
                 .FirstOrDefaultAsync(c => c.Id == clientId);
 
+            //var mileType = await _context.MilesTypes
+            //    .FirstOrDefaultAsync(mt => mt.Description == "Bonus");
+
             return client.Miles
                 .Where(m => m.ExpiryDate >= DateTime.UtcNow)
                 .Where(m => m.Balance > 0)
+                //.Where(m => m.MilesType == mileType)
                 .OrderByDescending(m => m.ExpiryDate);
         }
 

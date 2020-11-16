@@ -18,10 +18,9 @@ namespace CinelAirMiles.Web.Frontoffice.Helpers.Classes
                 model.Add(new MilesViewModel
                 {
                     Miles = mile.Balance,
-                    CreditDate = mile.CreditDate,
-                    ExpiryDate = mile.ExpiryDate,
-                    Description = mile.Description,
-                    Type = mile.MilesType.Description
+                    CreditDate = mile.CreditDate.ToString("dd/MM/yyyy"),
+                    ExpiryDate = mile.ExpiryDate.ToString("dd/MM/yyyy"),
+                    Description = mile.Description
                 });
             }
 
