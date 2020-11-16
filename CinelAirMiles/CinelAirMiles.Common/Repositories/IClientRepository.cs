@@ -66,14 +66,41 @@
         /// <returns>A string with info if the operation was successful or not</returns>
         Task<string> EditClientAsync(Client client, User user);
 
+        /// <summary>
+        /// CHecks if received client is already being referred for Gold tier
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
         Task<bool> CheckIfClientIsAlreadyReferredAsync(Client client);
 
+        /// <summary>
+        /// Get a referrer client number by comparing its referred client
+        /// </summary>
+        /// <param name="referredClient"></param>
+        /// <returns></returns>
         Task<string> GetReferrerClientNumber(Client referredClient);
 
+        /// <summary>
+        /// Get a referred client number by comparing its referrer client
+        /// </summary>
+        /// <param name="referrerClient"></param>
+        /// <returns></returns>
         Task<string> GetReferredClientNumber(Client referrerClient);
 
+        /// <summary>
+        /// Removes clients from the referrer program
+        /// </summary>
+        /// <param name="referrerClientNumber"></param>
+        /// <param name="referredClientNumber"></param>
+        /// <returns></returns>
         Task<string> RemoveReferenceClientsAsync(string referrerClientNumber, string referredClientNumber);
 
+        /// <summary>
+        /// Adds two clients to the referrer program
+        /// </summary>
+        /// <param name="referrerClientNumber"></param>
+        /// <param name="referredClientNumber"></param>
+        /// <returns></returns>
         Task<string> AddClientsToReferenceProgramAsync(string referrerClientNumber, string referredClientNumber);
     }
 }

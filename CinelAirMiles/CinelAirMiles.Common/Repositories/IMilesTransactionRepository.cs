@@ -38,7 +38,5 @@
         /// <param name="client"></param>
         /// <returns></returns>
         Task<string> ConvertMilesAsync(int quantity, Client client);
-
-        //Task<string> ExtendMilesAsync(Mile mile, Client client);
     }
 }

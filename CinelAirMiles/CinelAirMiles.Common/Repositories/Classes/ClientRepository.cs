@@ -220,7 +220,9 @@
 
         public async Task<string> GetReferrerClientNumber(Client referredClient)
         {
-            var referrerProgram = await _context.ReferrersProgram.FirstOrDefaultAsync(rp => rp.ReferredClient == referredClient);
+            var referrerProgram = await _context.ReferrersProgram
+                .Include(rp => rp.ReferrerClient)
+                .FirstOrDefaultAsync(rp => rp.ReferredClient == referredClient);
 
             return referrerProgram.ReferrerClient.MilesProgramNumber;
         }

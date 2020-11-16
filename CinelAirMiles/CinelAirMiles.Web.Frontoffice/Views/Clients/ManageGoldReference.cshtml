@@ -25,9 +25,15 @@
                                 <input type="hidden" asp-for="ReferrerClientNumber" />
                                 <input type="hidden" asp-for="ReferredClientNumber" />
                                 <input type="hidden" asp-for="ViewState" />
-                                <div class="form-group">
-                                    <input type="submit" class="button button-contactForm boxed-btn" value="Confirm" />
-                                </div>
+                                <div style="color:orange;">@ViewData["Message"]</div>
+                                @if (ViewData["Message"] == null)
+                                {
+                                    <div class="form-group">
+                                        <input type="submit" class="button button-contactForm boxed-btn" value="Remove" />
+                                    </div>
+                                }
+
+
                             </form>
                             }
                             else if (Model.ViewState == 2)
