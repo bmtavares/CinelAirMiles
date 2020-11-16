@@ -63,7 +63,7 @@
         /// </summary>
         /// <param name="client"></param>
         /// <param name="user"></param>
-        /// <returns></returns>
+        /// <returns>A string with info if the operation was successful or not</returns>
         Task<string> EditClientAsync(Client client, User user);
 
         Task<bool> CheckIfClientIsAlreadyReferredAsync(Client client);
@@ -71,5 +71,9 @@
         Task<string> GetReferrerClientNumber(Client referredClient);
 
         Task<string> GetReferredClientNumber(Client referrerClient);
+
+        Task<string> RemoveReferenceClientsAsync(string referrerClientNumber, string referredClientNumber);
+
+        Task<string> AddClientsToReferenceProgramAsync(string referrerClientNumber, string referredClientNumber);
     }
 }

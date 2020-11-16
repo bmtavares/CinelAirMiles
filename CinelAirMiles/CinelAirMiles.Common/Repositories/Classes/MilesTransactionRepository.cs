@@ -179,19 +179,22 @@
 
         async Task CheckClientBalanceAndTierAsync(Client client)
         {
-            var balance = await GetClientTotalStatusBalanceAsync(client);
+            if (!client.IsInReferrerProgram)
+            {
+                var balance = await GetClientTotalStatusBalanceAsync(client);
 
-            if (balance >= 0 && balance < 25000)
-            {
-                await ChangeClientTierAsync(client, "Basic");
-            }
-            else if (balance >= 25000 && balance < 60000)
-            {
-                await ChangeClientTierAsync(client, "Silver");
-            }
-            else if (balance > 60000)
-            {
-                await ChangeClientTierAsync(client, "Gold");
+                if (balance >= 0 && balance < 25000)
+                {
+                    await ChangeClientTierAsync(client, "Basic");
+                }
+                else if (balance >= 25000 && balance < 60000)
+                {
+                    await ChangeClientTierAsync(client, "Silver");
+                }
+                else if (balance > 60000)
+                {
+                    await ChangeClientTierAsync(client, "Gold");
+                }
             }
         }
 

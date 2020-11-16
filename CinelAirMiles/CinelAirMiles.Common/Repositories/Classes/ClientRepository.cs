@@ -227,9 +227,113 @@
 
         public async Task<string> GetReferredClientNumber(Client referrerClient)
         {
-            var referrerProgram = await _context.ReferrersProgram.FirstOrDefaultAsync(rp => rp.ReferrerClient == referrerClient);
+            var referrerProgram = await _context.ReferrersProgram
+                .Include(rp => rp.ReferredClient)
+                .FirstOrDefaultAsync(rp => rp.ReferrerClient == referrerClient);
 
             return referrerProgram.ReferredClient.MilesProgramNumber;
+        }
+
+        public async Task<string> RemoveReferenceClientsAsync(string referrerClientNumber, string referredClientNumber)
+        {
+            var referenceProgram = await _context.ReferrersProgram
+                .Where(rp => rp.ReferredClient.MilesProgramNumber == referredClientNumber)
+                .Where(rp => rp.ReferrerClient.MilesProgramNumber == referrerClientNumber)
+                .FirstOrDefaultAsync();
+
+            if (referenceProgram == null)
+            {
+                return "An error occurred";
+            }
+
+            _context.ReferrersProgram.Remove(referenceProgram);
+
+            var referrerClient = await GetClientByNumberAsync(referrerClientNumber);
+            var referredClient = await GetClientByNumberAsync(referredClientNumber);
+
+            referredClient.IsInReferrerProgram = false;
+            referrerClient.IsInReferrerProgram = false;
+
+            await UpdateAsync(referredClient);
+            await UpdateAsync(referrerClient);
+
+            await CheckClientBalanceAndTierAsync(referredClient);
+
+            return $"You are no longer sharing your Gold tier with the client number {referredClientNumber}";
+
+        }
+
+        public async Task<string> AddClientsToReferenceProgramAsync(string referrerClientNumber, string referredClientNumber)
+        {
+            var referrerClient = await GetClientByNumberAsync(referrerClientNumber);
+            var referredClient = await GetClientByNumberAsync(referredClientNumber);
+
+            if (referredClient == null || referrerClient == null)
+            {
+                return "An error occurred";
+            }
+
+            var referenceProgram = new ReferrerProgram
+            {
+                ReferredClient = referredClient,
+                ReferrerClient = referrerClient
+            };
+
+            await _context.ReferrersProgram.AddAsync(referenceProgram);
+
+            var goldTier = await _context.ProgramTiers.FirstOrDefaultAsync(pt => pt.Description == "Gold");
+
+            referredClient.IsInReferrerProgram = true;
+            referrerClient.IsInReferrerProgram = true;
+            referredClient.ProgramTier = goldTier;
+
+            await UpdateAsync(referredClient);
+            await UpdateAsync(referrerClient);
+
+            return $"You are now sharing your Gold tier with the client number {referredClientNumber}";
+        }
+
+
+        async Task CheckClientBalanceAndTierAsync(Client client)
+        {
+            var balance = await GetClientTotalStatusBalanceAsync(client);
+
+            if (balance >= 0 && balance < 25000)
+            {
+                await ChangeClientTierAsync(client, "Basic");
+            }
+            else if (balance >= 25000 && balance < 60000)
+            {
+                await ChangeClientTierAsync(client, "Silver");
+            }
+            else if (balance > 60000)
+            {
+                await ChangeClientTierAsync(client, "Gold");
+            }
+        }
+
+        async Task<int> GetClientTotalStatusBalanceAsync(Client client)
+        {
+            var balance = await _context.Miles
+                .Where(m => m.Client == client && m.ExpiryDate >= DateTime.UtcNow && m.MilesType.Description == "Status")
+                .SumAsync(m => m.Balance);
+
+            return balance;
+        }
+
+        async Task ChangeClientTierAsync(Client client, string tierDescription)
+        {
+            var tier = await _context.ProgramTiers.FirstOrDefaultAsync(t => t.Description == tierDescription);
+
+            if (tier == null)
+            {
+                return;
+            }
+
+            client.ProgramTier = tier;
+
+            _context.Clients.Update(client);
+            await _context.SaveChangesAsync();
         }
     }
 }

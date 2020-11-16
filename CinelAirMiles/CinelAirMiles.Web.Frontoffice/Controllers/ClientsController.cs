@@ -158,6 +158,8 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
                 model.ReferredClientNumber = await _clientRepository.GetReferredClientNumber(client);
                 model.ViewState = 1;
                 model.Info = $"You are sharing your Gold status with the client number {model.ReferredClientNumber}";
+
+                return View(model);
             }
 
             model.ReferrerClientNumber = client.MilesProgramNumber;
@@ -172,7 +174,39 @@ namespace CinelAirMiles.Web.Frontoffice.Controllers
         [HttpPost]
         public async Task<IActionResult> ManageGoldReference(GoldReferenceViewModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                string message;
+
+                if (model.ViewState == 0)
+                {
+                    return RedirectToAction(nameof(MyAccount));
+                }
+                else if (model.ViewState == 1)
+                {
+                    message = await _clientRepository.RemoveReferenceClientsAsync(model.ReferrerClientNumber, model.ReferredClientNumber);
+
+                    model.ViewState = 2;
+                    model.Info = message;
+                    return View(model);
+                }
+
+                var clientNumberToBeReferred = await _clientRepository.GetClientByNumberAsync(model.ReferredClientNumber);
+
+                if(clientNumberToBeReferred == null)
+                {
+                    model.Info = "A client with this number was not found";
+                    return View(model);
+                }
+
+                message = await _clientRepository.AddClientsToReferenceProgramAsync(model.ReferrerClientNumber, model.ReferredClientNumber);
+
+                model.ViewState = 1;
+                model.Info = message;
+                return View(model);
+            }
+
+            return View(model);
         }
 
         public IActionResult ManageMiles()
