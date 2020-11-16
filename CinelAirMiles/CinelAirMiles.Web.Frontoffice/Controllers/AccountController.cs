@@ -87,8 +87,11 @@
                             }
                         }
                     }
-                    ModelState.AddModelError(string.Empty, "User is deactivated. Please contact support.");
-                    return View();
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "User is deactivated. Please contact support.");
+                        return View();
+                    }
                 }
             }
 

@@ -2,6 +2,7 @@
 Windows Terminal - Um wrapper para a PowerShell com tabs; bom cliente de SSH "nativo" (https://aka.ms/terminal)
 WinSCP - Cliente gráfico para SCP: transferência de ficheiros por SSH (https://winscp.net)
 MySQL Workbench - Interface gráfica para interagir com sgdb MySQL (https://dev.mysql.com/downloads/workbench)
+win-acme - Ferramenta para gestão de certificados SSL Let's Encrypt (https://www.win-acme.com/)
 
 Assumimos desde já que o Windows Server vai hospedar:
     SQL Server
@@ -32,6 +33,9 @@ E o Linux Server:
     Garantir que o IIS está instalado, e após isso instalar o Web Platform Installer.
     No Web Platform Installer procurar "Web Deploy 3.6 for Hosting Servers" e instalar.
     No Server Manager instalar os Roles: IIS Management Scripts and Tools, e, Management Service, em Web Server (IIS) > Management Tools.
+
+  [Redirect HTTPS]
+    https://www.namecheap.com/support/knowledgebase/article.aspx/9953/38/iis-redirect-http-to-https
 
     Links úteis:
     https://docs.microsoft.com/en-us/aspnet/core/tutorials/publish-to-iis?view=aspnetcore-2.1&tabs=visual-studio
@@ -79,3 +83,14 @@ E o Linux Server:
         Correr: git init --bare
 
         Remotamente este repositório pode ser clonado neste endereço: git@ip-da-maquina:/home/git/MyRepo
+
+    [certbot/Let's Encrypt]
+        sudo apt-get update
+        sudo apt-get install software-properties-common
+        sudo add-apt-repository universe
+        sudo add-apt-repository ppa:certbot/certbot
+        sudo apt-get update
+        sudo apt-get install certbot
+        sudo apt-get install python-certbot-apache
+
+        Após instalado e com o apache configurado, seguir as instruções do certbot
